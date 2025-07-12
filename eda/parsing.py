@@ -33,18 +33,18 @@ class Participants:
         for row in self._df.itertuples():
             result[row.code] = Participant(
                 cast(str, row.code),
-                cast(str, row.geographic_origin), 
-                cast(AgeRange, row.age_range), 
+                cast(str, row.geographic_origin),
+                cast(AgeRange, row.age_range),
                 cast(str, row.mother_tonuge)
             )
         return result
 
     @classmethod
     def _parse_dataframe(cls) -> pd.DataFrame:
-        participants_file_path = KIPARLA_DATA_PATH / cls.PARTICIPANTS_FILENAME
+        participants_file_path = KIPARLA_DATA_PATH / "metadata" / cls.PARTICIPANTS_FILENAME
         assert participants_file_path.exists(), f"Path {participants_file_path} does not exist"
         participants_df = pd.read_excel(
-            participants_file_path, 
+            participants_file_path,
             keep_default_na=False,
             dtype={
                 "participant code": str,
@@ -76,11 +76,11 @@ class Participants:
 
 class ConversationParser:
     def __init__(
-        self, 
+        self,
         participants: Participants,
         *,
         conversation_number: Optional[int] = None,
-        kpc_df: Optional[pd.DataFrame] = None, 
+        kpc_df: Optional[pd.DataFrame] = None,
         kpc_vert_df: Optional[pd.DataFrame] = None
     ):
         if kpc_df is None and kpc_vert_df is None:
@@ -112,7 +112,7 @@ class ConversationParser:
                 kpc_row = next(kpc_rows)
                 conversation_line = ConversationLine(
                     self._participants[cast(str, row.speaker)],
-                    cast(str, kpc_row.text), 
+                    cast(str, kpc_row.text),
                     normalised_words[:]
                 )
                 result.append(conversation_line)
