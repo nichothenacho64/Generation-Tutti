@@ -1,0 +1,37 @@
+[tool.ruff]
+exclude = [
+    ".mypy_cache",
+    ".ruff_cache",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "venv",
+]
+
+line-length = 88
+indent-width = 4
+
+target-version = "py313"
+preview = true
+
+[tool.ruff.lint]
+select = [
+    "E4", "E7", "E9", "E203",
+    "F",
+    "I",
+    "UP",
+    "N",
+    "NPY"
+]
+ignore = ["NPY002", "UP045", "UP007", "COM812"]
+
+fixable = ["ALL"]
+unfixable = []
+
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = true
+line-ending = "auto"
