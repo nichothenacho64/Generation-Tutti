@@ -1,8 +1,11 @@
+import enum
 import re
 from dataclasses import dataclass
 from functools import cached_property
 
-from eda.utils import truthy_list
+import pandas as pd
+
+from eda.utils import truthy_tuple
 
 # Based on the oldest (recorded) person to ever live, Jeanne Calment
 # https://en.wikipedia.org/wiki/Jeanne_Calment
@@ -13,21 +16,30 @@ _OLDEST_POSSIBLE_AGE = 122
 def _normalise_simple(phrase: str) -> str:
     lowercased_phrase = phrase.lower()
     phrase_without_pauses = re.sub(
-        r"\(\.\) ", 
-        "", 
+        r"\(\.\) ",
+        "",
         lowercased_phrase
     )
     phrase_without_unknowns = re.sub(
-        r"x{2,}", 
-        "", 
+        r"x{2,}",
+        "",
         phrase_without_pauses
     )
     normalised_phrase = re.sub(
-        r"[\[\]<>°.?:()]|\.(?<=[A-Za-z])", 
-        "", 
+        r"[\[\]<>°.?:()]|\.(?<=[A-Za-z])",
+        "",
         phrase_without_unknowns
     )
     return normalised_phrase
+
+class MacroRegion(enum.Enum):
+    CENTRE = enum.auto()
+    NORTH = enum.auto()
+    SOUTH = enum.auto()
+
+    @property
+    def short_name(self) -> str:
+        return self.name[0]
 
 @dataclass
 class AgeRange:
@@ -50,6 +62,12 @@ class Participant:
     geographic_origin: str
     age_range: AgeRange
     mother_tongue: str
+    conversation_code: str
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, Participant):
+            return self.code == other.code
+        raise NotImplementedError
 
 _OVERLAPPING_PATTERN = re.compile(r"\[(.+?)\]")
 _SPED_UP_PATTERN = re.compile(r">(.+?)<")
@@ -66,19 +84,28 @@ class ConversationLine:
     @cached_property
     def normalised_text(self) -> str:
         return ' '.join(self.normalised_words)
-    
+
     @staticmethod
-    def _property_factory(pattern: re.Pattern[str]) -> cached_property[list[str]]:
-        def fget(self: "ConversationLine") -> list[str]:
-            return truthy_list(
+    def _property_factory(pattern: re.Pattern[str]) -> cached_property[tuple[str, ...]]:
+        def fget(self: "ConversationLine") -> tuple[str, ...]:
+            return truthy_tuple(
                 _normalise_simple(match.group(1))
                 for match in pattern.finditer(self.text)
             )
-        
+
         return cached_property(fget)
-    
+
     overlapping_phrases = _property_factory(_OVERLAPPING_PATTERN)
     sped_up_phrases = _property_factory(_SPED_UP_PATTERN)
     slowed_down_phrases = _property_factory(_SLOW_DOWN_PATTERN)
     low_volume_phrases = _property_factory(_LOW_VOLUME_PATTERN)
     raised_volume_phrases = _property_factory(_RAISED_VOLUME_PATTERN)
+
+@dataclass
+class Conversation:
+    lines: pd.Series
+
+@dataclass
+class ParticipantLines:
+    participant: Participant
+    lines: pd.Series
