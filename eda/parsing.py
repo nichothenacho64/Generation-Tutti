@@ -1,3 +1,4 @@
+import concurrent.futures
 import re
 from collections.abc import Iterator
 from pathlib import Path
@@ -17,8 +18,8 @@ from eda.models import (
 from eda.utils import KIPASTI_DATA_PATH, METADATA_PATH
 
 _DEFAULT_KP_REGION = MacroRegion.CENTRE
-_PARTICIPANT_UNKNOWN = "???"
-_CONVERSATION_FILE_PATTERN = re.compile(r"(KP[NCS]/d+).csv")
+_NON_SPEAKERS = frozenset(("???", "suoni"))
+_CONVERSATION_FILE_PATTERN = re.compile(r"(KP[NCS]\d+).csv")
 
 def _kp_code(number: int, region: MacroRegion) -> str:
     return f"KP{region.short_name}{str(number).zfill(3)}"
@@ -130,7 +131,7 @@ class ConversationParser:
             word = row.form
             if current_tu_id != tu_id:
                 kpc_row = next(kpc_rows)
-                if row.speaker != _PARTICIPANT_UNKNOWN:
+                if row.speaker not in _NON_SPEAKERS:
                     participant = self._participants[cast(str, row.speaker)]
                     participants.add(participant)
                     conversation_line = ConversationLine(
@@ -143,9 +144,15 @@ class ConversationParser:
                     result.append(conversation_line)
                 normalised_words.clear()
                 current_tu_id = tu_id
-            normalised_words.append(word)
 
-        return Conversation(conversation_code, list(participants), pd.Series(result))
+            if isinstance(word, str):
+                normalised_words.append(word)
+
+        return Conversation(
+            conversation_code,
+            list(participants),
+            pd.Series(result)
+        )
 
 class Conversations:
     def __init__(self, participants: Participants):
@@ -167,16 +174,49 @@ class Conversations:
         self._conversations[code] = conversation = self._parser.parse_conversation(code)
         return conversation
 
-    def read_all(self):
+    def read_all(
+        self,
+        parallel: bool = False,
+        progress_bar: bool = False,
+        load_sentiments: bool = False,
+        load_tagged: bool = False
+    ):
+        assert not (load_tagged and load_sentiments)
+        tasks = []
         for path in KIPASTI_DATA_PATH.iterdir():
             if (match := _CONVERSATION_FILE_PATTERN.fullmatch(path.name)) is None:
                 continue
 
-            code = match.group(0)
+            code = match.group(1)
             if code in self._conversations:
                 continue
 
-            self._conversations[code] = self._parser.parse_conversation(code)
+            self._conversations[code] = conversation = self._parser.parse_conversation(code)
+
+            if not load_sentiments and not load_tagged:
+                continue
+
+            if not parallel:
+                if load_sentiments:
+                    conversation.load_sentiment_scores(progress_bar=progress_bar)
+                else:
+                    conversation.load_tagged()
+            else:
+                if load_sentiments:
+                    tasks.append((conversation.load_sentiment_scores, dict(progress_bar=progress_bar)))
+                else:
+                    tasks.append((conversation.load_tagged, {}))
+
+        if not parallel:
+            return
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            futures = [
+                executor.submit(func, **kwargs)
+                for func, kwargs in tasks
+            ]
+            for future in concurrent.futures.as_completed(futures):
+                future.result()
 
     def participant_lines(self, participant: Participant) -> ParticipantLines:
         conversation = self.conversation(participant.conversation_code)
