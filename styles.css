@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+html, body {
+    height: 100%;
+    scroll-snap-type: y mandatory; 
+    scroll-behavior: smooth; 
+    overscroll-behavior: none;
+    font-family: "Lato", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.top-heading {
+    margin-top: 10vh;
+}
+
+#title, .row-container {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+}
+
+.animated-element {
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animated-element.visible {
+    opacity: 1;
+}
+
+.end {
+    scroll-snap-stop: normal;
+    min-height: 85vh; /* leave some room for the footer */
+}
