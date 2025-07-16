@@ -3,12 +3,14 @@ import re
 from collections.abc import Iterator
 from dataclasses import dataclass, field
 from functools import cached_property
-from typing import ClassVar, Self
+from typing import ClassVar, Optional, Protocol, Self, cast, overload, runtime_checkable
 
 import pandas as pd
+from tqdm import tqdm
 
+from eda.language import TaggedText, tag
 from eda.sentiments import TextSentiments
-from eda.utils import filter_series, truthy_tuple
+from eda.utils import filter_series, random_hex_colour, truthy_tuple
 
 # Based on the oldest (recorded) person to ever live, Jeanne Calment
 # https://en.wikipedia.org/wiki/Jeanne_Calment
@@ -18,29 +20,37 @@ _OLDEST_POSSIBLE_AGE = 122
 _OVER_AGE = -1
 _OVER_EIGHTY_FIVE = "over 85"
 
-def _normalise_simple(phrase: str) -> str:
-    lowercased_phrase = phrase.lower()
-    phrase_without_pauses = re.sub(
+def _simplify_text(text: str, lowercased: bool = True) -> str:
+    # Even the normalised text may still contain things we don't want
+    # We can remove that in this function
+    if lowercased:
+        text = text.lower()
+    without_pauses = re.sub(
         r"\(\.\) ",
         "",
-        lowercased_phrase
+        text
     )
-    phrase_without_unknowns = re.sub(
-        r"x{2,} ",
+    without_unknowns = re.sub(
+        r"[xX]{2,} |(?<= )[xX] ",
         "",
-        phrase_without_pauses
+        without_pauses
     )
-    phrase_without_ps = re.sub(
-        r"\{p\} ",
+    without_bracketed = re.sub(
+        r"\{.+?\}",
         "",
-        phrase_without_unknowns
+        without_unknowns
     )
-    normalised_phrase = re.sub(
+    without_ps = re.sub(
+        r"\{[pP]\} ",
+        "",
+        without_bracketed
+    )
+    simplifed = re.sub(
         r"[\[\]<>°.?:()]|\.(?<=[A-Za-z])",
         "",
-        phrase_without_ps
+        without_ps
     )
-    return normalised_phrase
+    return simplifed
 
 class MacroRegion(enum.Enum):
     CENTRE = enum.auto()
@@ -96,7 +106,7 @@ class Generation:
     X: ClassVar[Self]
     Y: ClassVar[Self]
     Z: ClassVar[Self]
-    BOOMER: ClassVar[Self]
+    BOOMERS: ClassVar[Self]
 
     name: str
     age_range: AgeRange
@@ -126,11 +136,19 @@ class Generation:
         else:
             raise Exception(f"Unknown generation for age range {age_range}")
 
+    @classmethod
+    def create_mapping(cls) -> dict[Self, list]:
+        return {
+            cls.BOOMERS: [],
+            cls.X: [],
+            cls.Y: [],
+            cls.Z: []
+        }
 
-Generation.Z = gen_z = Generation("Generation Z", AgeRange(16, 30))
-Generation.Y = gen_y = Generation("Generation Y", AgeRange(31, 50))
+Generation.Z = gen_z = Generation("Generation Z", AgeRange(16, 25))
+Generation.Y = gen_y = Generation("Generation Y", AgeRange(26, 50))
 Generation.X = gen_x = Generation("Generation X", AgeRange(51, 65))
-Generation.BOOMER = boomer = Generation("Baby Boomer", AgeRange(66, _OVER_AGE))
+Generation.BOOMERS = boomer = Generation("Baby Boomers", AgeRange(66, _OVER_AGE))
 Generation.register(gen_z, gen_y, gen_x, boomer)
 
 @dataclass(frozen=True)
@@ -166,15 +184,19 @@ class ConversationLine:
     def __post_init__(self):
         self.normalised_text = ' '.join(self.normalised_words)
         self.sentiments = TextSentiments(
-            _normalise_simple(self.normalised_text),
+            _simplify_text(self.normalised_text),
             self.conversation_code
         )
+
+    @cached_property
+    def tagged(self) -> list[TaggedText]:
+        return tag(_simplify_text(self.normalised_text, lowercased=False))
 
     @staticmethod
     def _property_factory(pattern: re.Pattern[str]) -> cached_property[tuple[str, ...]]:
         def fget(self: "ConversationLine") -> tuple[str, ...]:
             return truthy_tuple(
-                _normalise_simple(match.group(1))
+                _simplify_text(match.group(1))
                 for match in pattern.finditer(self.text)
             )
         return cached_property(fget)
@@ -185,44 +207,112 @@ class ConversationLine:
     low_volume_phrases = _property_factory(_LOW_VOLUME_PATTERN)
     raised_volume_phrases = _property_factory(_RAISED_VOLUME_PATTERN)
 
+@runtime_checkable
+class SupportsLineOperations(Protocol):
+    @overload
+    def __getitem__(self, index: int) -> ConversationLine: ...
+
+    @overload
+    def __getitem__(self, index: slice) -> pd.Series: ...
+
+    def __getitem__(self, index: int | slice) -> ConversationLine | pd.Series: ...
+
+    def __iter__(self) -> Iterator[ConversationLine]: ...
+
+    @property
+    def last_tu_id(self) -> int: ...
+
 @dataclass
-class ParticipantLines:
+class ParticipantLines(SupportsLineOperations):
     participant: Participant
     lines: pd.Series
+
+    @overload
+    def __getitem__(self, index: int) -> ConversationLine: ...
+
+    @overload
+    def __getitem__(self, index: slice) -> pd.Series: ...
+
+    def __getitem__(self, index: int | slice) -> ConversationLine | pd.Series:
+        return self.lines[index]
 
     def __iter__(self) -> Iterator[ConversationLine]:
         return iter(self.lines)
 
+    @property
+    def last_tu_id(self) -> int:
+        line = cast(ConversationLine, self.lines.tail(1).item())
+        return line.tu_id
+
 @dataclass
-class Conversation:
+class Conversation(SupportsLineOperations):
     code: str
     participants: list[Participant]
     lines: pd.Series
 
+    def __post_init__(self):
+        self.participants.sort(key=lambda participant: participant.code)
+
+    def __len__(self) -> int:
+        return len(self.lines)
+
+    @overload
+    def __getitem__(self, index: int) -> ConversationLine: ...
+
+    @overload
+    def __getitem__(self, index: slice) -> pd.Series: ...
+
+    def __getitem__(self, index: int | slice) -> ConversationLine | pd.Series:
+        return self.lines[index]
+
     def __iter__(self) -> Iterator[ConversationLine]:
         return iter(self.lines)
 
-    def participant_lines(self, participant: Participant, valid_sentiments: bool = True) -> ParticipantLines:
-        def filter_sentiment(line: ConversationLine) -> bool:
-            if not valid_sentiments:
-                return True
-            else:
-                return line.sentiments.has_scores()
+    @property
+    def last_tu_id(self) -> int:
+        line = cast(ConversationLine, self.lines.tail(1).item())
+        return line.tu_id
 
+    def load_sentiment_scores(self, progress_bar: bool = False):
+        if all(line.sentiments.has_loaded_scores() for line in self.lines):
+            return
+
+        if progress_bar:
+            pbar = tqdm(
+                total=len(self),
+                desc=f"{self.code} sentiment scores",
+                unit="lines",
+                dynamic_ncols=True,
+                colour=random_hex_colour()
+            )
+        else:
+            pbar = None
+
+        for line in self:
+            line.sentiments.load_scores()
+            if pbar is not None:
+                pbar.update(1)
+
+    def load_tagged(self):
+        for line in self:
+            _ = line.tagged
+
+    def participant_lines(self, participant: Participant, valid_sentiments: bool = True, up_to_line: Optional[int] = None) -> ParticipantLines:
         lines = filter_series(
-            self.lines,
+            self.lines[:up_to_line] if up_to_line is not None else self.lines,
             lambda line: line.participant == participant
         )
         return ParticipantLines(
             participant,
-            filter_series(lines, lambda line: filter_sentiment(line))
+            filter_series(lines, lambda line: not valid_sentiments or line.sentiments.has_scores())
         )
 
-    def lines_by_participant(self, valid_sentiments: bool = True) -> dict[Participant, ParticipantLines]:
+    def lines_by_participant(self, valid_sentiments: bool = True, up_to_line: Optional[int] = None) -> dict[Participant, ParticipantLines]:
         result = {}
         for participant in self.participants:
             result[participant] = self.participant_lines(
                 participant,
-                valid_sentiments=valid_sentiments
+                valid_sentiments=valid_sentiments,
+                up_to_line=up_to_line
             )
         return result

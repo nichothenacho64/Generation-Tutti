@@ -1,7 +1,12 @@
+import enum
 import json
+import time
+from collections import Counter
+from dataclasses import dataclass
 from functools import cached_property
 from pathlib import Path
-from typing import Optional, cast
+from typing import Final, Optional, Self, cast
+from urllib.error import HTTPError, URLError
 
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -9,9 +14,13 @@ from eda.llm import translate_llm
 from eda.utils import FOLDER_DIR
 
 type PolarityScores = dict[str, float]
-type ScoresEntry = dict[str, str | PolarityScores]
+type ScoresEntry = dict[str, Optional[str | PolarityScores]]
 
 INDETERMINATE_SCORES = {"pos": -5.0, "neg": -5.0, "neu": -5.0, "compound": -5.0}
+
+def encode_text_hashed(text: str) -> str:
+    import hashlib
+    return hashlib.sha256(text.encode(encoding="utf-8")).hexdigest()
 
 class _PolarityScoresCache:
     def __init__(self):
@@ -19,17 +28,28 @@ class _PolarityScoresCache:
 
     def get(self, text: str, conversation_code: str) -> PolarityScores:
         scores_by_text = self._load_entries(conversation_code)
-        if text in scores_by_text:
-            return cast(PolarityScores, scores_by_text[text]["scores"])
+        hashed_text = encode_text_hashed(text)
+        if hashed_text in scores_by_text:
+            return cast(PolarityScores, scores_by_text[hashed_text]["scores"])
 
         try:
-            scores = self._analyser.polarity_scores(text)
-        except IndexError:
+            retries = 0
+            while True:
+                try:
+                    scores = self._analyser.polarity_scores(text)
+                except (HTTPError, URLError):
+                    time.sleep(0.5)
+                else:
+                    break
+
+                if retries == 3:
+                    raise ValueError
+        except (IndexError, ValueError):
             retries = 0
             while True:
                 translated_text = translate_llm(text)
                 try:
-                    scores = self._analyser.polarity_scores(translated_text)
+                    scores = self._analyser.polarity_scores(text)
                 except IndexError:
                     retries += 1
                 else:
@@ -43,7 +63,7 @@ class _PolarityScoresCache:
         else:
             entry = {"scores": scores}
 
-        scores_by_text[text] = cast(ScoresEntry, entry)
+        scores_by_text[hashed_text] = cast(ScoresEntry, entry)
         self._save_entries(conversation_code, scores_by_text)
         return scores
 
@@ -64,16 +84,46 @@ class _PolarityScoresCache:
         with scores_path.open("w") as saved_scores:
             json.dump(scores, saved_scores, indent=4, ensure_ascii=False)
 
-_polarity_scores_cache = _PolarityScoresCache()
+_polarity_scores_cache: Final = _PolarityScoresCache()
+
+class SentimentType(enum.StrEnum):
+    POSITIVE = "pos"
+    NEGATIVE = "neg"
+    NEUTRAL = "neu"
+    COMPOUND = "compound"
+
+    @property
+    def display_name(self) -> str:
+        return self.name.lower()
+
+    @property
+    def default_colour(self) -> str:
+        match self:
+            case SentimentType.POSITIVE:
+                return "gold"
+            case SentimentType.NEGATIVE:
+                return "indigo"
+            case SentimentType.NEUTRAL:
+                return "darkseagreen"
+            case SentimentType.COMPOUND:
+                return "lightpink"
+
+@dataclass
+class ScoredSentiment:
+    score: float
+    type: SentimentType
+
+    def __lt__(self, other: Self) -> bool:
+        return self.score < other.score
 
 class TextSentiments:
     def __init__(self, text: str, conversation_code: str):
         self._text = text
         self._conversation_code = conversation_code
-        self._scores: Optional[PolarityScores] = None
+        self._raw_scores: Optional[PolarityScores] = None
 
     def __repr__(self) -> str:
-        if self._scores is None:
+        if self._raw_scores is None:
             return f"{self.__class__.__name__}()"
         else:
             sentiment_scores = (
@@ -82,22 +132,39 @@ class TextSentiments:
             )
             return f"{self.__class__.__name__}({sentiment_scores})"
 
-    @staticmethod
-    def _score_property(score_name: str) -> cached_property[float]:
-        def fget(self: "TextSentiments") -> float:
-            if self._scores is not None:
-                return self._scores[score_name]
+    @property
+    def score_counts(self) -> Counter:
+        return Counter(self._scores)
 
-            self._scores = scores = _polarity_scores_cache.get(self._text, self._conversation_code)
-            return scores[score_name]
+    @property
+    def _scores(self) -> PolarityScores:
+        if self._raw_scores is None:
+            self._raw_scores = _polarity_scores_cache.get(self._text, self._conversation_code)
+        return self._raw_scores
+
+    @staticmethod
+    def _score_property(sentiment_type: SentimentType) -> cached_property[float]:
+        def fget(self: "TextSentiments") -> float:
+            return self._scores[sentiment_type.value]
         return cached_property(fget)
 
     def has_scores(self) -> bool:
-        if self._scores is None:
-            self._scores = _polarity_scores_cache.get(self._text, self._conversation_code)
         return self._scores != INDETERMINATE_SCORES
 
-    positive = _score_property("pos")
-    negative = _score_property("neg")
-    neutral = _score_property("neu")
-    compound = _score_property("compound")
+    def has_loaded_scores(self) -> bool:
+        return self._raw_scores is not None
+
+    def load_scores(self):
+        if self._raw_scores is None:
+            self._raw_scores = _polarity_scores_cache.get(self._text, self._conversation_code)
+
+    def prevailing_sentiment(self) -> ScoredSentiment:
+        return max(
+            ScoredSentiment(score, SentimentType(sentiment_name))
+            for sentiment_name, score in self._scores.items()
+        )
+
+    positive = _score_property(SentimentType.POSITIVE)
+    negative = _score_property(SentimentType.NEGATIVE)
+    neutral = _score_property(SentimentType.NEUTRAL)
+    compound = _score_property(SentimentType.COMPOUND)

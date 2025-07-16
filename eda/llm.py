@@ -5,13 +5,11 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Final
 
-import log
 import ollama
 
 from eda.utils import PROMPTS_PATH
 
 _DEFAULT_MODEL = "mistral:latest"
-_VERBOSE_TRANSLATION = True
 
 _ANNOTATED_TRANSLATION_PATTERN = re.compile(r"[\[(].+[\])]$")
 
@@ -26,8 +24,6 @@ def translate_llm(text: str, model_name: str = _DEFAULT_MODEL) -> str:
     translated = response.message.content
     assert translated is not None
     translated =  _ANNOTATED_TRANSLATION_PATTERN.sub("", translated).strip()
-    if _VERBOSE_TRANSLATION:
-        log("Translated:", log.colours.RED(repr(text)), log.colours.GREEN("->"), log.colours.BLUE(repr(translated)))
     return translated
 
 @dataclass(kw_only=True)
