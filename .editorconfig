@@ -8,7 +8,7 @@ indent_style = space
 insert_final_newline = true
 indent_size = 2
 
-[*.{py,pyi}]
+[*.{py,pyi,ipynb}]
 indent_size = 4
 
 [*.{yml,yaml}]
