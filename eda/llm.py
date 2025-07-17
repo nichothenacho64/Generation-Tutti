@@ -1,9 +1,7 @@
 import asyncio
-import queue
 import re
-from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Final
+from typing import Any, Final, Optional
 
 import ollama
 
@@ -19,57 +17,84 @@ _client: Final = ollama.Client()
 
 def translate_llm(text: str, model_name: str = _DEFAULT_MODEL) -> str:
     response = _client.chat(
-        model_name, messages=PromptedMessages.create_single(_translate_prompt, text)
+        model_name, messages=MessageFactory(_translate_prompt).create_message(text).to_list()
     )
     translated = response.message.content
     assert translated is not None
     translated = _ANNOTATED_TRANSLATION_PATTERN.sub("", translated).strip()
     return translated
 
+@dataclass
+class ModelMessage:
+    prompt: ollama.Message
+    message: ollama.Message
+    metadata: dict[str, Any]
 
-@dataclass(kw_only=True)
-class PromptedMessages:
+    def to_list(self) -> list[ollama.Message]:
+        return [self.prompt, self.message]
+
+@dataclass
+class MessageFactory:
     prompt: str
-    model_inputs: list[str]
 
-    def create(self) -> list[list[ollama.Message]]:
-        return [
-            self.create_single(self.prompt, content) for content in self.model_inputs
-        ]
-
-    @classmethod
-    def create_single(cls, prompt: str, content: str) -> list[ollama.Message]:
-        return [
-            ollama.Message(role="system", content=prompt),
+    def create_message(self, content: str, **kwargs: Any) -> ModelMessage:
+        return ModelMessage(
+            ollama.Message(role="system", content=self.prompt),
             ollama.Message(role="user", content=content),
-        ]
+            metadata=kwargs
+        )
 
+
+@dataclass
+class ModelResponse:
+    message: ModelMessage
+    content: str
+    metadata: dict[str, Any]
 
 class ModelResponseGenerator:
-    def __init__(self, model_name: str = _DEFAULT_MODEL):
+    def __init__(self, task_group: asyncio.TaskGroup, model_name: str = _DEFAULT_MODEL, wait_time: float = 1.0):
+        self._task_group = task_group
         self._model_name = model_name
+        self._wait_time = wait_time
         self._client = ollama.AsyncClient()
-        self._responses: queue.Queue[str] = queue.Queue()
+        self._messages: asyncio.Queue[Optional[ModelMessage]] = asyncio.Queue()
+        self._responses: asyncio.Queue[ModelResponse] = asyncio.Queue()
 
-    async def generate_responses(
-        self, prompted_messages: PromptedMessages
-    ) -> list[str]:
-        messages = prompted_messages.create()
-        async with asyncio.TaskGroup() as task_group:
-            for message_pair in messages:
-                task_group.create_task(self._worker(message_pair))
+    @property
+    def running(self) -> bool:
+        return self._running
 
-        responses = []
-        while not self._responses.empty():
-            response = self._responses.get()
-            responses.append(response)
-        return responses
+    @running.setter
+    def running(self, value: bool):
+        self._running = value
 
-    async def _worker(self, messages: Sequence[ollama.Message]):
-        response = await self._client.chat(self._model_name, messages)
+    async def poll_response(self) -> Optional[ModelResponse]:
+        if self._responses.qsize() > 0:
+            return await self._responses.get()
+        else:
+            return None
+
+    async def wait(self):
+        await asyncio.sleep(self._wait_time)
+
+    async def run(self):
+        while True:
+            if (message := await self._messages.get()) is None:
+                return
+            self._task_group.create_task(self._worker(message))
+
+    async def enqueue(self, item: Optional[ModelMessage | ModelResponse]):
+        if item is None:
+            await self._messages.put(None)
+        elif isinstance(item, ModelResponse):
+            await self._messages.put(item.message)
+        else:
+            await self._messages.put(item)
+
+    async def _worker(self, message: ModelMessage):
+        response = await self._client.chat(self._model_name, message.to_list())
         content = response.message.content
         assert content is not None
-        self._responses.put(content)
-
-
-generate_responses = ModelResponseGenerator().generate_responses
+        await self._responses.put(
+            ModelResponse(message, content, message.metadata)
+        )

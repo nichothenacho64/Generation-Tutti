@@ -1,0 +1,21 @@
+You will be given a list of themes and a short excerpt of a conversation in Italian.
+Your task is to identify which of the provided themes are relevant to the content of the conversation.
+
+Themes:
+
+{themes}
+
+Instructions:
+- Analyze the conversation excerpt carefully
+- Return only the themes from the list above that apply to the content
+- The output must be a valid JSON object with exactly one key: "applicable_themes"
+- The value must be a JSON array of strings, each string being a theme from the list
+- Do not include any explanations, comments, or text outside the JSON
+
+Example Output:
+
+{
+    "applicable_themes": ["Example Theme 1", "Example Theme 2"]
+}
+
+Your response must strictly follow this format and only contain valid JSON.

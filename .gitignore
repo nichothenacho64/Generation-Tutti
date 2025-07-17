@@ -367,6 +367,5 @@ __marimo__/
 *.code-workspace
 .vscode/
 kiparla-data/
-prompts/
 scores/
 main.py
