@@ -1,18 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 :root {
-    --heading-color: #dd3333
+    --heading-color: #dd3333;
+    --light-color: #f85b52;
+    --logo-margin: 10px;
+    --border-trace: rgb(234, 234, 234);
+    --dark-background: #0b0c0d;
 }
 
 html, body {
     height: 100%;
+    line-height: 1.75;
     scroll-snap-type: y mandatory; 
     scroll-behavior: smooth; 
     overscroll-behavior: none;
     font-family: "Lato", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-h1 {
+nav.navbar, footer.footer {
+    background-color: rgb(249, 250, 251) !important; 
+}
+
+h1, h2 {
     color: var(--heading-color);
 }
 
@@ -23,7 +32,20 @@ a.nav-link:hover {
 /* ∞ body stuff */
 
 .top-heading {
-    margin-top: 10vh;
+    margin-top: 11vh;
+}
+
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+#logo {
+    width: 3%;
+    height: 3%;
+    padding-right: 10px;
 }
 
 #title, .row-container {
@@ -32,9 +54,13 @@ a.nav-link:hover {
     min-height: 100vh;
 }
 
+#introduction {
+    background-color: var(--dark-background);
+}
+
 .animated-element {
     opacity: 0;
-    transition: all 2s;
+    transition: all 2.25s;
 }
 
 .animated-element.visible {
@@ -43,7 +69,7 @@ a.nav-link:hover {
 
 .end {
     scroll-snap-stop: normal;
-    min-height: 85vh; /* leave some room for the footer */
+    min-height: 70vh; /* leave some room for the footer */
 }
 
 .chart {
@@ -55,4 +81,34 @@ a.nav-link:hover {
 #generationsGraph {
     width: 100%;
     height: 45vh;
+}
+
+/* ∞ general styles */
+
+.coloured-text {
+    color: var(--heading-color);
+}
+
+.quote-text {
+    font-style: italic;
+    background-color: rgb(248, 249, 250);
+    border-color: var(--border-trace);
+    border-left-color: rgb(221, 51, 51);
+    border-width: 1px;
+    border-left-width: 3px;
+    border-style: dashed;
+    border-left-style: solid;
+    padding: 5px 15px;
+}
+
+@media (max-width:992px) {
+    #logo {
+        width: 5%;
+        height: 5%;
+        padding-right: 0;
+    }
+
+    body {
+        font-size: 90%;
+    }
 }

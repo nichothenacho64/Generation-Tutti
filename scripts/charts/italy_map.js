@@ -80,6 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
             margin: { t: 50, b: 0 }
         };
 
-        Plotly.newPlot("myDiv", data, layout, { responsive: true });
+        Plotly.newPlot("italyMap", data, layout, { responsive: true });
     });
-    })
+})
