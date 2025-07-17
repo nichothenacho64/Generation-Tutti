@@ -1,0 +1,76 @@
+{
+    "conversation_types": [
+        "Awkward Silence",
+        "Chatter",
+        "Comfortable Silence",
+        "Communication In Small Groups",
+        "Conversation Piece",
+        "Dialogue",
+        "Difficult Conversation",
+        "Discussion",
+        "Doctor-Patient Conversation",
+        "Emotion Recognition In Conversation",
+        "Gossip",
+        "Intervention",
+        "Locker Room Talk",
+        "Non-Convergent Discourse",
+        "Oral Communication",
+        "Phone Conversation",
+        "Radio Voice Communication",
+        "Relationship Effort"
+    ],
+    "region_data": {
+        "Abruzzo": {
+            "url": "http://dbpedia.org/resource/Abruzzo",
+            "population": "1305770"
+        },
+        "Puglia": {
+            "url": "http://dbpedia.org/resource/Apulia",
+            "population": "4063888"
+        },
+        "Basilicata": {
+            "url": "http://dbpedia.org/resource/Basilicata",
+            "population": "575902"
+        },
+        "Calabria": {
+            "url": "http://dbpedia.org/resource/Calabria",
+            "population": "1877527"
+        },
+        "Campania": {
+            "url": "http://dbpedia.org/resource/Campania",
+            "population": "5869029"
+        },
+        "Emilia-Romagna": {
+            "url": "http://dbpedia.org/resource/Emilia-Romagna",
+            "population": "4446220"
+        },
+        "Lazio": {
+            "url": "http://dbpedia.org/resource/Lazio",
+            "population": "5864321"
+        },
+        "Lombardia": {
+            "url": "http://dbpedia.org/resource/Lombardy",
+            "population": "10103969"
+        },
+        "Marche": {
+            "url": "http://dbpedia.org/resource/Marche",
+            "population": "1541692"
+        },
+        "Sardegna": {
+            "url": "http://dbpedia.org/resource/Sardinia",
+            "population": "1628384"
+        },
+        "Toscana": {
+            "url": "http://dbpedia.org/resource/Tuscany",
+            "population": "3722729"
+        },
+        "Umbria": {
+            "url": "http://dbpedia.org/resource/Umbria",
+            "population": "889001"
+        },
+        "Veneto": {
+            "url": "http://dbpedia.org/resource/Veneto",
+            "population": "4865380"
+        }
+    }
+}

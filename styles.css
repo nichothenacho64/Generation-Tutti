@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
+:root {
+    --heading-color: #dd3333
+}
+
 html, body {
     height: 100%;
     scroll-snap-type: y mandatory; 
@@ -7,6 +11,16 @@ html, body {
     overscroll-behavior: none;
     font-family: "Lato", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+h1 {
+    color: var(--heading-color);
+}
+
+a.nav-link:hover {
+    color: var(--heading-color);
+}
+
+/* ∞ body stuff */
 
 .top-heading {
     margin-top: 10vh;
@@ -20,7 +34,7 @@ html, body {
 
 .animated-element {
     opacity: 0;
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transition: all 2s;
 }
 
 .animated-element.visible {
@@ -30,4 +44,15 @@ html, body {
 .end {
     scroll-snap-stop: normal;
     min-height: 85vh; /* leave some room for the footer */
+}
+
+.chart {
+    width: 100%;
+    height: 600px; 
+    margin: auto;
+}
+
+#generationsGraph {
+    width: 100%;
+    height: 45vh;
 }

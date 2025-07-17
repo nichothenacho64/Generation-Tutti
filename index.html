@@ -6,10 +6,12 @@
         <title>Document</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="styles.css" rel="stylesheet">
-        <script src="script.js"></script>
-        <script defer src="charts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="scripts/script.js"></script>
+        <script src="scripts/charts/italy_map.js"></script> <!-- defer -->
+        <script src="scripts/charts/generations.js"></script> <!-- defer -->
+        <script src="scripts/charts/charts.js"></script>
     </head>
     <body>
         <header>
@@ -47,8 +49,8 @@
                         repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
                         deserunt ex quaerat ea, corporis nam veritatis quos!
                     </p>
-                    <p>Chart here:</p>
-                    <div id="myChart" style="width:90%;height:600px;margin:auto;"></div>
+                    <!-- <div id="myChart" class="chart"></div> -->
+                    <div id="generationsGraph" class="chart"></div>
                 </div>
             </section>
             <section class="row row-container animated-element section-2">
@@ -60,7 +62,19 @@
                         repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
                         deserunt ex quaerat ea, corporis nam veritatis quos!
                     </p>
-                    <div id="climateChart" style="width:90%;height:600px;margin:auto;"></div>
+                    <div id="climateChart" class="chart"></div>
+                </div>
+            </section>
+            <section class="row row-container animated-element section-3">
+                <div class="col">
+                    <h1 class="top-heading">Not Last</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti aut. 
+                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos inventore 
+                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
+                        deserunt ex quaerat ea, corporis nam veritatis quos!
+                    </p>
+                    <div id="myDiv" class="d-flex justify-content-center">!</div>
                 </div>
             </section>
             <section class="row row-container animated-element end">
