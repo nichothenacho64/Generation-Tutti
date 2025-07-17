@@ -1,0 +1,740 @@
+{
+    "metadata": {
+        "title": "Dialect word percentages"
+    },
+    "data": {
+        "Baby Boomers": [
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0.06,
+                "macro_region": "south"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.59,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 0.86,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 0.51,
+                "macro_region": "south"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 2.13,
+                "macro_region": "centre"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 2.46,
+                "macro_region": "south"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 2.26,
+                "macro_region": "south"
+            },
+            {
+                "region": "sardegna",
+                "dialect_percentage": 0.24,
+                "macro_region": "south"
+            },
+            {
+                "region": "sardegna",
+                "dialect_percentage": 0.04,
+                "macro_region": "south"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "sicilia",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "estero",
+                "dialect_percentage": 0,
+                "macro_region": "external"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 19.71,
+                "macro_region": "south"
+            },
+            {
+                "region": "toscana",
+                "dialect_percentage": 3.42,
+                "macro_region": "centre"
+            },
+            {
+                "region": "toscana",
+                "dialect_percentage": 2.83,
+                "macro_region": "centre"
+            }
+        ],
+        "Generation X": [
+            {
+                "region": "puglia",
+                "dialect_percentage": 1.92,
+                "macro_region": "south"
+            },
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 10.17,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 43.83,
+                "macro_region": "north"
+            },
+            {
+                "region": "abruzzo",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.08,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 2.0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "estero",
+                "dialect_percentage": 14.05,
+                "macro_region": "external"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 2.65,
+                "macro_region": "south"
+            },
+            {
+                "region": "estero",
+                "dialect_percentage": 1.01,
+                "macro_region": "external"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 11.11,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 2.55,
+                "macro_region": "south"
+            },
+            {
+                "region": "toscana",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.32,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 2.46,
+                "macro_region": "north"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "calabria",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 1.86,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 8.62,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 30.78,
+                "macro_region": "north"
+            },
+            {
+                "region": "sardegna",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "toscana",
+                "dialect_percentage": 0.23,
+                "macro_region": "centre"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 1.44,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 2.08,
+                "macro_region": "south"
+            },
+            {
+                "region": "lazio",
+                "dialect_percentage": 0.68,
+                "macro_region": "centre"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 1.05,
+                "macro_region": "south"
+            },
+            {
+                "region": "calabria",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "sicilia",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 0.73,
+                "macro_region": "centre"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "sicilia",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "estero",
+                "dialect_percentage": 0.12,
+                "macro_region": "external"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 10.43,
+                "macro_region": "south"
+            },
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0.23,
+                "macro_region": "south"
+            },
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 45.94,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0.08,
+                "macro_region": "north"
+            }
+        ],
+        "Generation Y": [
+            {
+                "region": "piemonte",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "lazio",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "lazio",
+                "dialect_percentage": 0.13,
+                "macro_region": "centre"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.86,
+                "macro_region": "north"
+            },
+            {
+                "region": "lazio",
+                "dialect_percentage": 0.16,
+                "macro_region": "centre"
+            },
+            {
+                "region": "lazio",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.44,
+                "macro_region": "north"
+            },
+            {
+                "region": "piemonte",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 1.53,
+                "macro_region": "south"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.41,
+                "macro_region": "north"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 17.56,
+                "macro_region": "south"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 2.45,
+                "macro_region": "south"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 2.42,
+                "macro_region": "south"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 6.02,
+                "macro_region": "south"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 11.17,
+                "macro_region": "south"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 2.92,
+                "macro_region": "south"
+            },
+            {
+                "region": "abruzzo",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            }
+        ],
+        "Generation Z": [
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "estero",
+                "dialect_percentage": 0.4,
+                "macro_region": "external"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 2.95,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.06,
+                "macro_region": "north"
+            },
+            {
+                "region": "sicilia",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "toscana",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 1.11,
+                "macro_region": "centre"
+            },
+            {
+                "region": "toscana",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 10.94,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0.13,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0.18,
+                "macro_region": "north"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 1.0,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 1.99,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 2.99,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 0.12,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 1.02,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 0.05,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 4.42,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 8.23,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 5.85,
+                "macro_region": "south"
+            },
+            {
+                "region": "puglia",
+                "dialect_percentage": 2.78,
+                "macro_region": "south"
+            },
+            {
+                "region": "friuli-venezia-giulia",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "toscana",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 0.36,
+                "macro_region": "centre"
+            },
+            {
+                "region": "marche",
+                "dialect_percentage": 1.35,
+                "macro_region": "centre"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0.91,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0.15,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0.61,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 20.26,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0.38,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 1.79,
+                "macro_region": "north"
+            },
+            {
+                "region": "sardegna",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "sardegna",
+                "dialect_percentage": 0.39,
+                "macro_region": "south"
+            },
+            {
+                "region": "umbria",
+                "dialect_percentage": 7.03,
+                "macro_region": "centre"
+            },
+            {
+                "region": "umbria",
+                "dialect_percentage": 5.48,
+                "macro_region": "centre"
+            },
+            {
+                "region": "umbria",
+                "dialect_percentage": 11.75,
+                "macro_region": "centre"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "toscana",
+                "dialect_percentage": 0.16,
+                "macro_region": "centre"
+            },
+            {
+                "region": "toscana",
+                "dialect_percentage": 0,
+                "macro_region": "centre"
+            },
+            {
+                "region": "calabria",
+                "dialect_percentage": 0.87,
+                "macro_region": "south"
+            },
+            {
+                "region": "calabria",
+                "dialect_percentage": 0.21,
+                "macro_region": "south"
+            },
+            {
+                "region": "calabria",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.1,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.23,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0,
+                "macro_region": "north"
+            },
+            {
+                "region": "emilia-romagna",
+                "dialect_percentage": 0.18,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 2.26,
+                "macro_region": "north"
+            },
+            {
+                "region": "campania",
+                "dialect_percentage": 2.44,
+                "macro_region": "south"
+            },
+            {
+                "region": "abruzzo",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0.59,
+                "macro_region": "south"
+            },
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0,
+                "macro_region": "south"
+            },
+            {
+                "region": "basilicata",
+                "dialect_percentage": 0.44,
+                "macro_region": "south"
+            },
+            {
+                "region": "basilicata",
+                "dialect_percentage": 1.77,
+                "macro_region": "south"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 42.86,
+                "macro_region": "north"
+            },
+            {
+                "region": "veneto",
+                "dialect_percentage": 1.04,
+                "macro_region": "north"
+            },
+            {
+                "region": "umbria",
+                "dialect_percentage": 1.72,
+                "macro_region": "centre"
+            }
+        ]
+    }
+}

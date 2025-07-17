@@ -175,6 +175,9 @@ _SPED_UP_PATTERN = re.compile(r">(.+?)<")
 _SLOW_DOWN_PATTERN = re.compile(r"<(.+?)>")
 _LOW_VOLUME_PATTERN = re.compile(r"°(.+?)°")
 _RAISED_VOLUME_PATTERN = re.compile(r"([A-Z]+)")
+_FALLING_INTONATION_PATTERN = re.compile(r"(.+?)\.")
+_WEAKLY_RISING_INTOATION_PATTERN = re.compile(r"(.+?)\,")
+_RISING_INTONATION_PATTERN = re.compile(r"(.+?)\?")
 
 
 @dataclass
@@ -211,6 +214,9 @@ class ConversationLine:
     slowed_down_phrases = _property_factory(_SLOW_DOWN_PATTERN)
     low_volume_phrases = _property_factory(_LOW_VOLUME_PATTERN)
     raised_volume_phrases = _property_factory(_RAISED_VOLUME_PATTERN)
+    falling_intonation_phrases = _property_factory(_FALLING_INTONATION_PATTERN)
+    rising_intonation_phrases = _property_factory(_RISING_INTONATION_PATTERN)
+    weakly_rising_intonation_phrases = _property_factory(_WEAKLY_RISING_INTOATION_PATTERN)
 
     def load_prosodic(self):
         _ = self.overlapping_phrases
@@ -218,6 +224,9 @@ class ConversationLine:
         _ = self.slowed_down_phrases
         _ = self.low_volume_phrases
         _ = self.raised_volume_phrases
+        _ = self.rising_intonation_phrases
+        _ = self.weakly_rising_intonation_phrases
+        _ = self.falling_intonation_phrases
 
 
 @runtime_checkable

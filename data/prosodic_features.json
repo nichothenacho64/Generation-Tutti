@@ -1,0 +1,43 @@
+{
+    "metadata": {
+        "title": "Average prosodic feature frequency per line by generation"
+    },
+    "data": {
+        "Baby Boomers": {
+            "Sped up phrases": 0.014497814291529276,
+            "Slowed down phrases": 0.00791803647319628,
+            "Low volume phrases": 0.017077811279168797,
+            "Raised volume phrases": 0.024807525372655848,
+            "Rising intonation phrases": 0.09176623881228133,
+            "Falling intonation phrases": 0.06935500411911254,
+            "Weakly rising intonation phrases": 0.023955922815993003
+        },
+        "Generation X": {
+            "Sped up phrases": 0.05483006408036782,
+            "Low volume phrases": 0.053311096251922284,
+            "Raised volume phrases": 0.06023487657539071,
+            "Rising intonation phrases": 0.10712049622692701,
+            "Weakly rising intonation phrases": 0.07680527833677278,
+            "Falling intonation phrases": 0.15675989728478368,
+            "Slowed down phrases": 0.018570144882663515
+        },
+        "Generation Y": {
+            "Sped up phrases": 0.047217917908248266,
+            "Slowed down phrases": 0.02391045335344436,
+            "Low volume phrases": 0.029293823484617447,
+            "Raised volume phrases": 0.055588943652887746,
+            "Rising intonation phrases": 0.09542193627255281,
+            "Weakly rising intonation phrases": 0.06796555088797443,
+            "Falling intonation phrases": 0.1085075622393672
+        },
+        "Generation Z": {
+            "Sped up phrases": 0.0643856542503202,
+            "Low volume phrases": 0.048719554754283766,
+            "Raised volume phrases": 0.07050071540625416,
+            "Rising intonation phrases": 0.09448532322032832,
+            "Weakly rising intonation phrases": 0.06353747302297197,
+            "Falling intonation phrases": 0.1588144074669462,
+            "Slowed down phrases": 0.01805307018048847
+        }
+    }
+}

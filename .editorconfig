@@ -11,7 +11,7 @@ indent_size = 2
 [*.{py,pyi,ipynb}]
 indent_size = 4
 
-[*.{yml,yaml}]
+[*.{json,yml,yaml}]
 indent_size = 4
 
 [*.md]
