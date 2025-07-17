@@ -16,15 +16,16 @@ _ANNOTATED_TRANSLATION_PATTERN = re.compile(r"[\[(].+[\])]$")
 _translate_prompt: Final = PROMPTS_PATH.joinpath("translate.txt").read_text()
 _client: Final = ollama.Client()
 
+
 def translate_llm(text: str, model_name: str = _DEFAULT_MODEL) -> str:
     response = _client.chat(
-        model_name,
-        messages=PromptedMessages.create_single(_translate_prompt, text)
+        model_name, messages=PromptedMessages.create_single(_translate_prompt, text)
     )
     translated = response.message.content
     assert translated is not None
-    translated =  _ANNOTATED_TRANSLATION_PATTERN.sub("", translated).strip()
+    translated = _ANNOTATED_TRANSLATION_PATTERN.sub("", translated).strip()
     return translated
+
 
 @dataclass(kw_only=True)
 class PromptedMessages:
@@ -33,15 +34,14 @@ class PromptedMessages:
 
     def create(self) -> list[list[ollama.Message]]:
         return [
-            self.create_single(self.prompt, content)
-            for content in self.model_inputs
+            self.create_single(self.prompt, content) for content in self.model_inputs
         ]
 
     @classmethod
     def create_single(cls, prompt: str, content: str) -> list[ollama.Message]:
         return [
             ollama.Message(role="system", content=prompt),
-            ollama.Message(role="user", content=content)
+            ollama.Message(role="user", content=content),
         ]
 
 
@@ -51,7 +51,9 @@ class ModelResponseGenerator:
         self._client = ollama.AsyncClient()
         self._responses: queue.Queue[str] = queue.Queue()
 
-    async def generate_responses(self, prompted_messages: PromptedMessages) -> list[str]:
+    async def generate_responses(
+        self, prompted_messages: PromptedMessages
+    ) -> list[str]:
         messages = prompted_messages.create()
         async with asyncio.TaskGroup() as task_group:
             for message_pair in messages:
@@ -68,5 +70,6 @@ class ModelResponseGenerator:
         content = response.message.content
         assert content is not None
         self._responses.put(content)
+
 
 generate_responses = ModelResponseGenerator().generate_responses
