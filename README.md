@@ -1,9 +1,9 @@
-# My project title
+# Generation Tutti
 [Project Website](https://nichothenacho64.github.io/Generation-Tutti/)
 
-Credits:
+## Credits
 
-## Luca Napoli
+Luca Napoli
 
 * Project concept development
 * Data parsing
@@ -13,7 +13,7 @@ Credits:
 * Transforming data for website integration of charts
 * Jupyter Notebook visualisations
 
-## Nico Napoli
+Nico Napoli
 
 * Literature review
 * Complementary dataset searching
@@ -24,7 +24,7 @@ Credits:
 * Website design
 * Narrative storytelling
 
-## Licenses:
+## Licenses
 
 All data (both integrated and not integrated) is reused and released under the original license:
 
