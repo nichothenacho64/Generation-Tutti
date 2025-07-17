@@ -19,7 +19,7 @@
             <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
                 <div class="container">
                     <img id="logo" src="assets/generation_tutti.svg">
-                    <a class="navbar-brand" href="#">Generation Tutti</a>
+                    <a class="navbar-brand" href="#title">Generation Tutti</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -27,79 +27,120 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto d-flex gap-2">
-                            <li class="nav-item active"><a id="home" class="nav-link" href="#" onclick="resetTransitions()">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Page 1</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Page 2</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Yeah</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#home" onclick="resetTransitions()">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#emotionalTone" onclick="resetTransitions()">Emotional tone</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#foundations" onclick="resetTransitions()">Lexical and thematic foundations</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#regionalIdentity" onclick="resetTransitions()">Regional identity</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </header>
-        <section id="introduction">
+        <main>
+            <article id="introduction">
+                <section class="container my-5">
+                    <div id="title" class="row justify-content-center align-items-center">
+                        <div class="col">
+                            <h1 class="mb-2 fw-bolder">Generation Tutti</h1>
+                            <p class="text-white">Exploring everyday conversations across Italy, across generations</p>
+                        </div>
+                        <div class="col">
+                            <img src="assets/famous_italians.jpg" class="img-fluid">
+                        </div>
+                    </div>
+                </section>
+            </article>
             <section class="container my-5">
-                <div id="title" class="row justify-content-center align-items-center">
+                <section class="row row-container animated-element">
                     <div class="col">
-                        <h1 class="mb-3">Generation Tutti</h1>
-                        <p class="text-white">Exploring everyday conversations across Italy, across generations</p>
+                        <h2 id="home" class="top-heading">What don't we know?</h2>
+                        <p>
+                            Despite widespread awareness of the idea that languages change over time, <span class="fw-bold">we lack a clear, data-driven 
+                            understanding of how everyday conversation really differs between generations in Italy</span>. This is not just in terms of 
+                            vocabulary, but also tone, sentiment, and dialectal variation, where we explore how Italian not only changes as a spoken 
+                            language but as a form of expression for many Italians. So you might ponder on questions like the following:
+                        </p>
+                        <p class="quote-text">
+                            Do younger and older generations express themselves in the same way?<br>
+                            How much of the Italian language is shared across generations, and how much is changing with times?<br>
+                            Is regional language/dialect use really declining, or is its use just changing?<br>
+                        </p>
+                        <p>Here's the problem: Aspects like these are rarely visualised or compared in a systematic way, especially using real,
+                            organic, everyday conversational data. There is no accessible, interactive way to <span class="coloured-text">see</span> 
+                            and <span class="coloured-text">hear</span> how language evolves from one generation to the next.
+                        </p>
                     </div>
+                </section>
+                <section class="row row-container animated-element">
                     <div class="col">
-                        <img src="assets/famous_italians.jpg" class="img-fluid">
+                        <h2 class="top-heading">Significance</h2>
+                        <p>
+                            Languages are constantly evolving thanks to many factors from techological to social changes. Such changes are
+                            are especially sophisticated due to linguistic diversity, the cultural value of speech, changes in self-expression, etc.
+                            Previous studies have examined linguistic change in an academic context, though the everyday spoken
+                            language (i.e. how we speak in informal quotidian contexts) remains underexplored, especially across different generations.
+                            Hence, in our research, we aim to <span class="fw-bold">compare and contrast the nature of everyday conversations in Italy across generations.</span>
+
+                        </p>
+                        <p>
+                            The researchers at KIParla define free conversations as those that have spontaneous conversational speech among people all 
+                            across the country (Mauri et al., 2022), without any instructions from the research. Accordingly, we define ‘everyday conversations’ as those 
+                            that have no thematic alignment and unfold organically in recreational settings such as meals.
+                            However, based on widespread consensus as well as new Gen Z analysis by the Pew Research Center, and the one generation 
+                            defined by the U.S. Census Bureau (Baby Boomers), these are the birth years and ages of the generations you’ll want to use in 2025.
+                            We have drawn on the Pew Research Center’s definitions for the age range of each generation, given their widespread consensus 
+                            in the USA (Dimock, 2018). Though there are specific definitions like these, we have had to accommodate for the fact that 
+                            each participant had an age range rather than a specific age; hence, our definitions may differ slightly.
+                        </p>
+                        <div id="generationsGraph" class="chart"></div>
                     </div>
-                </div>
-            </section>
-        </section>
-        <main class="container my-5">
-            <section class="row row-container animated-element section-1">
-                <div class="col">
-                    <h1 class="top-heading">Next</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti aut. 
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos inventore 
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
-                    </p>
-                    <!-- <div id="myChart" class="chart"></div> -->
-                    <div id="generationsGraph" class="chart"></div>
-                </div>
-            </section>
-            <section class="row row-container animated-element section-2">
-                <div class="col">
-                    <h1 class="top-heading">Next</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti aut. 
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. 
-                    </p>
-                    <p class="quote-text">
-                        Similique quos inventore 
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
-                    </p>
-                    <div id="climateChart" class="chart"></div>
-                </div>
-            </section>
-            <section class="row row-container animated-element section-3">
-                <div class="col">
-                    <h1 class="top-heading">Not Last</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti aut. 
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos inventore 
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
-                    </p>
-                    <div id="myDiv" class="d-flex justify-content-center"></div>
-                </div>
-            </section>
-            <section class="row row-container animated-element end">
-                <div class="col">
-                    <h1>Last</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti aut. 
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos inventore 
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
-                    </p>
-                </div>
+                </section>
+                <section class="row row-container animated-element">
+                    <div class="col">
+                        <h2 id="emotionalTone" class="top-heading">Emotional tone</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti aut. 
+                            Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos inventore 
+                            repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
+                            deserunt ex quaerat ea, corporis nam veritatis quos!
+                        </p>
+                    </div>
+                </section>
+                <section class="row row-container animated-element">
+                    <div class="col">
+                        <h2 id="foundations" class="top-heading">Lexical and thematic foundations</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti aut. 
+                            Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos inventore 
+                            repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
+                            deserunt ex quaerat ea, corporis nam veritatis quos!
+                        </p>
+                        <div id="climateChart" class="chart"></div>
+                    </div>
+                </section>
+                <section class="row row-container animated-element">
+                    <div class="col">
+                        <h2 id="regionalIdentity" class="top-heading">Regional identity</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti aut. 
+                            Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos inventore 
+                            repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
+                            deserunt ex quaerat ea, corporis nam veritatis quos!
+                        </p>
+                        <div id="italyMap" class="d-flex justify-content-center"></div>
+                    </div>
+                </section>
+                <section class="row row-container animated-element end">
+                    <div class="col">
+                        <h2>Conclusion</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti aut. 
+                            Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos inventore 
+                            repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati, eaque non 
+                            deserunt ex quaerat ea, corporis nam veritatis quos!
+                        </p>
+                    </div>
+                </section>
             </section>
         </main>
         <footer class="text-center text-lg-start">

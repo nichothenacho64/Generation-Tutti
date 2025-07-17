@@ -32,4 +32,4 @@ All data (both integrated and not integrated) is reused and released under the o
 * [DBpedia](https://www.dbpedia.org/) – CC-BY-SA 4.0 (Creative Commons Attribution-ShareAlike)
 * [Corpus KIParla](https://kiparla.it/en/) – CC-BY-NC-SA 4.0 (Creative Commons Attribution Non Commercial Share Alike 4.0 International)
 
-The code and the final web application are released under a CC-BY license [CC-BY license](https://creativecommons.org/licenses/by/4.0/)
+The code and the final web application are released under a [CC-BY license](https://creativecommons.org/licenses/by/4.0/)

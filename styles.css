@@ -2,13 +2,15 @@
 
 :root {
     --heading-color: #dd3333;
-    --light-color: #F85B52;
+    --light-color: #f85b52;
     --logo-margin: 10px;
     --border-trace: rgb(234, 234, 234);
+    --dark-background: #0b0c0d;
 }
 
 html, body {
     height: 100%;
+    line-height: 1.75;
     scroll-snap-type: y mandatory; 
     scroll-behavior: smooth; 
     overscroll-behavior: none;
@@ -19,7 +21,7 @@ nav.navbar, footer.footer {
     background-color: rgb(249, 250, 251) !important; 
 }
 
-h1 {
+h1, h2 {
     color: var(--heading-color);
 }
 
@@ -30,7 +32,7 @@ a.nav-link:hover {
 /* ∞ body stuff */
 
 .top-heading {
-    margin-top: 10vh;
+    margin-top: 11vh;
 }
 
 
@@ -53,7 +55,7 @@ a.nav-link:hover {
 }
 
 #introduction {
-    background-color: #0b0c0d;
+    background-color: var(--dark-background);
 }
 
 .animated-element {
@@ -67,7 +69,7 @@ a.nav-link:hover {
 
 .end {
     scroll-snap-stop: normal;
-    min-height: 85vh; /* leave some room for the footer */
+    min-height: 70vh; /* leave some room for the footer */
 }
 
 .chart {
@@ -82,6 +84,10 @@ a.nav-link:hover {
 }
 
 /* ∞ general styles */
+
+.coloured-text {
+    color: var(--heading-color);
+}
 
 .quote-text {
     font-style: italic;
@@ -100,5 +106,9 @@ a.nav-link:hover {
         width: 5%;
         height: 5%;
         padding-right: 0;
+    }
+
+    body {
+        font-size: 90%;
     }
 }
