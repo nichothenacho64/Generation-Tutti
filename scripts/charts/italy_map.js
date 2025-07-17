@@ -82,4 +82,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
         Plotly.newPlot("myDiv", data, layout, { responsive: true });
     });
-    })
+})
