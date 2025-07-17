@@ -55,6 +55,19 @@ class Participants:
 
     def __init__(self):
         self._df = self._parse_dataframe()
+        self._conversations_df = pd.read_excel(
+            METADATA_PATH / "KIPasti_conversations.xlsx"
+        )
+        region_to_macro_region = self._conversations_df[["region", "macro_region"]]
+        region_to_macro_region = region_to_macro_region.drop_duplicates()
+        region_to_macro_region = region_to_macro_region.set_index("region")["macro_region"]
+
+        self._region_to_macro_region = {
+            cast(str, key).strip(): MacroRegion.from_italian(cast(str, value).strip())
+            for key, value in region_to_macro_region.to_dict().items()
+        }
+        self._add_regions_manual()
+
         self._participants_by_code: dict[str, Participant] = self._parse_participants()
 
     def __getitem__(self, code_or_number: str | int) -> Participant:
@@ -71,6 +84,10 @@ class Participants:
     @property
     def df(self) -> pd.DataFrame:
         return self._df
+
+    @property
+    def conversations_df(self) -> pd.DataFrame:
+        return self._conversations_df
 
     @classmethod
     def _parse_dataframe(cls) -> pd.DataFrame:
@@ -112,13 +129,20 @@ class Participants:
         )
         return participants_df
 
+    def geographic_origins(self) -> list[str]:
+        return self._df["geographic_origin"].unique().tolist()
+
     def _parse_participants(self) -> dict[str, Participant]:
         result = {}
         for row in self._df.itertuples():
+            # Data reconcilliation
+            geographic_origin = region = cast(str, row.geographic_origin).strip()
+            macro_region = self._region_to_macro_region[region]
             conversation_code = cast(str, row.in_files).split(", ")[0]
             result[row.code] = Participant(
                 cast(str, row.code),
-                cast(str, row.geographic_origin),
+                geographic_origin,
+                macro_region,
                 cast(AgeRange, row.age_range),
                 cast(Generation, row.generation),
                 cast(str, row.mother_tonuge),
@@ -126,13 +150,17 @@ class Participants:
             )
         return result
 
+    def _add_regions_manual(self):
+        self._region_to_macro_region["piemonte"] = MacroRegion.NORTH
+        self._region_to_macro_region["estero"] = MacroRegion.EXTERNAL
+        self._region_to_macro_region["sicilia"] = MacroRegion.SOUTH
+        self._region_to_macro_region["friuli-venezia-giulia"] = MacroRegion.NORTH
+
 
 class ConversationParser:
     def __init__(self, participants: Participants):
         self._participants = participants
-        self._conversations_df = pd.read_excel(
-            METADATA_PATH / "KIPasti_conversations.xlsx"
-        )
+        self._conversations_df = participants.conversations_df
 
     def parse_conversation(
         self,
@@ -149,7 +177,7 @@ class ConversationParser:
         metadata = self._conversation_metadata(conversation_code)
         languages = cast(str, metadata["languages"]).split("-")
         macro_region = MacroRegion.from_italian(metadata["macro_region"])
-        region = metadata["region"]
+        region = metadata["region"].strip()
 
         kp_path = _kp_path(number_or_code, macro_region)
         kp_vert_path = _kp_vert_path(number_or_code, macro_region)
@@ -194,7 +222,7 @@ class ConversationParser:
                     AttributedWord(
                         word,
                         word_type=cast(str, row.type),
-                        jefferson_features=cast(str, row.jefferson_feats).split("|"),
+                        jefferson_features=cast(str, row.jefferson_feats).split('|'),
                         variation=cast(str, row.variation),
                     )
                 )
@@ -220,6 +248,9 @@ class Conversations:
     def __init__(self, participants: Participants):
         self._parser = ConversationParser(participants)
         self._conversations: dict[str, Conversation] = {}
+
+    def __len__(self) -> int:
+        return len(self._conversations)
 
     def __iter__(self) -> Iterator[Conversation]:
         return iter(self._conversations.values())

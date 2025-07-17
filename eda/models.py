@@ -39,6 +39,7 @@ class MacroRegion(enum.Enum):
     NORTH = enum.auto()
     CENTRE = enum.auto()
     SOUTH = enum.auto()
+    EXTERNAL = enum.auto()
 
     def __lt__(self, other: object) -> bool:
         if isinstance(other, MacroRegion):
@@ -154,6 +155,7 @@ Generation.register(gen_z, gen_y, gen_x, boomer)
 class Participant:
     code: str
     geographic_origin: str
+    macro_region: MacroRegion
     age_range: AgeRange
     generation: Generation
     mother_tongue: str
