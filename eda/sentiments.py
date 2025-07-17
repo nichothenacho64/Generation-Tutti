@@ -1,4 +1,5 @@
 import enum
+import hashlib
 import json
 import time
 from collections import Counter
@@ -18,9 +19,10 @@ type ScoresEntry = dict[str, Optional[str | PolarityScores]]
 
 INDETERMINATE_SCORES = {"pos": -5.0, "neg": -5.0, "neu": -5.0, "compound": -5.0}
 
+
 def encode_text_hashed(text: str) -> str:
-    import hashlib
     return hashlib.sha256(text.encode(encoding="utf-8")).hexdigest()
+
 
 class _PolarityScoresCache:
     def __init__(self):
@@ -84,7 +86,9 @@ class _PolarityScoresCache:
         with scores_path.open("w") as saved_scores:
             json.dump(scores, saved_scores, indent=4, ensure_ascii=False)
 
+
 _polarity_scores_cache: Final = _PolarityScoresCache()
+
 
 class SentimentType(enum.StrEnum):
     POSITIVE = "pos"
@@ -108,6 +112,7 @@ class SentimentType(enum.StrEnum):
             case SentimentType.COMPOUND:
                 return "lightpink"
 
+
 @dataclass
 class ScoredSentiment:
     score: float
@@ -115,6 +120,7 @@ class ScoredSentiment:
 
     def __lt__(self, other: Self) -> bool:
         return self.score < other.score
+
 
 class TextSentiments:
     def __init__(self, text: str, conversation_code: str):
@@ -139,13 +145,16 @@ class TextSentiments:
     @property
     def _scores(self) -> PolarityScores:
         if self._raw_scores is None:
-            self._raw_scores = _polarity_scores_cache.get(self._text, self._conversation_code)
+            self._raw_scores = _polarity_scores_cache.get(
+                self._text, self._conversation_code
+            )
         return self._raw_scores
 
     @staticmethod
     def _score_property(sentiment_type: SentimentType) -> cached_property[float]:
         def fget(self: "TextSentiments") -> float:
             return self._scores[sentiment_type.value]
+
         return cached_property(fget)
 
     def has_scores(self) -> bool:
@@ -156,7 +165,9 @@ class TextSentiments:
 
     def load_scores(self):
         if self._raw_scores is None:
-            self._raw_scores = _polarity_scores_cache.get(self._text, self._conversation_code)
+            self._raw_scores = _polarity_scores_cache.get(
+                self._text, self._conversation_code
+            )
 
     def prevailing_sentiment(self) -> ScoredSentiment:
         return max(
