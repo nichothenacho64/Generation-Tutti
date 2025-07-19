@@ -1,80 +1,141 @@
-document.addEventListener("DOMContentLoaded", function () {
-    var data = [
-    {
-        x: [1, 2, 3, 4, 5],
-        y: [10, 15, 13, 17, 21],
-        type: 'scatter',
-        mode: 'lines+markers',
-        marker: { color: 'blue' }
-    }
-    ];
+import ChartConstructor from "../chart_constructor.js";
+import {axisFont, chartFont, globalConfig} from "../graph_configurations.js";
 
-    var layout = {
-        title: 'Simple Line Chart',
-        xaxis: { title: 'X Axis' },
-        yaxis: { title: 'Y Axis' }
+async function createSentimentBarChart() {
+    let sentimentBarChart = await new ChartConstructor("sentiment_percentages.json").init();
+    sentimentBarChart.numDataArrays = sentimentBarChart.dataArray.length;
+    // const frequencies = sentimentBarChart.getDataArrayValues();
+    // console.log(sentimentBarChart.getDataArrayKeys());
+    console.log(sentimentBarChart.dataArray)
+    // console.log(frequencies);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const generations = ["Baby Boomers", "Generation X", "Generation Y", "Generation Z"];
+
+    const data = {
+        Negative: [46.3, 50, 10.5, 10.4], // 2nd set correct
+        Positive: [10.4, 12.8, 28.2, 28.1],
+        Neutral: [28.6, 26.9, 47.5, 47.5],
+        Compound: [14.8, 10.4, 13.8, 14.1]
     };
 
-    Plotly.newPlot('myChart', data, layout);
+    const colors = {
+        Negative: "#dd3333",
+        Positive: "rgb(95, 147, 69)",
+        Neutral: "#dddddd",
+        Compound: "#7c7c7cff"
+    };
+
+    const traces = Object.keys(data).map(sentiment => ({
+        x: generations,
+        y: data[sentiment],
+        name: sentiment,
+        type: "bar",
+        marker: { color: colors[sentiment] },
+        textposition: "inside",               // <--- center text vertically
+        insidetextanchor: "middle",
+        text: data[sentiment].map(v => `${v.toFixed(1)}%`),
+        textposition: "auto"
+    }));
+
+    const layout = {
+        barmode: "stack",
+        title: {
+            text: "<b>Sentiment percentages per generation (excluding neutral=1.0)</b>",
+            font: axisFont
+        },
+        yaxis: {
+            title: "Proportion of sentiments (%)",
+            range: [0, 100]
+        },
+        legend: {
+            title: { text: "Sentiments" }
+        },
+        font: chartFont
+    };
+
+    Plotly.newPlot("sentimentChart", traces, layout, { responsive: true });
 });
 
+async function createLemmaHeatmap() {
+    let lemmaHeatmap = await new ChartConstructor("top_lemmas.json").init();
+    lemmaHeatmap.orderData();
+    lemmaHeatmap.numDataArrays = 10; // change later.?
+    const frequencies = lemmaHeatmap.getDataArrayValues();
+
+    const data = [{
+        x: lemmaHeatmap.generations,
+        y: lemmaHeatmap.getDataArrayKeys(),
+        z: frequencies,
+        type: "heatmap", // the actual graph type
+
+        colorscale: [
+            ["0.0", "#EEEEEE"],
+            ["0.5", "#dd3333"],
+            ["1.0", "#8d1818"]
+        ],
+        xgap: 1.25,
+        ygap: 1.25,
+        text: frequencies,
+        texttemplate: "%{text}",
+        hoverongaps: false, // just because...
+        colorbar: {
+            title: {
+                text: `Frequency (per 1000 words)`,
+                side: "right",
+                font: {
+                    size: 12
+                },
+            },
+            thickness: 14, // the thickness of the title thing
+            len: 1, // length as a scale of the total
+            xanchor: "left",
+            tickfont: {
+                size: 10 // for the colorbar
+            }
+        }
+    }];
+
+    const layout = {
+        title: {
+            text: `<b>Occurrences of top ${lemmaHeatmap.metadata["top_n_lemmas"]} lemmas in each generation (per ${lemmaHeatmap.metadata["per_n_words"]} words)</b>`,
+            font: axisFont
+        },
+        xaxis: {
+            title: {
+                text: "Generation",
+                font: axisFont,
+                standoff: 20,
+            },
+            tickangle: -45, // angled x axis labels
+            scaleanchor: "y", // for square cells
+            constrain: "domain",
+        },
+        yaxis: {
+            title: {
+                text: "Lemma",
+                font: axisFont,
+                standoff: 20,
+            },
+            autorange: "reversed",
+        },
+        font: chartFont,
+        margin: { b: 100 }
+    };
+
+    Plotly.newPlot("heatmap", data, layout, globalConfig);
+}
 document.addEventListener("DOMContentLoaded", function () {
-  // Sample data (realistic but simplified)
-  const years = [
-    1960, 1965, 1970, 1975, 1980, 1985, 1990,
-    1995, 2000, 2005, 2010, 2015, 2020
-  ];
-
-  const co2Emissions = [9.4, 11.2, 14.3, 17.6, 20.2, 21.8, 22.4, 23.9, 24.7, 28.5, 32.1, 35.6, 36.4]; // Gigatons
-
-  const tempAnomalies = [-0.02, 0.01, 0.03, 0.09, 0.15, 0.12, 0.32, 0.38, 0.42, 0.55, 0.64, 0.87, 1.02]; // °C deviation
-
-  const co2Trace = {
-    x: years,
-    y: co2Emissions,
-    name: 'CO₂ Emissions (Gt)',
-    type: 'scatter',
-    mode: 'lines+markers',
-    line: { color: 'green', width: 3 },
-    yaxis: 'y1'
-  };
-
-  const tempTrace = {
-    x: years,
-    y: tempAnomalies,
-    name: 'Temperature Anomaly (°C)',
-    type: 'scatter',
-    mode: 'lines+markers',
-    line: { color: 'red', dash: 'dash', width: 3 },
-    yaxis: 'y2'
-  };
-
-  const layout = {
-    title: 'CO₂ Emissions vs Global Temperature Anomaly (1960–2020)',
-    xaxis: {
-      title: 'Year',
-      tickformat: 'd'
-    },
-    yaxis: {
-      title: 'CO₂ Emissions (Gigatons)',
-      side: 'left',
-      showgrid: false
-    },
-    yaxis2: {
-      title: 'Temperature Anomaly (°C)',
-      overlaying: 'y',
-      side: 'right',
-      showgrid: false
-    },
-    legend: {
-    x: 0.5,
-    y: -0.2,
-    xanchor: 'center',
-    orientation: 'h'
-    },
-    hovermode: 'x unified',
-    margin: { t: 50, l: 50, r: 50, b: 50 }
-  };
-
-  Plotly.newPlot('climateChart', [co2Trace, tempTrace], layout, { responsive: true });
+    createSentimentBarChart();
+    createLemmaHeatmap();
 });
+
+
+/*
+
+draft insights:
+* tipo, cioè - increase, filler words
+* okay - increase, incorporation of foreign words
+* mamma, nonno - decrease, parent words
+*/

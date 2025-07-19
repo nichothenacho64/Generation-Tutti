@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const hovertext = regionData.map(d => `${d.region}<br>${d.value}%`);
 
         const data = [{
-            type: "choroplethmapbox",
+            type: "choroplethmap", // new type
             geojson: geoData,
             locations: locations,
             z: z,
@@ -70,14 +70,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 text: "Frequency of Dialect Use in Italy (2015)",
                 font: { size: 20 }
             },
-            width: 600, 
+            width: 600,
             height: 450,
-            mapbox: {
+            map: {
                 style: "carto-positron",
                 center: { lat: 42.0, lon: 12.3 },
                 zoom: 4.25
             },
-            margin: { t: 50, b: 0 }
+            margin: { t: 50, b: 0 },
         };
 
         Plotly.newPlot("italyMap", data, layout, { responsive: true });

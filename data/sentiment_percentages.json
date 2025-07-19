@@ -4,6 +4,7 @@
     },
     "data": {
         "Baby Boomers": {
+<<<<<<< HEAD
             "neutral": 44.3,
             "positive": 30.03,
             "negative": 9.98,
@@ -26,6 +27,30 @@
             "positive": 28.04280428042804,
             "compound": 14.161416141614161,
             "negative": 10.261026102610261
+=======
+            "negative": 46.3,
+            "positive": 10.4,
+            "neutral": 28.6,
+            "compound": 14.8
+        },
+        "Generation X": {
+            "negative": 50.0,
+            "positive": 12.8,
+            "neutral": 26.9,
+            "compound": 10.4
+        },
+        "Generation Y": {
+            "negative": 10.5,
+            "positive": 28.2,
+            "neutral": 47.5,
+            "compound": 13.8
+        },
+        "Generation Z": {
+            "negative": 10.4,
+            "positive": 28.1,
+            "neutral": 47.5,
+            "compound": 14.1
+>>>>>>> 1d4364d8dadf057d014c14b66acb07a965b20fad
         }
     }
 }
