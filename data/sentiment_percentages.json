@@ -2,38 +2,30 @@
     "metadata": {
         "title": "Sentiment percentages per generation"
     },
-    "data": [
-        {
-            "Baby Boomers": {
-                "neutral": 46.25,
-                "positive": 28.63,
-                "negative": 10.35,
-                "compound": 14.77
-            }
+    "data": {
+        "Baby Boomers": {
+            "negative": 46.3,
+            "positive": 10.4,
+            "neutral": 28.6,
+            "compound": 14.8
         },
-        {
-            "Generation X": {
-                "neutral": 50.0,
-                "positive": 26.85,
-                "compound": 12.76,
-                "negative": 10.39
-            }
+        "Generation X": {
+            "negative": 50.0,
+            "positive": 12.8,
+            "neutral": 26.9,
+            "compound": 10.4
         },
-        {
-            "Generation Y": {
-                "negative": 10.49,
-                "neutral": 47.47,
-                "positive": 28.22,
-                "compound": 13.819999999999999
-            }
+        "Generation Y": {
+            "negative": 10.5,
+            "positive": 28.2,
+            "neutral": 47.5,
+            "compound": 13.8
         },
-        {
-            "Generation Z": {
-                "neutral": 47.45,
-                "positive": 28.050000000000004,
-                "compound": 14.14,
-                "negative": 10.36
-            }
+        "Generation Z": {
+            "negative": 10.4,
+            "positive": 28.1,
+            "neutral": 47.5,
+            "compound": 14.1
         }
-    ]
+    }
 }

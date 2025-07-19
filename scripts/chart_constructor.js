@@ -7,6 +7,7 @@ export default class ChartConstructor {
 		this.ready = this.loadData();
         this._numDataArrays = 0;
         this.dataArray = null;
+        // this.sortAttribute = null; // null
 	}
 
     async init() {
@@ -19,8 +20,14 @@ export default class ChartConstructor {
 		const jsonData = await response.json(); // ! DO NOT TOUCH
 		this._metadata = jsonData.metadata;
 		this.data = jsonData.data;
+
         this.transformDataFormat();
-        this.addAverages();
+
+        if (this._metadata.sort === "Average") {
+            this.addAverages();
+        } else if (this._metadata.sort === "Average delta") {
+            this.addAverageDeltas();
+        }
         this.createDataArray();
 	}
 
@@ -35,35 +42,55 @@ export default class ChartConstructor {
 			}
 		}
 
-		const modifiedValues = {};
+		let modifiedValues = {};
 
-		for (const label of allLabels) {
-			modifiedValues[label] = {};
-			for (const generation of generations) {
-				modifiedValues[label][generation] = 0;
-			}
-		}
+        for (const label of allLabels) {
+            modifiedValues[label] = {};
+            for (const generation of generations) {
+                modifiedValues[label][generation] = 0;
+            }
+        }
 
-		for (const generation of generations) {
-			const scores = this.data[generation];
-			for (const [label, value] of Object.entries(scores)) {
-				modifiedValues[label][generation] = value;
-			}
-		}
+        for (const generation of generations) {
+            const scores = this.data[generation];
+            for (const [label, value] of Object.entries(scores)) {
+                modifiedValues[label][generation] = value;
+            }
+        }
 
 		this.data = modifiedValues;
-		// return this.data;
 	}
 
 	addAverages() {
 		for (const key in this.data) {
 			const scores = Object.values(this.data[key]);
-			const total = scores.reduce((sum, val) => sum + val, 0);
+			const total = scores.reduce((sum, value) => sum + value, 0);
 			const average = total / scores.length;
 			this.data[key]['average'] = average;
 		}
         this.generations.push("Average");
 	}
+
+    addAverageDeltas() {
+        for (const key in this.data) {
+            const values = Object.values(this.data[key]);
+            const deltas = [];
+
+            for (let i = 1; i < values.length; i++) {
+                // const delta = values[i] - values[i - 1];
+                const delta = Math.abs(values[i] - values[i - 1]);
+                deltas.push(delta);
+            }
+
+            const totalDelta = deltas.reduce((sum, d) => sum + d, 0);
+            const averageDelta = deltas.length > 0 ? totalDelta / deltas.length : 0;
+
+            this.data[key]['averageDelta'] = averageDelta;
+        }
+
+        this.generations.push("Average delta"); 
+    }
+
 
     createDataArray() {
         let dataArray = {};
@@ -103,6 +130,10 @@ export default class ChartConstructor {
         let dataArrayValues = Object.values(this.dataArray).slice(0, this._numDataArrays);
         return dataArrayValues.map(values => values[0].map(num => Math.round(num * 10) / 10));
     }
+
+    // get dataArray() {
+    //     return this._dataArray
+    // }
 
     get metadata() {
         return this._metadata;
