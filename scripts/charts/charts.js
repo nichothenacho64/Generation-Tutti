@@ -1,106 +1,135 @@
 import ChartConstructor from "../chart_constructor.js";
-import {axisFont, chartFont, globalConfig} from "../graph_configurations.js";
+import { titleFont, axisFont, globalFont, themeColours, globalConfig, hoverLabelConfig } from "../graph_configurations.js";
+
 
 async function createSentimentBarChart() {
     let sentimentBarChart = await new ChartConstructor("sentiment_percentages.json").init();
-    sentimentBarChart.numDataArrays = sentimentBarChart.dataArray.length;
-    // const frequencies = sentimentBarChart.getDataArrayValues();
-    // console.log(sentimentBarChart.getDataArrayKeys());
-    console.log(sentimentBarChart.dataArray)
-    // console.log(frequencies);
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    const generations = ["Baby Boomers", "Generation X", "Generation Y", "Generation Z"];
-
-    const data = {
-        Negative: [46.3, 50, 10.5, 10.4], // 2nd set correct
-        Positive: [10.4, 12.8, 28.2, 28.1],
-        Neutral: [28.6, 26.9, 47.5, 47.5],
-        Compound: [14.8, 10.4, 13.8, 14.1]
-    };
+    sentimentBarChart.numDataArrays = sentimentBarChart.dataArray.length; // sentimentBarChart.dataArray.length
 
     const colors = {
-        Negative: "#dd3333",
-        Positive: "rgb(95, 147, 69)",
-        Neutral: "#dddddd",
-        Compound: "#7c7c7cff"
+        negative: themeColours.mostNegativeColour,
+        positive: themeColours.mostPositiveColour,
+        neutral: themeColours.primaryRed,
+        compound: themeColours.darkRed
     };
 
-    const traces = Object.keys(data).map(sentiment => ({
-        x: generations,
-        y: data[sentiment],
-        name: sentiment,
+
+    const data = Object.keys(sentimentBarChart.dataArray).map(sentiment => ({
+        x: sentimentBarChart.generations,
+        y: sentimentBarChart.dataArray[sentiment],
+        name: sentiment.toLowerCase().split(' ').map(w => w[0].toUpperCase() + w.slice(1)).join(' '),
         type: "bar",
         marker: { color: colors[sentiment] },
-        textposition: "inside",               // <--- center text vertically
+        textposition: "inside",   
         insidetextanchor: "middle",
-        text: data[sentiment].map(v => `${v.toFixed(1)}%`),
-        textposition: "auto"
+        text: sentimentBarChart.dataArray[sentiment].map(value => `${value}%`),
+        textposition: "auto",
+        hoverlabel: hoverLabelConfig,
+        hovertemplate: `Generation: %{x}<br>Sentiment: ${sentiment.toLowerCase().split(' ').map(w => w[0].toUpperCase() + w.slice(1)).join(' ')}<br>Value: %{text}<extra></extra>`, // all on one line with <br>
     }));
 
     const layout = {
         barmode: "stack",
         title: {
-            text: "<b>Sentiment percentages per generation (excluding neutral=1.0)</b>",
-            font: axisFont
+            text: `<b>${sentimentBarChart.metadata.title}</b>`,
+            font: titleFont
+        },
+        xaxis: {
+            title: {
+                text: "Generation",
+                font: axisFont
+            },
         },
         yaxis: {
-            title: "Proportion of sentiments (%)",
+            title: {
+                text: "Proportion of sentiments (%)",
+            },
+            automargin: true,
             range: [0, 100]
         },
         legend: {
-            title: { text: "Sentiments" }
+            title: { 
+                text: `<b>Sentiments</b>`,
+                font: axisFont
+            }
         },
-        font: chartFont
+        font: globalFont
     };
 
-    Plotly.newPlot("sentimentChart", traces, layout, { responsive: true });
-});
+    Plotly.newPlot("sentimentChart", data, layout, globalConfig);
+}
 
 async function createLemmaHeatmap() {
     let lemmaHeatmap = await new ChartConstructor("top_lemmas.json").init();
     lemmaHeatmap.orderData();
-    lemmaHeatmap.numDataArrays = 10; // change later.?
-    const frequencies = lemmaHeatmap.getDataArrayValues();
+    lemmaHeatmap.numDataArrays = 10;
 
-    const data = [{
-        x: lemmaHeatmap.generations,
-        y: lemmaHeatmap.getDataArrayKeys(),
-        z: frequencies,
-        type: "heatmap", // the actual graph type
+    const lemmas = lemmaHeatmap.getDataArrayKeys();
+    const frequencies = lemmaHeatmap.getDataArrayValues().map(row => row.slice(0, -2)); // all except the last columns
+    const deltaFrequencies = lemmaHeatmap.getDataArrayValues().map(row => row.slice(-2, -1)); // average delta column
+    const paddedDeltaFrequencies = deltaFrequencies.map(row => { // line up each row with the last column position
+        return Array(lemmaHeatmap.generations.length - 1).fill("").concat(row);
+    });
 
-        colorscale: [
-            ["0.0", "#EEEEEE"],
-            ["0.5", "#dd3333"],
-            ["1.0", "#8d1818"]
-        ],
-        xgap: 1.25,
-        ygap: 1.25,
-        text: frequencies,
-        texttemplate: "%{text}",
-        hoverongaps: false, // just because...
-        colorbar: {
-            title: {
-                text: `Frequency (per 1000 words)`,
-                side: "right",
-                font: {
-                    size: 12
+    const data = [
+        {
+            x: lemmaHeatmap.generations,
+            y: lemmas,
+            z: frequencies,
+            type: "heatmap",
+            colorscale: [
+                ["0.0", themeColours.brightestGrey],
+                ["0.5", themeColours.primaryRed],
+                ["1.0", themeColours.darkRed]
+            ],
+            xgap: 1.25,
+            ygap: 1.25,
+            text: frequencies,
+            texttemplate: "%{text}",
+            hoverlabel: hoverLabelConfig,
+            hovertemplate: `Generation: %{x}<br>Lemma: %{y}<br>Value: %{z}<extra></extra>`, // all on one line with <br>
+            hoverongaps: false,
+            showscale: true,
+            colorbar: {
+                title: {
+                    text: `Frequency (per 1000 words)`,
+                    side: "right",
+                    font: { size: 12 },
                 },
-            },
-            thickness: 14, // the thickness of the title thing
-            len: 1, // length as a scale of the total
-            xanchor: "left",
-            tickfont: {
-                size: 10 // for the colorbar
+                thickness: 14,
+                len: 1.045,
+                xanchor: "left",
+                x: 0.625, // abs position
+                xpad: 80, // minimum padding between chart and barx, improves responsivity
+                tickfont: { size: 10 }
             }
+        },
+        {
+            x: lemmaHeatmap.generations,
+            y: lemmas,
+            z: paddedDeltaFrequencies,
+            type: "heatmap",
+            colorscale: [
+                ["0.0", themeColours.mostNegativeColour],
+                ["1.0", themeColours.mostPositiveColour]
+            ],
+            xgap: 1.25,
+            ygap: 1.25,
+            text: paddedDeltaFrequencies,
+            texttemplate: "%{text}",
+            hoverlabel: hoverLabelConfig,
+            hovertemplate: 
+                `Lemma: %{y}<br>Average delta value: %{z}<extra></extra>`,
+            hoverongaps: false,
+            showscale: false
         }
-    }];
+    ];
+
 
     const layout = {
         title: {
             text: `<b>Occurrences of top ${lemmaHeatmap.metadata["top_n_lemmas"]} lemmas in each generation (per ${lemmaHeatmap.metadata["per_n_words"]} words)</b>`,
-            font: axisFont
+            font: titleFont
         },
         xaxis: {
             title: {
@@ -120,12 +149,13 @@ async function createLemmaHeatmap() {
             },
             autorange: "reversed",
         },
-        font: chartFont,
+        font: globalFont,
         margin: { b: 100 }
     };
 
     Plotly.newPlot("heatmap", data, layout, globalConfig);
 }
+
 document.addEventListener("DOMContentLoaded", function () {
     createSentimentBarChart();
     createLemmaHeatmap();

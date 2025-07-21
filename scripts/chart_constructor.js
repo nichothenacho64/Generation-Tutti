@@ -6,7 +6,7 @@ export default class ChartConstructor {
 		this._generations = ['Baby Boomers', 'Generation X', 'Generation Y', 'Generation Z'];
 		this.ready = this.loadData();
         this._numDataArrays = 0;
-        this.dataArray = null;
+        this._dataArray = null;
         // this.sortAttribute = null; // null
 	}
 
@@ -16,8 +16,8 @@ export default class ChartConstructor {
 	}
 
 	async loadData() {
-		const response = await fetch(this.fileLocation); // ! LEAVE ALONE
-		const jsonData = await response.json(); // ! DO NOT TOUCH
+		const response = await fetch(this.fileLocation); // const jsonString = await readFile(this.fileLocation, 'utf-8');
+		const jsonData = await response.json(); // const jsonData = JSON.parse(jsonString);
 		this._metadata = jsonData.metadata;
 		this.data = jsonData.data;
 
@@ -77,8 +77,8 @@ export default class ChartConstructor {
             const deltas = [];
 
             for (let i = 1; i < values.length; i++) {
-                // const delta = values[i] - values[i - 1];
-                const delta = Math.abs(values[i] - values[i - 1]);
+                const delta = values[i] - values[i - 1];
+                // const delta = Math.abs(values[i] - values[i - 1]);
                 deltas.push(delta);
             }
 
@@ -86,6 +86,7 @@ export default class ChartConstructor {
             const averageDelta = deltas.length > 0 ? totalDelta / deltas.length : 0;
 
             this.data[key]['averageDelta'] = averageDelta;
+            this.data[key]['absAverageData'] = Math.abs(averageDelta); // for sorting only
         }
 
         this.generations.push("Average delta"); 
@@ -97,18 +98,22 @@ export default class ChartConstructor {
 
         for (const label in this.data) {
             const values = Object.values(this.data[label]);
-            dataArray[label] = new Array(values); 
+            if (Array.isArray(values)) {
+                dataArray[label] = values; 
+            } else {
+                dataArray[label] = new Array(values); 
+            }
         }
         
-        this.dataArray = dataArray;
+        this._dataArray = dataArray; // dataArray.map(values => values[0])
     }
 
     orderData() {
         const entries = Object.entries(this.dataArray);
 
         entries.sort((a, b) => {
-            const averageA = a[1][0].at(-1); 
-            const averageB = b[1][0].at(-1);
+            const averageA = a[1].at(-1); 
+            const averageB = b[1].at(-1);
             return averageB - averageA; 
         });
 
@@ -118,7 +123,7 @@ export default class ChartConstructor {
             sortedData[key] = value;
         }
 
-        this.dataArray = sortedData;
+        this._dataArray = sortedData;
         this.numDataArrays = this.dataArray.length
     }
 
@@ -128,12 +133,12 @@ export default class ChartConstructor {
 
     getDataArrayValues() {
         let dataArrayValues = Object.values(this.dataArray).slice(0, this._numDataArrays);
-        return dataArrayValues.map(values => values[0].map(num => Math.round(num * 10) / 10));
+        return dataArrayValues.map(values => values.map(num => Math.round(num * 10) / 10));
     }
 
-    // get dataArray() {
-    //     return this._dataArray
-    // }
+    get dataArray() {
+        return this._dataArray;
+    }
 
     get metadata() {
         return this._metadata;
