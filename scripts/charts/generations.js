@@ -1,3 +1,5 @@
+import { globalConfig } from "../graph_configurations.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     const generations = [
         { name: "Baby Boomers", ageStart: 66, ageEnd: 83, shapeColour: "dd6666" },
@@ -99,5 +101,5 @@ document.addEventListener("DOMContentLoaded", function () {
         showlegend: false
     };
 
-    Plotly.newPlot("generationsGraph", [trace], layout, { responsive: true });
+    Plotly.newPlot("generationsGraph", [trace], layout, globalConfig);
 });

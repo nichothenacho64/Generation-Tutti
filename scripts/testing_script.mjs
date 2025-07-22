@@ -1,6 +1,5 @@
 import { readFile } from 'fs/promises';
 
-
 class ChartConstructor {
 	constructor(fileName) {
 		this.fileLocation = "data/" + fileName;
@@ -9,7 +8,8 @@ class ChartConstructor {
 		this._generations = ['Baby Boomers', 'Generation X', 'Generation Y', 'Generation Z'];
 		this.ready = this.loadData();
         this._numDataArrays = 0;
-        this.dataArray = null;
+        this._dataArray = null;
+        // this.sortAttribute = null; // null
 	}
 
     async init() {
@@ -18,12 +18,18 @@ class ChartConstructor {
 	}
 
 	async loadData() {
-		const jsonString = await readFile(this.fileLocation, 'utf-8');
+        const jsonString = await readFile(this.fileLocation, 'utf-8');
 		const jsonData = JSON.parse(jsonString);
 		this._metadata = jsonData.metadata;
 		this.data = jsonData.data;
+
         this.transformDataFormat();
-        this.addAverages();
+
+        if (this._metadata.sort === "Average") {
+            this.addAverages();
+        } else if (this._metadata.sort === "Average delta") {
+            this.addAverageDeltas();
+        }
         this.createDataArray();
 	}
 
@@ -38,34 +44,56 @@ class ChartConstructor {
 			}
 		}
 
-		const modifiedValues = {};
+		let modifiedValues = {};
 
-		for (const label of allLabels) {
-			modifiedValues[label] = {};
-			for (const generation of generations) {
-				modifiedValues[label][generation] = 0;
-			}
-		}
+        for (const label of allLabels) {
+            modifiedValues[label] = {};
+            for (const generation of generations) {
+                modifiedValues[label][generation] = 0;
+            }
+        }
 
-		for (const generation of generations) {
-			const scores = this.data[generation];
-			for (const [label, value] of Object.entries(scores)) {
-				modifiedValues[label][generation] = value;
-			}
-		}
+        for (const generation of generations) {
+            const scores = this.data[generation];
+            for (const [label, value] of Object.entries(scores)) {
+                modifiedValues[label][generation] = value;
+            }
+        }
 
 		this.data = modifiedValues;
-		// return this.data;
 	}
 
 	addAverages() {
 		for (const key in this.data) {
 			const scores = Object.values(this.data[key]);
-			const total = scores.reduce((sum, val) => sum + val, 0);
+			const total = scores.reduce((sum, value) => sum + value, 0);
 			const average = total / scores.length;
 			this.data[key]['average'] = average;
 		}
+        this.generations.push("Average");
 	}
+
+    addAverageDeltas() {
+        for (const key in this.data) {
+            const values = Object.values(this.data[key]);
+            const deltas = [];
+
+            for (let i = 1; i < values.length; i++) {
+                const delta = values[i] - values[i - 1];
+                // const delta = Math.abs(values[i] - values[i - 1]);
+                deltas.push(delta);
+            }
+
+            const totalDelta = deltas.reduce((sum, d) => sum + d, 0);
+            const averageDelta = deltas.length > 0 ? totalDelta / deltas.length : 0;
+
+            this.data[key]['averageDelta'] = averageDelta;
+            this.data[key]['absAverageData'] = Math.abs(averageDelta); // for sorting only
+        }
+
+        this.generations.push("Average delta"); 
+    }
+
 
     createDataArray() {
         let dataArray = {};
@@ -75,7 +103,7 @@ class ChartConstructor {
             dataArray[label] = new Array(values); 
         }
         
-        this.dataArray = dataArray;
+        this._dataArray = dataArray;
     }
 
     orderData() {
@@ -93,7 +121,7 @@ class ChartConstructor {
             sortedData[key] = value;
         }
 
-        this.dataArray = sortedData;
+        this._dataArray = sortedData;
         this.numDataArrays = this.dataArray.length
     }
 
@@ -103,7 +131,11 @@ class ChartConstructor {
 
     getDataArrayValues() {
         let dataArrayValues = Object.values(this.dataArray).slice(0, this._numDataArrays);
-        return dataArrayValues.map(values => values[0]);
+        return dataArrayValues.map(values => values[0].map(num => Math.round(num * 10) / 10));
+    }
+
+    get dataArray() {
+        return this._dataArray;
     }
 
     get metadata() {
@@ -114,46 +146,14 @@ class ChartConstructor {
         return this._generations;
     }
 
-    // get data() {
-    //     return this.data;
-    // }
-
-    // get dataArray() { // not in use
-    //     return this.dataArray;
-    // }
-
     set numDataArrays(/** @type {number | undefined} */ numDataArrays) {
         this._numDataArrays = numDataArrays;
     }
 }
 
+let sentimentBarChart = await new ChartConstructor("sentiment_percentages.json").init();
+sentimentBarChart.numDataArrays = sentimentBarChart.dataArray.length; // sentimentBarChart.dataArray.length
+// const keys = lemmaHeatmap.getDataArrayKeys();
+// const frequencies = lemmaHeatmap.getDataArrayValues();
 
-// Usage:
-const lemmaHeatmap = await new ChartConstructor("top_lemmas.json").init();
-lemmaHeatmap.orderData();
-
-lemmaHeatmap.numDataArrays = 10 // change later...
-
-const frequencies_new = lemmaHeatmap.getDataArrayValues();
-console.log(frequencies_new);
-// let data = newChart.transformData();
-// newChart.addAverage()
-// console.log(data)
-// newChart.initialiseChart().then(chart => {
-// 	chart.getData(); // runs only after data is loaded
-// });
-
-
-// change to await fetch("data/data.json");
-// change to await response.json()
-// const data = jsonData.data;
-
-
-
-// const data = {
-//   Negative: [45.5, 50.3, 10.3, 10.3],
-//   Positive: [10.2, 12.6, 28.2, 28.0],
-//   Neutral: [29.2, 26.6, 47.6, 47.6],
-//   Compound: [15.0, 10.4, 14.0, 14.2]
-// };
-
+console.log(sentimentBarChart.dataArray)
