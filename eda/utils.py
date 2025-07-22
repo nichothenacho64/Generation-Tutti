@@ -57,3 +57,7 @@ def gen_default_colours[T](
 
 def default_colours(n_colours: int, start: int = 0) -> list[str]:
     return [f"C{i}" for i in range(start, start + n_colours)]
+
+
+def human_name_from_snake_case(name: str) -> str:
+    return " ".join(name.split("_")).capitalize()

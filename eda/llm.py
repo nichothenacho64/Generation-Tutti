@@ -44,7 +44,6 @@ class MessageFactory:
             metadata=kwargs
         )
 
-
 @dataclass
 class ModelResponse:
     message: ModelMessage
