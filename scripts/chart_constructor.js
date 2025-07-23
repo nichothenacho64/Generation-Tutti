@@ -1,5 +1,10 @@
 export default class ChartConstructor {
-	constructor(fileName) {
+	constructor(fileName, sortOptions) {
+        /**
+         * @param {Object} sortOptions
+         * @param {string} fileLocation
+         */
+
 		this.fileLocation = "data/" + fileName;
 		this._metadata = null;
 		this.data = null;
@@ -7,7 +12,12 @@ export default class ChartConstructor {
 		this.ready = this.loadData();
         this._numDataArrays = 0;
         this._dataArray = null;
-        // this.sortAttribute = null; // null
+
+        if (!sortOptions) {
+            this.sortAttribute = null;
+        } else {
+            this.sortAttribute = sortOptions.sortAttribute;
+        }
 	}
 
     async init() {
@@ -16,18 +26,19 @@ export default class ChartConstructor {
 	}
 
 	async loadData() {
-		const response = await fetch(this.fileLocation); // const jsonString = await readFile(this.fileLocation, 'utf-8');
-		const jsonData = await response.json(); // const jsonData = JSON.parse(jsonString);
+		const response = await fetch(this.fileLocation); // const jsonString = await readFile(this.fileLocation, 'utf-8'); /* plain JS */
+		const jsonData = await response.json(); // const jsonData = JSON.parse(jsonString); /* plain JS */
 		this._metadata = jsonData.metadata;
 		this.data = jsonData.data;
 
         this.transformDataFormat();
 
-        if (this._metadata.sort === "Average") {
+        if (this.sortAttribute === "Average") {
             this.addAverages();
-        } else if (this._metadata.sort === "Average delta") {
+        } else if (this.sortAttribute === "Average delta") {
             this.addAverageDeltas();
         }
+
         this.createDataArray();
 	}
 
@@ -66,7 +77,8 @@ export default class ChartConstructor {
 			const scores = Object.values(this.data[key]);
 			const total = scores.reduce((sum, value) => sum + value, 0);
 			const average = total / scores.length;
-			this.data[key]['average'] = average;
+			this.data[key]['average'] = average; // invisible...
+            this.data[key]['Average'] = average; // better
 		}
         this.generations.push("Average");
 	}
