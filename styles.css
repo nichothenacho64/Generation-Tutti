@@ -9,20 +9,23 @@
     --dark-background: #0b0c0d;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     line-height: 1.75;
-    scroll-snap-type: y mandatory; 
-    scroll-behavior: smooth; 
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
     overscroll-behavior: none;
     font-family: "Lato", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-nav.navbar, footer.footer {
-    background-color: rgb(249, 250, 251) !important; 
+nav.navbar,
+footer.footer {
+    background-color: rgb(249, 250, 251) !important;
 }
 
-h1, h2 {
+h1,
+h2 {
     color: var(--primary-color);
 }
 
@@ -49,7 +52,8 @@ a.nav-link:hover {
     padding-right: 10px;
 }
 
-#title, .row-container {
+#title,
+.row-container {
     scroll-snap-align: start;
     scroll-snap-stop: always;
     min-height: 100vh;
@@ -70,14 +74,23 @@ a.nav-link:hover {
 
 .end {
     scroll-snap-stop: normal;
-    min-height: 70vh; /* leave some room for the footer */
+    min-height: 70vh;
+    /* leave some room for the footer */
 }
 
 .chart {
     width: 100%;
-    height: 600px; 
+    height: 600px;
     margin: auto;
     overflow: visible;
+}
+
+.full-width-chart {
+    width: 75%;
+}
+
+#dialectsDeltaChoroplethMap {
+    width: 50%;
 }
 
 #generationsGraph {
@@ -88,7 +101,7 @@ a.nav-link:hover {
 /* ∞ general styles */
 
 .coloured-text {
-    color: var(--primary-color);
+    color: var(--light-color);
 }
 
 .quote-text {
@@ -118,6 +131,25 @@ a.nav-link:hover {
     background-color: var(--primary-color) !important;
 }
 
+.maplibregl-ctrl {
+    white-space: nowrap !important;
+    display: flex !important;
+}
+
+.maplibregl-ctrl-attrib-inner {
+    font-family: "Lato" !important;
+}
+
+.maplibregl-ctrl-attrib-inner a {
+    color: var(--primary-color)
+}
+
+@media (max-width:1200px) {
+    #dialectsDeltaChoroplethMap {
+        width: 60%;
+    }
+}
+
 @media (max-width:992px) {
     #logo {
         width: 5%;
@@ -127,5 +159,13 @@ a.nav-link:hover {
 
     body {
         font-size: 90%;
+    }
+
+    #dialectsDeltaChoroplethMap {
+        width: 100%;
+    }
+
+    .full-width-chart {
+        width: 100%;
     }
 }

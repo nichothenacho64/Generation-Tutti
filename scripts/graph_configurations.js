@@ -21,19 +21,39 @@ export const themeColours = {
     mostPositiveColour: "#DDDDDD",
     mostNegativeColour: "#222222",
     primaryRed: "#dd3333",
-    darkRed: "#8d1818",
     lightRed: "#f85b52",
+    darkRed: "#8d1818",
+    lightRose: "#ffcece",
+    darkRose:  "#ff9d9d",
     labelColour: "#333333",
 };
 
 export const colourPalettes = {
-    eightColourPalette: [themeColours.primaryRed, "#9b2424", "#ffcece", "#ff9d9d", "#333333", "#777777", "#BBBBBB"],
+    eightColourPalette: [themeColours.primaryRed, "#9b2424", 
+        themeColours.lightRose, themeColours.darkRose, 
+        themeColours.labelColour, "#777777", "#BBBBBB"],
     sentimentColours: {
         negative: themeColours.mostNegativeColour,
         positive: themeColours.mostPositiveColour,
         neutral: themeColours.primaryRed,
         compound: themeColours.darkRed
-    }
+    },
+    lemmaHeatmap: {
+        valueColours: [
+            ["0.0", themeColours.brightestGrey],
+            ["0.5", themeColours.primaryRed],
+            ["1.0", themeColours.darkRed]
+        ],
+        averageColours: [
+            ["0.0", themeColours.mostPositiveColour],
+            ["1.0", themeColours.mostNegativeColour]
+        ],
+    },
+    dialectsDeltaChoroplethMap: [
+        ["0.0", themeColours.brightestGrey],
+        ["0.5", themeColours.primaryRed],
+        ["1.0", themeColours.darkRed]
+    ]
 };
 
 
