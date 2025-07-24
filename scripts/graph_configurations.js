@@ -23,8 +23,20 @@ export const themeColours = {
     primaryRed: "#dd3333",
     darkRed: "#8d1818",
     lightRed: "#f85b52",
-    labelColour: "#333333"
+    labelColour: "#333333",
 };
+
+export const colourPalettes = {
+    eightColourPalette: [themeColours.primaryRed, "#9b2424", "#ffcece", "#ff9d9d", "#333333", "#777777", "#BBBBBB"],
+    sentimentColours: {
+        negative: themeColours.mostNegativeColour,
+        positive: themeColours.mostPositiveColour,
+        neutral: themeColours.primaryRed,
+        compound: themeColours.darkRed
+    }
+};
+
+
 
 export const hoverLabelConfig = {
     font: {
@@ -32,9 +44,11 @@ export const hoverLabelConfig = {
         family: globalFont.family,
     },
     bgcolor: themeColours.labelColour
-}
+};
 
 export const globalConfig = {
     responsive: true, 
     displayModeBar: false
 };
+
+// ! create a radar chart properties object!!!!

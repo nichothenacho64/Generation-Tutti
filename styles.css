@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 :root {
-    --heading-color: #dd3333;
+    --primary-color: #dd3333;
+    --primary-color-dark: rgb(171, 1, 1);
     --light-color: #f85b52;
     --logo-margin: 10px;
     --border-trace: rgb(234, 234, 234);
@@ -22,11 +23,11 @@ nav.navbar, footer.footer {
 }
 
 h1, h2 {
-    color: var(--heading-color);
+    color: var(--primary-color);
 }
 
 a.nav-link:hover {
-    color: var(--heading-color);
+    color: var(--primary-color);
 }
 
 /* ∞ body stuff */
@@ -87,7 +88,7 @@ a.nav-link:hover {
 /* ∞ general styles */
 
 .coloured-text {
-    color: var(--heading-color);
+    color: var(--primary-color);
 }
 
 .quote-text {
@@ -100,6 +101,21 @@ a.nav-link:hover {
     border-style: dashed;
     border-left-style: solid;
     padding: 5px 15px;
+}
+
+.styled-button {
+    background-color: var(--primary-color);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+    border: none;
+}
+
+.styled-button:hover {
+    background-color: var(--primary-color-dark);
+    /* box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 1px 1px; */
+}
+
+.styled-button:active {
+    background-color: var(--primary-color) !important;
 }
 
 @media (max-width:992px) {

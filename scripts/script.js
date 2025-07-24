@@ -1,6 +1,8 @@
+// import {createSentimentBarChart, createProsodicLineChart, createLemmaHeatmap} from "./charts/charts.js"
+
 const transitionDelay = 600;
 
-document.addEventListener("DOMContentLoaded", () => {
+function loadTransitions() {
     const rows = document.querySelectorAll('.row-container');
 
     const observer = new IntersectionObserver(entries => {
@@ -19,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.myObserver = observer;
-});
+};
 
 function resetTransitions() {
     const rows = document.querySelectorAll('.row-container');
@@ -29,3 +31,7 @@ function resetTransitions() {
     
     setTimeout(() => rows.forEach(row => window.myObserver.observe(row)), transitionDelay); 
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadTransitions();
+});

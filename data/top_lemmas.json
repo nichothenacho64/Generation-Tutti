@@ -2,7 +2,8 @@
     "metadata": {
         "title": "Top lemmas by generation",
         "top_n_lemmas": 20,
-        "per_n_words": 1000
+        "per_n_words": 1000,
+        "sort": "Average delta"
     },
     "data": {
         "Baby Boomers": {
