@@ -1,4 +1,4 @@
-export default class ChartConstructor {
+export class ChartConstructor {
 	constructor(fileName, sortOptions) {
         /**
          * @param {Object} sortOptions
@@ -8,7 +8,7 @@ export default class ChartConstructor {
 		this.fileLocation = "data/" + fileName;
 		this._metadata = null;
 		this.data = null;
-		this._generations = ['Baby Boomers', 'Generation X', 'Generation Y', 'Generation Z'];
+		this._xValues = ['Baby Boomers', 'Generation X', 'Generation Y', 'Generation Z'];
 		this.ready = this.loadData();
         this._numDataArrays = 0;
         this._dataArray = null;
@@ -80,7 +80,7 @@ export default class ChartConstructor {
 			this.data[key]['average'] = average; // invisible...
             this.data[key]['Average'] = average; // better
 		}
-        this.generations.push("Average");
+        this.xValues.push("Average");
 	}
 
     addAverageDeltas() {
@@ -101,7 +101,7 @@ export default class ChartConstructor {
             this.data[key]['absAverageData'] = Math.abs(averageDelta); // for sorting only
         }
 
-        this.generations.push("Average delta"); 
+        this.xValues.push("Average delta"); 
     }
 
 
@@ -117,7 +117,7 @@ export default class ChartConstructor {
             }
         }
         
-        this._dataArray = dataArray; // dataArray.map(values => values[0])
+        this._dataArray = dataArray;
     }
 
     orderData() {
@@ -156,11 +156,33 @@ export default class ChartConstructor {
         return this._metadata;
     }
 
-    get generations() {
-        return this._generations;
+    get xValues() {
+        return this._xValues;
     }
 
     set numDataArrays(/** @type {number | undefined} */ numDataArrays) {
         this._numDataArrays = numDataArrays;
+    }
+}
+
+export class ChoroplethConstructor extends ChartConstructor {
+    constructor(fileName) {
+        super(fileName);
+        this._geoData = null;
+    }
+
+    async loadGeoData() {
+        const response = await fetch("https://raw.githubusercontent.com/openpolis/geojson-italy/master/geojson/limits_IT_regions.geojson");
+        this._geoData = await response.json();
+    }
+
+    async init() {
+        await super.init(); // wait for the parent class to finish
+        await this.loadGeoData(); // get the geodata instead...
+        return this;
+    }
+
+    get geoData() {
+        return this._geoData;
     }
 }

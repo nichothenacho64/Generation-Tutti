@@ -1,7 +1,8 @@
-import ChartConstructor from "../chart_constructor.js";
-import { titleFont, axisFont, globalFont, 
-    themeColours, colourPalettes, 
-    globalConfig, hoverLabelConfig 
+import { ChartConstructor, ChoroplethConstructor } from "../chart_constructor.js";
+import {
+    titleFont, axisFont, globalFont,
+    themeColours, colourPalettes,
+    globalConfig, hoverLabelConfig
 } from "../graph_configurations.js";
 
 let currentSortAttribute = "Average";
@@ -11,7 +12,7 @@ async function createSentimentBarChart() {
     sentimentBarChart.numDataArrays = sentimentBarChart.dataArray.length; // sentimentBarChart.dataArray.length
 
     const data = Object.keys(sentimentBarChart.dataArray).map(sentiment => ({
-        x: sentimentBarChart.generations,
+        x: sentimentBarChart.xValues,
         y: sentimentBarChart.dataArray[sentiment],
         name: sentiment.toLowerCase().split(' ').map(w => w[0].toUpperCase() + w.slice(1)).join(' '),
         type: "bar",
@@ -64,22 +65,18 @@ async function createLemmaHeatmap(currentSortAttribute) {
     const frequencies = lemmaHeatmap.getDataArrayValues().map(row => row.slice(0, -2)); // all except the last columns
     const deltaFrequencies = lemmaHeatmap.getDataArrayValues().map(row => row.slice(-2, -1)); // average delta column
     const paddedDeltaFrequencies = deltaFrequencies.map(row => { // line up each row with the last column position
-        return Array(lemmaHeatmap.generations.length - 1).fill("").concat(row);
+        return Array(lemmaHeatmap.xValues.length - 1).fill("").concat(row);
     });
 
     const data = [
         {
-            x: lemmaHeatmap.generations,
+            x: lemmaHeatmap.xValues,
             y: lemmas,
             z: frequencies,
             // zmin: 0,
             // zmax: 22,
             type: "heatmap",
-            colorscale: [
-                ["0.0", themeColours.brightestGrey],
-                ["0.5", themeColours.primaryRed],
-                ["1.0", themeColours.darkRed]
-            ],
+            colorscale: colourPalettes.lemmaHeatmap.valueColours,
             xgap: 1.25,
             ygap: 1.25,
             text: frequencies,
@@ -100,18 +97,14 @@ async function createLemmaHeatmap(currentSortAttribute) {
                 x: 0.625, // abs position
                 xpad: 80, // minimum padding between chart and barx, improves responsivity
                 tickfont: { size: 10 },
-                // range: [0, 22],
             }
         },
         {
-            x: lemmaHeatmap.generations,
+            x: lemmaHeatmap.xValues,
             y: lemmas,
             z: paddedDeltaFrequencies,
             type: "heatmap",
-            colorscale: [
-                ["0.0", themeColours.mostPositiveColour],
-                ["1.0", themeColours.mostNegativeColour]
-            ],
+            colorscale: colourPalettes.lemmaHeatmap.averageColours,
             xgap: 1.25,
             ygap: 1.25,
             text: paddedDeltaFrequencies,
@@ -154,14 +147,14 @@ async function createLemmaHeatmap(currentSortAttribute) {
     };
 
     Plotly.newPlot("lemmaHeatmap", data, layout, globalConfig);
-} // ! add sort attribute later
+}
 
 async function createProsodicLineChart() {
     let prosodicLineChart = await new ChartConstructor("prosodic_features.json").init();
     prosodicLineChart.numDataArrays = prosodicLineChart.dataArray.length;
 
     const data = Object.keys(prosodicLineChart.dataArray).map((prosodicFeature, colourNumber) => ({
-        x: prosodicLineChart.generations,
+        x: prosodicLineChart.xValues,
         y: prosodicLineChart.dataArray[prosodicFeature],
         name: prosodicFeature, // this is where the name comes in
         type: 'scatter',
@@ -197,8 +190,6 @@ async function createProsodicLineChart() {
     }
 
     Plotly.newPlot("prosodicLineChart", data, layout, globalConfig);
-
-
 }
 
 async function createThemesRadarChart() {
@@ -208,14 +199,15 @@ async function createThemesRadarChart() {
             r: [0.39, 0.28, 0.8, 0.7, 0.28, 0.39, 0.45, 0.11, 0.27, 0.39],
             theta: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'A'],
             fill: 'toself',
-            name: 'Group A'
+            name: 'Baby Boomers',
         },
         {
             type: 'scatterpolar',
-            r: [0.45, 0.90, 0.59, 0.71, 0.85, 0.15, 0.75, 0.89, 0.61, 0.45],
+            r: [0.45, 0.90, 0.59, 0.71, 0.85, 0.15, 0.75, 1, 0.61, 0.45],
             theta: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'A'],
             fill: 'toself',
-            name: 'Group B'
+            name: 'Generation X',
+            hovertemplate: `<b>Generation X<br></b>Theme: %{theta}<br>Correlation: %{r}<extra></extra>` // ! eventually replace with x values...
         }
         // ! to remember
         // ∞ 1. the R/theta lists need to have their first and last values DUPLICATED
@@ -241,7 +233,7 @@ async function createThemesRadarChart() {
         },
         legend: {
             title: {
-                text: `<b>Prosodic feature</b>`,
+                text: `<b>Theme</b>`,
                 font: axisFont
             }
         },
@@ -250,13 +242,146 @@ async function createThemesRadarChart() {
             radialaxis: {
                 visible: true, // ! important too?
                 range: [0, 1], // ! must keep this
+                tickangle: 22.5
             },
-            // gridshape: 'linear' // ← This makes it polygonal instead of circular
+            // gridshape: 'linear' // comment this to make it circular (default)
         }
-
     }
 
-    Plotly.newPlot("themesRadarChart", data, layout)
+    Plotly.newPlot("themesRadarChart", data, layout, globalConfig);
+}
+
+async function createDialectsDeltaChoroplethMap() {
+    let dialectsDeltaChoroplethMap = await new ChoroplethConstructor("prosodic_features.json").init(); // change JSON
+    dialectsDeltaChoroplethMap.numDataArrays = dialectsDeltaChoroplethMap.dataArray.length;
+
+    console.log(dialectsDeltaChoroplethMap.data);
+
+    const regionData = [ // for now...
+        { region: "Lombardia", value: 42 },
+        { region: "Veneto", value: 38 },
+        { region: "Piemonte", value: 18 },
+        { region: "Emilia-Romagna", value: 25 },
+        { region: "Lazio", value: 4 },
+        { region: "Campania", value: 35 },
+        { region: "Puglia", value: 28 },
+        { region: "Sicilia", value: 32 },
+        { region: "Sardegna", value: 3 },
+        { region: "Toscana", value: 0 },
+        { region: "Calabria", value: 41 },
+        { region: "Abruzzo", value: 14 },
+        { region: "Marche", value: 16 },
+        { region: "Umbria", value: 9 },
+        { region: "Liguria", value: 6 },
+        { region: "Friuli-Venezia Giulia", value: 39 },
+        { region: "Trentino-Alto Adige/Südtirol", value: 45 },
+        { region: "Molise", value: 29 },
+        { region: "Basilicata", value: 30 },
+        { region: "Valle d'Aosta/Vallée d'Aoste", value: 2 }
+    ]; // the regions must be spelt in this EXACT way
+    // ! consider that currently, there are no negative values...
+
+    const data = [{
+        type: "choroplethmap", // the new type
+        geojson: dialectsDeltaChoroplethMap.geoData,
+        locations: regionData.map(d => d.region),
+        z: regionData.map(d => d.value),
+        featureidkey: "properties.reg_name", // ?
+        colorscale: colourPalettes.dialectsDeltaChoroplethMap,
+        marker: {
+            line: {
+                width: 0.5, // the border for the map
+                color: "#000"
+            }
+        },
+        // ! extra
+        // zmin: 0,
+        // zmax: 5,
+        // showscale: false,
+        hoverinfo: "text",
+        hovertext: regionData.map(d => `${d.region}<br>${d.value}%`),
+        hoverlabel: hoverLabelConfig,
+        colorbar: {
+            title: {
+                text: `(Dialect percentage)`,
+                side: "right",
+                font: { size: 12 },
+            },
+            thickness: 14,
+            len: 1.045,
+            tickfont: { size: 10 },
+        }
+    }]
+
+    const layout = {
+        title: {
+            text: `<b>(Dialect delta change)</b>`,
+            font: titleFont
+        },
+        map: {
+            style: "carto-positron",
+            center: { lat: 42.0, lon: 12.3 },
+            zoom: 4.25
+        },
+        font: globalFont,
+    }
+
+    Plotly.newPlot("dialectsDeltaChoroplethMap", data, layout, { responsive: true }); // no label removal just in case
+}
+
+async function createDialectScatterPlot() {
+    var trace1 = {
+        x: [1, 2, 3, 4, 5],
+        y: [1, 6, 3, 6, 1],
+        mode: 'markers',
+        type: 'scatter',
+        name: 'Team A',
+        text: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5'],
+        marker: { size: 12 }
+    }; 
+
+    var trace2 = {
+        x: [1.5, 2.5, 3.5, 4.5, 5.5],
+        y: [4, 1, 7, 1, 4],
+        mode: 'markers',
+        type: 'scatter',
+        name: 'Team B',
+        text: ['B-a', 'B-b', 'B-c', 'B-d', 'B-e'],
+        marker: { size: 12 }
+    };
+
+    var data = [trace1, trace2];
+
+
+    const layout = {
+        title: {
+            text: `<b>(Relationship between generations and dialect words spoken (% of all words))</b>`,
+            font: titleFont
+        },
+        xaxis: {
+            title: {
+                text: "Generation",
+                range: [0.75, 5.25], // ! temporary
+                font: axisFont
+            },
+        },
+        yaxis: {
+            title: {
+                text: "Y (%)",
+                range: [0, 8], // ! temporary
+                font: axisFont
+            },
+        },
+        legend: {
+            title: {
+                text: `<b>X</b>`,
+                font: axisFont
+            }
+        },
+        font: globalFont,
+    };
+
+    Plotly.newPlot('dialectScatterPlot', data, layout, globalConfig);
 }
 
 function switchSortAttribute() {
@@ -265,14 +390,24 @@ function switchSortAttribute() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    // ?? Question 1
     createSentimentBarChart();
     createProsodicLineChart();
 
+    // ?? Question 2
     createLemmaHeatmap(currentSortAttribute);
-    createThemesRadarChart(); // Q2
+    createThemesRadarChart();
+
+    // ?? Question 3
+    createDialectsDeltaChoroplethMap();
+    createDialectScatterPlot();
+
+    document.querySelectorAll(".styled-button").forEach(button => {
+        button.addEventListener("click", switchSortAttribute);
+    });
 
     // ! change the ID depending on the graph
-    document.getElementById("lemmaHeatmapSort").addEventListener("click", switchSortAttribute);
+    // ! maybe do a query selector if there are multiple changing buttons
 });
 
 /*
@@ -284,4 +419,4 @@ draft insights:
 
 ! explain the meaning of delta vs average delta
 
-*/
+// */
