@@ -100,6 +100,9 @@ class AgeRange:
         else:
             return other.youngest_age < self.oldest_age
 
+    def is_oldest(self) -> bool:
+        return self.oldest_age == _OLDEST_POSSIBLE_AGE
+
 
 @dataclass(eq=True, frozen=True)
 class Generation:
@@ -115,7 +118,7 @@ class Generation:
     age_range: AgeRange
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.name}, {self.age_range})"
+        return f"{self.__class__.__name__}({self.name!r}, {self.age_range})"
 
     def __str__(self) -> str:
         if not self.__class__._include_range_in_str:
