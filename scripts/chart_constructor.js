@@ -31,7 +31,9 @@ export class ChartConstructor {
 		this._metadata = jsonData.metadata;
 		this.data = jsonData.data;
 
-        this.transformDataFormat();
+        if (this.sortAttribute !== "No sort") {
+            this.transformDataFormat();
+        }
 
         if (this.sortAttribute === "Average") {
             this.addAverages();
@@ -110,6 +112,7 @@ export class ChartConstructor {
 
         for (const label in this.data) {
             const values = Object.values(this.data[label]);
+            console.log(values)
             if (Array.isArray(values)) {
                 dataArray[label] = values; 
             } else {
@@ -166,9 +169,15 @@ export class ChartConstructor {
 }
 
 export class ChoroplethConstructor extends ChartConstructor {
-    constructor(fileName) {
-        super(fileName);
+    constructor(fileName, sortOptions) {
+        super(fileName, sortOptions);
         this._geoData = null;
+        this.regionOrder = [
+            "Lombardia", "Veneto", "Piemonte", "Emilia-Romagna", "Lazio", "Campania", "Puglia",
+            "Sicilia", "Sardegna", "Toscana", "Calabria", "Abruzzo", "Marche", "Umbria",
+            "Liguria", "Friuli-Venezia Giulia", "Trentino-Alto Adige/Südtirol", "Molise",
+            "Basilicata", "Valle d'Aosta/Vallée d'Aoste"
+        ];
     }
 
     async loadGeoData() {
@@ -180,6 +189,15 @@ export class ChoroplethConstructor extends ChartConstructor {
         await super.init(); // wait for the parent class to finish
         await this.loadGeoData(); // get the geodata instead...
         return this;
+    }
+
+    getRegionOrder() {
+        const regionData = this.regionOrder.map(region => ({
+            region,
+            value: this.data[region]?.[0] ?? -15 // Use value if exists, else 0
+        }));
+
+        return regionData
     }
 
     get geoData() {
