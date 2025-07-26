@@ -51,8 +51,7 @@ export const colourPalettes = {
         ],
     },
     dialectsDeltaChoroplethMap: [
-        ["0.0", "#FFFFFF00"],
-        ["0.0000000001", themeColours.darkGrey],
+        ["0.0", themeColours.darkGrey],
         ["0.9", themeColours.brightestGrey],
         ["1.0", themeColours.primaryRed]
     ]

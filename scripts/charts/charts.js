@@ -252,15 +252,36 @@ async function createThemesRadarChart() {
 }
 
 async function createDialectsDeltaChoroplethMap() {
-    let dialectsDeltaChoroplethMap = await new ChoroplethConstructor("dialect_delta_percentages.json", {sortAttribute: "No sort"}).init(); // {sortAttribute: "No sort"}
+    let dialectsDeltaChoroplethMap = await new ChoroplethConstructor("dialect_delta_percentages.json", { sortAttribute: "No sort" }).init(); // {sortAttribute: "No sort"}
     dialectsDeltaChoroplethMap.numDataArrays = dialectsDeltaChoroplethMap.dataArray.length;
     let regionData = dialectsDeltaChoroplethMap.getRegionOrder();
+    const filteredRegionData = regionData.filter(d => d.value !== -15);
+    const noDataRegions = regionData.filter(d => d.value === -15).map(d => d.region);
+    console.log(filteredRegionData)
 
     const data = [{
+        type: "choroplethmap",
+        geojson: dialectsDeltaChoroplethMap.geoData,
+        locations: noDataRegions,
+        z: noDataRegions.map(() => 0), // dummy values, won’t be shown
+        featureidkey: "properties.reg_name",
+        showscale: false,
+        marker: {
+            line: {
+                width: 0.5,
+                color: "#CCC"
+            }
+        },
+        colorscale: [[0, "#f6f6f6"], [1, "#f6f6f6"]],
+        hoverinfo: "text",
+        hovertext: noDataRegions.map(r => `<b>${r}</b><br>Insufficient data`),
+        hoverlabel: hoverLabelConfig
+    },
+    {
         type: "choroplethmap", // the new type
         geojson: dialectsDeltaChoroplethMap.geoData,
-        locations: regionData.map(d => d.region),
-        z: regionData.map(d => d.value),
+        locations: filteredRegionData.map(d => d.region),
+        z: filteredRegionData.map(d => d.value),
         featureidkey: "properties.reg_name", // ?
         colorscale: colourPalettes.dialectsDeltaChoroplethMap,
         marker: {
@@ -272,7 +293,7 @@ async function createDialectsDeltaChoroplethMap() {
         // ! extra
         zmax: -15,
         hoverinfo: "text",
-        hovertext: regionData.map(d =>`<b>${d.region}</b><br>${d.value === -15 ? "Insufficient data" : d.value + "%"}`), // regionData.map(d => ${d.region}<br>${d.value}%),
+        hovertext: filteredRegionData.map(d => `<b>${d.region}</b><br>${d.value}%`),
         hoverlabel: hoverLabelConfig,
         colorbar: {
             title: {
@@ -284,7 +305,8 @@ async function createDialectsDeltaChoroplethMap() {
             len: 1.045,
             tickfont: { size: 10 },
         }
-    }]
+    }
+    ]
 
     const layout = {
         title: {
@@ -298,8 +320,7 @@ async function createDialectsDeltaChoroplethMap() {
         },
         font: globalFont,
     }
-
-    Plotly.newPlot("dialectsDeltaChoroplethMap", data, layout, { responsive: true }); // no label removal just in case
+    Plotly.newPlot("dialectsDeltaChoroplethMap", data, layout, globalConfig)
 }
 
 async function createDialectScatterPlot() {
@@ -401,4 +422,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ! change the ID depending on the graph
     // ! maybe do a query selector if there are multiple changing buttons
-});
+})
