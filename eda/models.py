@@ -161,6 +161,7 @@ class Participant:
     macro_region: MacroRegion
     age_range: AgeRange
     generation: Generation
+    degree: str
     mother_tongue: str
     conversation_code: str
 

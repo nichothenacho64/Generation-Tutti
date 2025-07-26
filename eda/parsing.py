@@ -145,6 +145,7 @@ class Participants:
                 macro_region,
                 cast(AgeRange, row.age_range),
                 cast(Generation, row.generation),
+                cast(str, row.degree),
                 cast(str, row.mother_tonuge),
                 conversation_code,
             )

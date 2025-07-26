@@ -1,0 +1,637 @@
+{
+    "metadata": {
+        "title": "Dialect percentages based on other participant statistics"
+    },
+    "data": {
+        "KPC001": {
+            "n_participants": 2,
+            "dialect_percentage": 1.56,
+            "sort": {
+                "average_approximate_age": 38,
+                "generation": "Generation X",
+                "region": "centre",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPC002": {
+            "n_participants": 3,
+            "dialect_percentage": 0.08,
+            "sort": {
+                "average_approximate_age": 43,
+                "generation": "Generation X",
+                "region": "centre",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPC003": {
+            "n_participants": 2,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 23,
+                "generation": "Generation Z",
+                "region": "centre",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPC004": {
+            "n_participants": 2,
+            "dialect_percentage": 0.07,
+            "sort": {
+                "average_approximate_age": 28,
+                "generation": "Generation Y",
+                "region": "centre",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPC005": {
+            "n_participants": 3,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 46.33,
+                "generation": "Generation X",
+                "region": "centre",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPC006": {
+            "n_participants": 2,
+            "dialect_percentage": 1.06,
+            "sort": {
+                "average_approximate_age": 50.5,
+                "generation": "Baby Boomers",
+                "region": "centre",
+                "educational_background": "elem"
+            }
+        },
+        "KPC007": {
+            "n_participants": 3,
+            "dialect_percentage": 0.57,
+            "sort": {
+                "average_approximate_age": 21.33,
+                "generation": "Generation Z",
+                "region": "centre",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPC008": {
+            "n_participants": 2,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 35.5,
+                "generation": "Generation Y",
+                "region": "centre",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPC009": {
+            "n_participants": 3,
+            "dialect_percentage": 8.09,
+            "sort": {
+                "average_approximate_age": 23,
+                "generation": "Generation Z",
+                "region": "centre",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPC011": {
+            "n_participants": 3,
+            "dialect_percentage": 2.66,
+            "sort": {
+                "average_approximate_age": 61.33,
+                "generation": "Baby Boomers",
+                "region": "centre",
+                "educational_background": "elem"
+            }
+        },
+        "KPN001": {
+            "n_participants": 2,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 25.5,
+                "generation": "Generation Y",
+                "region": "north",
+                "educational_background": "dip_lic"
+            }
+        },
+        "KPN002": {
+            "n_participants": 5,
+            "dialect_percentage": 1.18,
+            "sort": {
+                "average_approximate_age": 23,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN003": {
+            "n_participants": 3,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 23,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea"
+            }
+        },
+        "KPN004": {
+            "n_participants": 3,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 43,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPN005": {
+            "n_participants": 4,
+            "dialect_percentage": 0.02,
+            "sort": {
+                "average_approximate_age": 30.5,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPN006": {
+            "n_participants": 4,
+            "dialect_percentage": 0.16,
+            "sort": {
+                "average_approximate_age": 44.25,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "elem"
+            }
+        },
+        "KPN007": {
+            "n_participants": 4,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 51.75,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPN009": {
+            "n_participants": 4,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 21.75,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN010": {
+            "n_participants": 4,
+            "dialect_percentage": 0.04,
+            "sort": {
+                "average_approximate_age": 21.75,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN011": {
+            "n_participants": 4,
+            "dialect_percentage": 0.13,
+            "sort": {
+                "average_approximate_age": 49.25,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPN012": {
+            "n_participants": 4,
+            "dialect_percentage": 1.05,
+            "sort": {
+                "average_approximate_age": 21.75,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "dip_lic"
+            }
+        },
+        "KPN013": {
+            "n_participants": 3,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 23,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN014": {
+            "n_participants": 2,
+            "dialect_percentage": 0.22,
+            "sort": {
+                "average_approximate_age": 25.5,
+                "generation": "Generation Y",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN015": {
+            "n_participants": 3,
+            "dialect_percentage": 0.93,
+            "sort": {
+                "average_approximate_age": 46.33,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPN016": {
+            "n_participants": 2,
+            "dialect_percentage": 0.16,
+            "sort": {
+                "average_approximate_age": 40.5,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPN017": {
+            "n_participants": 2,
+            "dialect_percentage": 0.16,
+            "sort": {
+                "average_approximate_age": 40.5,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPN018": {
+            "n_participants": 3,
+            "dialect_percentage": 0.37,
+            "sort": {
+                "average_approximate_age": 44.67,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPN019": {
+            "n_participants": 4,
+            "dialect_percentage": 35.89,
+            "sort": {
+                "average_approximate_age": 40.5,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN020": {
+            "n_participants": 3,
+            "dialect_percentage": 11.72,
+            "sort": {
+                "average_approximate_age": 46.33,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPN021": {
+            "n_participants": 4,
+            "dialect_percentage": 0.88,
+            "sort": {
+                "average_approximate_age": 29.25,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN022": {
+            "n_participants": 4,
+            "dialect_percentage": 15.14,
+            "sort": {
+                "average_approximate_age": 39.25,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "med"
+            }
+        },
+        "KPN023": {
+            "n_participants": 4,
+            "dialect_percentage": 0.32,
+            "sort": {
+                "average_approximate_age": 23,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN024": {
+            "n_participants": 2,
+            "dialect_percentage": 1.35,
+            "sort": {
+                "average_approximate_age": 23,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN025": {
+            "n_participants": 4,
+            "dialect_percentage": 0.21,
+            "sort": {
+                "average_approximate_age": 44.25,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN026": {
+            "n_participants": 4,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 24.25,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN027": {
+            "n_participants": 2,
+            "dialect_percentage": 0.09,
+            "sort": {
+                "average_approximate_age": 48,
+                "generation": "Baby Boomers",
+                "region": "north",
+                "educational_background": "elem"
+            }
+        },
+        "KPN028": {
+            "n_participants": 3,
+            "dialect_percentage": 0.08,
+            "sort": {
+                "average_approximate_age": 43,
+                "generation": "Generation X",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN029": {
+            "n_participants": 3,
+            "dialect_percentage": 0.2,
+            "sort": {
+                "average_approximate_age": 24.67,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN030": {
+            "n_participants": 3,
+            "dialect_percentage": 0.93,
+            "sort": {
+                "average_approximate_age": 23,
+                "generation": "Generation Z",
+                "region": "north",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPN031": {
+            "n_participants": 3,
+            "dialect_percentage": 0.34,
+            "sort": {
+                "average_approximate_age": 28,
+                "generation": "Generation Y",
+                "region": "north",
+                "educational_background": "laurea"
+            }
+        },
+        "KPS001": {
+            "n_participants": 4,
+            "dialect_percentage": 0.7,
+            "sort": {
+                "average_approximate_age": 41.75,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPS002": {
+            "n_participants": 3,
+            "dialect_percentage": 0.07,
+            "sort": {
+                "average_approximate_age": 33,
+                "generation": "Generation Z",
+                "region": "south",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPS003": {
+            "n_participants": 2,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 38,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "dip_lic"
+            }
+        },
+        "KPS004": {
+            "n_participants": 3,
+            "dialect_percentage": 0.74,
+            "sort": {
+                "average_approximate_age": 77.67,
+                "generation": "Baby Boomers",
+                "region": "south",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPS005": {
+            "n_participants": 4,
+            "dialect_percentage": 0.48,
+            "sort": {
+                "average_approximate_age": 38,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPS006": {
+            "n_participants": 5,
+            "dialect_percentage": 0.4,
+            "sort": {
+                "average_approximate_age": 47,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPS007": {
+            "n_participants": 2,
+            "dialect_percentage": 0,
+            "sort": {
+                "average_approximate_age": 25.5,
+                "generation": "Generation Y",
+                "region": "south",
+                "educational_background": "dip_lic"
+            }
+        },
+        "KPS008": {
+            "n_participants": 3,
+            "dialect_percentage": 1.55,
+            "sort": {
+                "average_approximate_age": 44.67,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "laurea"
+            }
+        },
+        "KPS009": {
+            "n_participants": 4,
+            "dialect_percentage": 1.66,
+            "sort": {
+                "average_approximate_age": 38,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "dip_lic"
+            }
+        },
+        "KPS010": {
+            "n_participants": 4,
+            "dialect_percentage": 2.27,
+            "sort": {
+                "average_approximate_age": 39.25,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "dip_lic"
+            }
+        },
+        "KPS011": {
+            "n_participants": 4,
+            "dialect_percentage": 1.17,
+            "sort": {
+                "average_approximate_age": 54.25,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "elem"
+            }
+        },
+        "KPS012": {
+            "n_participants": 3,
+            "dialect_percentage": 8.4,
+            "sort": {
+                "average_approximate_age": 31.33,
+                "generation": "Generation Z",
+                "region": "south",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPS013": {
+            "n_participants": 3,
+            "dialect_percentage": 2.77,
+            "sort": {
+                "average_approximate_age": 31.33,
+                "generation": "Generation Z",
+                "region": "south",
+                "educational_background": "dip_lic"
+            }
+        },
+        "KPS014": {
+            "n_participants": 3,
+            "dialect_percentage": 1.68,
+            "sort": {
+                "average_approximate_age": 51.33,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "laurea"
+            }
+        },
+        "KPS015": {
+            "n_participants": 3,
+            "dialect_percentage": 1.57,
+            "sort": {
+                "average_approximate_age": 61.33,
+                "generation": "Baby Boomers",
+                "region": "south",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPS016": {
+            "n_participants": 3,
+            "dialect_percentage": 0.13,
+            "sort": {
+                "average_approximate_age": 31.33,
+                "generation": "Generation Z",
+                "region": "south",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPS017": {
+            "n_participants": 4,
+            "dialect_percentage": 0.17,
+            "sort": {
+                "average_approximate_age": 51.75,
+                "generation": "Baby Boomers",
+                "region": "south",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPS018": {
+            "n_participants": 3,
+            "dialect_percentage": 0.27,
+            "sort": {
+                "average_approximate_age": 48,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "laurea"
+            }
+        },
+        "KPS021": {
+            "n_participants": 3,
+            "dialect_percentage": 7.48,
+            "sort": {
+                "average_approximate_age": 28,
+                "generation": "Generation Y",
+                "region": "south",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPS022": {
+            "n_participants": 3,
+            "dialect_percentage": 11.58,
+            "sort": {
+                "average_approximate_age": 28,
+                "generation": "Generation Y",
+                "region": "south",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPS023": {
+            "n_participants": 2,
+            "dialect_percentage": 10.24,
+            "sort": {
+                "average_approximate_age": 30.5,
+                "generation": "Generation Y",
+                "region": "south",
+                "educational_background": "laurea in corso"
+            }
+        },
+        "KPS024": {
+            "n_participants": 2,
+            "dialect_percentage": 10,
+            "sort": {
+                "average_approximate_age": 25.5,
+                "generation": "Generation Y",
+                "region": "south",
+                "educational_background": "dip_tec_prof"
+            }
+        },
+        "KPS025": {
+            "n_participants": 3,
+            "dialect_percentage": 15.9,
+            "sort": {
+                "average_approximate_age": 54.67,
+                "generation": "Generation X",
+                "region": "south",
+                "educational_background": "elem"
+            }
+        }
+    }
+}
