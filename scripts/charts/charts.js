@@ -252,34 +252,9 @@ async function createThemesRadarChart() {
 }
 
 async function createDialectsDeltaChoroplethMap() {
-    let dialectsDeltaChoroplethMap = await new ChoroplethConstructor("prosodic_features.json").init(); // change JSON
+    let dialectsDeltaChoroplethMap = await new ChoroplethConstructor("dialect_delta_percentages.json", {sortAttribute: "No sort"}).init(); // {sortAttribute: "No sort"}
     dialectsDeltaChoroplethMap.numDataArrays = dialectsDeltaChoroplethMap.dataArray.length;
-
-    console.log(dialectsDeltaChoroplethMap.data);
-
-    const regionData = [ // for now...
-        { region: "Lombardia", value: 42 },
-        { region: "Veneto", value: 38 },
-        { region: "Piemonte", value: 18 },
-        { region: "Emilia-Romagna", value: 25 },
-        { region: "Lazio", value: 4 },
-        { region: "Campania", value: 35 },
-        { region: "Puglia", value: 28 },
-        { region: "Sicilia", value: 32 },
-        { region: "Sardegna", value: 3 },
-        { region: "Toscana", value: 0 },
-        { region: "Calabria", value: 41 },
-        { region: "Abruzzo", value: 14 },
-        { region: "Marche", value: 16 },
-        { region: "Umbria", value: 9 },
-        { region: "Liguria", value: 6 },
-        { region: "Friuli-Venezia Giulia", value: 39 },
-        { region: "Trentino-Alto Adige/Südtirol", value: 45 },
-        { region: "Molise", value: 29 },
-        { region: "Basilicata", value: 30 },
-        { region: "Valle d'Aosta/Vallée d'Aoste", value: 2 }
-    ]; // the regions must be spelt in this EXACT way
-    // ! consider that currently, there are no negative values...
+    let regionData = dialectsDeltaChoroplethMap.getRegionOrder();
 
     const data = [{
         type: "choroplethmap", // the new type
@@ -295,15 +270,13 @@ async function createDialectsDeltaChoroplethMap() {
             }
         },
         // ! extra
-        // zmin: 0,
-        // zmax: 5,
-        // showscale: false,
+        zmax: -15,
         hoverinfo: "text",
-        hovertext: regionData.map(d => `${d.region}<br>${d.value}%`),
+        hovertext: regionData.map(d =>`<b>${d.region}</b><br>${d.value === -15 ? "Insufficient data" : d.value + "%"}`), // regionData.map(d => ${d.region}<br>${d.value}%),
         hoverlabel: hoverLabelConfig,
         colorbar: {
             title: {
-                text: `(Dialect percentage)`,
+                text: `Delta change (%)`,
                 side: "right",
                 font: { size: 12 },
             },
@@ -315,7 +288,7 @@ async function createDialectsDeltaChoroplethMap() {
 
     const layout = {
         title: {
-            text: `<b>(Dialect delta change)</b>`,
+            text: `<b>${dialectsDeltaChoroplethMap.metadata.title}</b>`,
             font: titleFont
         },
         map: {
@@ -330,7 +303,7 @@ async function createDialectsDeltaChoroplethMap() {
 }
 
 async function createDialectScatterPlot() {
-    var trace1 = {
+    const data = [{
         x: [1, 2, 3, 4, 5],
         y: [1, 6, 3, 6, 1],
         mode: 'markers',
@@ -338,9 +311,8 @@ async function createDialectScatterPlot() {
         name: 'Team A',
         text: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5'],
         marker: { size: 12 }
-    }; 
-
-    var trace2 = {
+    },
+    {
         x: [1.5, 2.5, 3.5, 4.5, 5.5],
         y: [4, 1, 7, 1, 4],
         mode: 'markers',
@@ -348,10 +320,7 @@ async function createDialectScatterPlot() {
         name: 'Team B',
         text: ['B-a', 'B-b', 'B-c', 'B-d', 'B-e'],
         marker: { size: 12 }
-    };
-
-    var data = [trace1, trace2];
-
+    }];
 
     const layout = {
         title: {
@@ -379,9 +348,33 @@ async function createDialectScatterPlot() {
             }
         },
         font: globalFont,
+
+        updatemenus: [
+            {
+                buttons: [
+                    {
+                        method: 'restyle',
+                        args: ['marker.color', 'red'],
+                        label: 'Red markers'
+                    },
+                    {
+                        method: 'restyle',
+                        args: ['marker.color', 'blue'],
+                        label: 'Blue markers'
+                    },
+                    {
+                        method: 'restyle',
+                        args: ['marker.color', 'green'],
+                        label: 'Green markers'
+                    }
+                ],
+                direction: 'down',
+                showactive: true,
+            },
+        ]
     };
 
-    Plotly.newPlot('dialectScatterPlot', data, layout, globalConfig);
+    Plotly.newPlot("dialectScatterPlot", data, layout, globalConfig);
 }
 
 function switchSortAttribute() {
@@ -396,11 +389,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ?? Question 2
     createLemmaHeatmap(currentSortAttribute);
-    createThemesRadarChart();
+    createThemesRadarChart(); // ! incomplete
 
     // ?? Question 3
-    createDialectsDeltaChoroplethMap();
-    createDialectScatterPlot();
+    createDialectsDeltaChoroplethMap(); // ! incomplete
+    createDialectScatterPlot(); // ! incomplete
 
     document.querySelectorAll(".styled-button").forEach(button => {
         button.addEventListener("click", switchSortAttribute);
@@ -409,14 +402,3 @@ document.addEventListener("DOMContentLoaded", () => {
     // ! change the ID depending on the graph
     // ! maybe do a query selector if there are multiple changing buttons
 });
-
-/*
-
-draft insights:
-* tipo, cioè - increase, filler words
-* okay - increase, incorporation of foreign words
-* mamma, nonno - decrease, parent words
-
-! explain the meaning of delta vs average delta
-
-// */

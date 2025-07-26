@@ -20,6 +20,7 @@ export const themeColours = {
     brightestGrey: "#EEEEEE",
     mostPositiveColour: "#DDDDDD",
     mostNegativeColour: "#222222",
+    darkGrey: "#444444",
     primaryRed: "#dd3333",
     lightRed: "#f85b52",
     darkRed: "#8d1818",
@@ -50,12 +51,12 @@ export const colourPalettes = {
         ],
     },
     dialectsDeltaChoroplethMap: [
-        ["0.0", themeColours.brightestGrey],
-        ["0.5", themeColours.primaryRed],
-        ["1.0", themeColours.darkRed]
+        ["0.0", "#FFFFFF00"],
+        ["0.0000000001", themeColours.darkGrey],
+        ["0.9", themeColours.brightestGrey],
+        ["1.0", themeColours.primaryRed]
     ]
 };
-
 
 
 export const hoverLabelConfig = {
