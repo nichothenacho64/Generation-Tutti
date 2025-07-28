@@ -66,9 +66,22 @@ export const hoverLabelConfig = {
     bgcolor: themeColours.labelColour
 };
 
+export const dialectScatterPlotConfig = {
+    colours: {
+        generation: "Generation Y", // ! INCOMPLETE
+        region: { 
+            north: themeColours.lightRose,
+            centre: themeColours.primaryRed,
+            south: themeColours.darkRed
+        },
+        educational_background: "laurea in corso"
+    }
+};
+
 export const globalConfig = {
     responsive: true, 
     displayModeBar: false
 };
+
 
 // ! create a radar chart properties object!!!!

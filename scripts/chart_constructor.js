@@ -112,14 +112,12 @@ export class ChartConstructor {
 
         for (const label in this.data) {
             const values = Object.values(this.data[label]);
-            console.log(values)
             if (Array.isArray(values)) {
                 dataArray[label] = values; 
             } else {
                 dataArray[label] = new Array(values); 
             }
         }
-        
         this._dataArray = dataArray;
     }
 
@@ -139,11 +137,13 @@ export class ChartConstructor {
         }
 
         this._dataArray = sortedData;
-        this.numDataArrays = this.dataArray.length
     }
 
     getDataArrayKeys() {
-        return Object.keys(this.dataArray).slice(0, this._numDataArrays);
+        if (this._numDataArrays !== 0) {
+            return Object.keys(this.dataArray).slice(0, this._numDataArrays);
+        } 
+        return Object.keys(this.dataArray);
     }
 
     getDataArrayValues() {

@@ -2,16 +2,17 @@ import { ChartConstructor, ChoroplethConstructor } from "../chart_constructor.js
 import {
     titleFont, axisFont, globalFont,
     themeColours, colourPalettes,
+    dialectScatterPlotConfig,
     globalConfig, hoverLabelConfig
 } from "../graph_configurations.js";
 
 let currentSortAttribute = "Average";
+let currentDisplayAttribute = "region";
 
 async function createSentimentBarChart() {
     let sentimentBarChart = await new ChartConstructor("sentiment_percentages.json").init();
-    sentimentBarChart.numDataArrays = sentimentBarChart.dataArray.length; // sentimentBarChart.dataArray.length
 
-    const data = Object.keys(sentimentBarChart.dataArray).map(sentiment => ({
+    const data = sentimentBarChart.getDataArrayKeys().map(sentiment => ({
         x: sentimentBarChart.xValues,
         y: sentimentBarChart.dataArray[sentiment],
         name: sentiment.toLowerCase().split(' ').map(w => w[0].toUpperCase() + w.slice(1)).join(' '),
@@ -151,9 +152,8 @@ async function createLemmaHeatmap(currentSortAttribute) {
 
 async function createProsodicLineChart() {
     let prosodicLineChart = await new ChartConstructor("prosodic_features.json").init();
-    prosodicLineChart.numDataArrays = prosodicLineChart.dataArray.length;
 
-    const data = Object.keys(prosodicLineChart.dataArray).map((prosodicFeature, colourNumber) => ({
+    const data = prosodicLineChart.getDataArrayKeys().map((prosodicFeature, colourNumber) => ({
         x: prosodicLineChart.xValues,
         y: prosodicLineChart.dataArray[prosodicFeature],
         name: prosodicFeature, // this is where the name comes in
@@ -251,13 +251,11 @@ async function createThemesRadarChart() {
     Plotly.newPlot("themesRadarChart", data, layout, globalConfig);
 }
 
-async function createDialectsDeltaChoroplethMap() {
+async function createDialectDeltaChoroplethMap() {
     let dialectsDeltaChoroplethMap = await new ChoroplethConstructor("dialect_delta_percentages.json", { sortAttribute: "No sort" }).init(); // {sortAttribute: "No sort"}
-    dialectsDeltaChoroplethMap.numDataArrays = dialectsDeltaChoroplethMap.dataArray.length;
     let regionData = dialectsDeltaChoroplethMap.getRegionOrder();
     const filteredRegionData = regionData.filter(d => d.value !== -15);
     const noDataRegions = regionData.filter(d => d.value === -15).map(d => d.region);
-    console.log(filteredRegionData)
 
     const data = [{
         type: "choroplethmap",
@@ -323,44 +321,65 @@ async function createDialectsDeltaChoroplethMap() {
     Plotly.newPlot("dialectsDeltaChoroplethMap", data, layout, globalConfig)
 }
 
-async function createDialectScatterPlot() {
+async function createDialectScatterPlot(currentDisplayAttribute) {
+    let dialectScatterPlot = await new ChartConstructor("dialect_comparisons.json", { sortAttribute: "No sort" }).init();
+    let xValues = [], yValues = [], chartText = [], markerSizes = [], markerColours = [];
+    console.log(dialectScatterPlot.dataArray)
+
+    // ! IMPORTANT ACCOUNT FOR 0 VALUES ON THE Y AXIS
+    // ! SHOULD ONLY RECORD CONVERSATIONS WITH SOME DIALECT USAGE
+
+    dialectScatterPlot.getDataArrayKeys().forEach(conversationName => {
+        const conversation = dialectScatterPlot.dataArray[conversationName];
+        const colourKey = conversation[2][currentDisplayAttribute];
+        const xValue = conversation[2].average_approximate_age;
+        const yValue = conversation[1]; // ! CHANGE INDEXES!!!)
+
+        if (yValue >= 0.5) { // ! 20 for outlier restriction, set a global constant
+            xValues.push(xValue);
+            yValues.push(yValue);
+            chartText.push(conversationName);
+            markerSizes.push(conversation[0] * 6);
+            markerColours.push(dialectScatterPlotConfig.colours[currentDisplayAttribute][colourKey])
+        }
+    });
+
     const data = [{
-        x: [1, 2, 3, 4, 5],
-        y: [1, 6, 3, 6, 1],
+        x: xValues,
+        y: yValues,
+        text: chartText,
         mode: 'markers',
         type: 'scatter',
-        name: 'Team A',
-        text: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5'],
-        marker: { size: 12 }
-    },
-    {
-        x: [1.5, 2.5, 3.5, 4.5, 5.5],
-        y: [4, 1, 7, 1, 4],
-        mode: 'markers',
-        type: 'scatter',
-        name: 'Team B',
-        text: ['B-a', 'B-b', 'B-c', 'B-d', 'B-e'],
-        marker: { size: 12 }
+        name: 'Conversations',
+        marker: { 
+            size: markerSizes, 
+            color: markerColours
+        },
     }];
+
+    // dialectScatterPlot.getDataArrayKeys().forEach((conversationName, colourNumber) => {console.log(conversationName), console.log(colourNumber)})
+    // 
+
+    console.log(data)
 
     const layout = {
         title: {
-            text: `<b>(Relationship between generations and dialect words spoken (% of all words))</b>`,
+            text: `<b>${dialectScatterPlot.metadata.title}</b>`,
             font: titleFont
         },
         xaxis: {
             title: {
-                text: "Generation",
-                range: [0.75, 5.25], // ! temporary
+                text: "(Average participant age)",
                 font: axisFont
             },
+            range: [82, 18] // ! temporary, MOVE TO CONSTANTS
         },
         yaxis: {
             title: {
-                text: "Y (%)",
-                range: [0, 8], // ! temporary
+                text: "Percentage of dialect words in conversations (%)",
                 font: axisFont
             },
+            range: [0, 17], // ! temporary, KPN019 is an outlier
         },
         legend: {
             title: {
@@ -395,7 +414,7 @@ async function createDialectScatterPlot() {
         ]
     };
 
-    Plotly.newPlot("dialectScatterPlot", data, layout, globalConfig);
+    Plotly.newPlot("dialectScatterPlot", data, layout, { responsive: true });
 }
 
 function switchSortAttribute() {
@@ -413,8 +432,8 @@ document.addEventListener("DOMContentLoaded", () => {
     createThemesRadarChart(); // ! incomplete
 
     // ?? Question 3
-    createDialectsDeltaChoroplethMap(); // ! incomplete
-    createDialectScatterPlot(); // ! incomplete
+    createDialectDeltaChoroplethMap(); // ! incomplete
+    createDialectScatterPlot(currentDisplayAttribute); // ! incomplete
 
     document.querySelectorAll(".styled-button").forEach(button => {
         button.addEventListener("click", switchSortAttribute);
