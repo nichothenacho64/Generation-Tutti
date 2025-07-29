@@ -1,13 +1,6 @@
-import { globalConfig } from "../graph_configurations.js";
+import { globalConfig, generations } from "../graph_configurations.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-    const generations = [
-        { name: "Baby Boomers", ageStart: 66, ageEnd: 83, shapeColour: "dd6666" },
-        { name: "Generation X", ageStart: 51, ageEnd: 65, shapeColour: "dd5555" },
-        { name: "Generation Y", ageStart: 26, ageEnd: 50, shapeColour: "dd4444" },
-        { name: "Generation Z", ageStart: 16, ageEnd: 25, shapeColour: "dd3333" },
-    ];
-
     generations.forEach(gen => {
         gen.birthStart = 2025 - gen.ageEnd;
         gen.birthEnd = 2025 - gen.ageStart;

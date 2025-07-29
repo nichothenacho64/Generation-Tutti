@@ -3,11 +3,12 @@ import {
     titleFont, axisFont, globalFont,
     themeColours, colourPalettes,
     dialectScatterPlotConfig,
-    globalConfig, hoverLabelConfig
+    globalConfig, hoverLabelConfig,
+    generations
 } from "../graph_configurations.js";
 
 let currentSortAttribute = "Average";
-let currentDisplayAttribute = "region";
+let currentDisplayAttribute = "educational_background"; // macro_region, generation
 
 async function createSentimentBarChart() {
     let sentimentBarChart = await new ChartConstructor("sentiment_percentages.json").init();
@@ -57,8 +58,8 @@ async function createSentimentBarChart() {
     Plotly.newPlot("sentimentBarChart", data, layout, globalConfig);
 }
 
-async function createLemmaHeatmap(currentSortAttribute) {
-    let lemmaHeatmap = await new ChartConstructor("top_lemmas.json", { sortAttribute: currentSortAttribute }).init();
+async function createLemmaHeatmap(sortAttribute) {
+    let lemmaHeatmap = await new ChartConstructor("top_lemmas.json", { sortAttribute: sortAttribute }).init();
     lemmaHeatmap.orderData();
     lemmaHeatmap.numDataArrays = 10;
 
@@ -182,7 +183,7 @@ async function createProsodicLineChart() {
         },
         legend: {
             title: {
-                text: `<b>Prosodic feature</b>`,
+                text: `<b>Prosodic phrase feature</b>`,
                 font: axisFont
             }
         },
@@ -321,46 +322,58 @@ async function createDialectDeltaChoroplethMap() {
     Plotly.newPlot("dialectsDeltaChoroplethMap", data, layout, globalConfig)
 }
 
-async function createDialectScatterPlot(currentDisplayAttribute) {
+async function createDialectScatterPlot(displayAttribute) {
     let dialectScatterPlot = await new ChartConstructor("dialect_comparisons.json", { sortAttribute: "No sort" }).init();
-    let xValues = [], yValues = [], chartText = [], markerSizes = [], markerColours = [];
-    console.log(dialectScatterPlot.dataArray)
-
-    // ! IMPORTANT ACCOUNT FOR 0 VALUES ON THE Y AXIS
-    // ! SHOULD ONLY RECORD CONVERSATIONS WITH SOME DIALECT USAGE
+    let traces = {};
 
     dialectScatterPlot.getDataArrayKeys().forEach(conversationName => {
         const conversation = dialectScatterPlot.dataArray[conversationName];
-        const colourKey = conversation[2][currentDisplayAttribute];
-        const xValue = conversation[2].average_approximate_age;
-        const yValue = conversation[1]; // ! CHANGE INDEXES!!!)
+        const [numParticipants, yValue, xValue, sortValues] = conversation;
+        const sortValue = sortValues[displayAttribute]; // adjust this key if needed
+        const sortValueData = dialectScatterPlotConfig[displayAttribute][sortValue]
+        const hovertext = `Average participant age: ${xValue}<br>Dialect words used: ${yValue}%<br>Number of participants: ${numParticipants}`;
 
-        if (yValue >= 0.5) { // ! 20 for outlier restriction, set a global constant
-            xValues.push(xValue);
-            yValues.push(yValue);
-            chartText.push(conversationName);
-            markerSizes.push(conversation[0] * 6);
-            markerColours.push(dialectScatterPlotConfig.colours[currentDisplayAttribute][colourKey])
+        if (yValue >= dialectScatterPlotConfig.rules.minY) {
+            if (!traces[sortValue]) {
+                traces[sortValue] = {
+                    x: [],
+                    y: [],
+                    text: [],
+                    hovertext: [],
+                    size: [],
+                    color: sortValueData.colour || "gray",
+                    name: sortValueData.formatted || sortValue
+                };
+            }
+
+            traces[sortValue].x.push(xValue);
+            traces[sortValue].y.push(yValue);
+            traces[sortValue].text.push(conversationName);
+            traces[sortValue].hovertext.push(hovertext);
+            traces[sortValue].size.push(numParticipants * dialectScatterPlotConfig.sizing.bubbleMultiplier);
         }
     });
 
-    const data = [{
-        x: xValues,
-        y: yValues,
-        text: chartText,
-        mode: 'markers',
-        type: 'scatter',
-        name: 'Conversations',
-        marker: { 
-            size: markerSizes, 
-            color: markerColours
-        },
-    }];
-
-    // dialectScatterPlot.getDataArrayKeys().forEach((conversationName, colourNumber) => {console.log(conversationName), console.log(colourNumber)})
-    // 
-
-    console.log(data)
+    const data = dialectScatterPlotConfig[displayAttribute].order
+        .filter(key => traces[key])
+        .map(key => {
+            const trace = traces[key];  // your original object
+            return {
+                name: trace.name,
+                x: trace.x,
+                y: trace.y,
+                text: trace.text,
+                hovertext: trace.hovertext,
+                marker: {
+                    size: trace.size,
+                    color: trace.color
+                },
+                mode: "markers",
+                type: "scatter",
+                hoverinfo: "text",
+                hoverlabel: hoverLabelConfig
+            };
+        });
 
     const layout = {
         title: {
@@ -369,52 +382,66 @@ async function createDialectScatterPlot(currentDisplayAttribute) {
         },
         xaxis: {
             title: {
-                text: "(Average participant age)",
+                text: "Average participant age",
                 font: axisFont
             },
             range: [82, 18] // ! temporary, MOVE TO CONSTANTS
         },
         yaxis: {
             title: {
-                text: "Percentage of dialect words in conversations (%)",
+                text: "Dialect words used in conversation (%)",
                 font: axisFont
             },
             range: [0, 17], // ! temporary, KPN019 is an outlier
         },
         legend: {
             title: {
-                text: `<b>X</b>`,
+                text: `<b>${dialectScatterPlotConfig[displayAttribute].formatted}</b>`,
                 font: axisFont
-            }
+            },
+            // showlegend: true,
         },
         font: globalFont,
-
-        updatemenus: [
-            {
-                buttons: [
-                    {
-                        method: 'restyle',
-                        args: ['marker.color', 'red'],
-                        label: 'Red markers'
-                    },
-                    {
-                        method: 'restyle',
-                        args: ['marker.color', 'blue'],
-                        label: 'Blue markers'
-                    },
-                    {
-                        method: 'restyle',
-                        args: ['marker.color', 'green'],
-                        label: 'Green markers'
-                    }
-                ],
-                direction: 'down',
-                showactive: true,
-            },
-        ]
+        shapes: createGenerationGridLines(),
     };
 
-    Plotly.newPlot("dialectScatterPlot", data, layout, { responsive: true });
+    Plotly.newPlot("dialectScatterPlot", data, layout, globalConfig);
+}
+
+function createGenerationGridLines() {
+    let generationGridLines = [];
+
+    for (let i = 0; i < generations.length; i++) {
+        const current = generations[i];
+        const next = generations[i + 1];
+
+        generationGridLines.push({
+            type: "rect",
+            xref: "x",
+            yref: "paper", // spans full y-axis
+            x0: current.ageStart,
+            x1: next ? next.ageStart : 16, // if it's the last generation
+            y0: 0,
+            y1: 1,
+            // fillcolor: i % 2 === 0 ? "rgba(0, 0, 0, 0.03)" : "rgba(0, 0, 0, 0)", // striped effect
+            line: { width: 0 }
+        });
+
+        generationGridLines.push({
+            type: "line",
+            x0: current.ageStart,
+            x1: current.ageStart,
+            y0: -1,
+            y1: 100,
+            line: {
+                color: themeColours.additionalLine,
+                width: 1,
+                dash: "solid"
+            }
+        });
+    }
+
+    return generationGridLines
 }
 
 function switchSortAttribute() {
@@ -423,15 +450,12 @@ function switchSortAttribute() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // ?? Question 1
     createSentimentBarChart();
     createProsodicLineChart();
 
-    // ?? Question 2
     createLemmaHeatmap(currentSortAttribute);
     createThemesRadarChart(); // ! incomplete
 
-    // ?? Question 3
     createDialectDeltaChoroplethMap(); // ! incomplete
     createDialectScatterPlot(currentDisplayAttribute); // ! incomplete
 
@@ -439,6 +463,10 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener("click", switchSortAttribute);
     });
 
-    // ! change the ID depending on the graph
-    // ! maybe do a query selector if there are multiple changing buttons
+    document.querySelectorAll(".sort-category").forEach(button => {
+        button.addEventListener("click", () => {
+            currentDisplayAttribute = button.id;
+            createDialectScatterPlot(currentDisplayAttribute);
+        })
+    });
 })

@@ -3,15 +3,15 @@
         "title": "Changes of percentage of dialect words spoken over generations"
     },
     "data": {
-        "basilicata": 0.41,
-        "campania": -5.7,
-        "emilia-romagna": -0.26,
-        "estero": -4.66,
-        "lazio": -0.61,
-        "marche": -0.36,
-        "puglia": 2.16,
-        "sardegna": 0.06,
-        "toscana": -3.09,
-        "veneto": -14.9
+        "Basilicata": [0.41],
+        "Campania": [-5.7],
+        "Emilia-romagna":[ -0.26],
+        "Estero": [-4.66],
+        "Lazio": [-0.61],
+        "Marche": [-0.36],
+        "Puglia": [2.16],
+        "Sardegna": [0.06],
+        "Toscana": [-3.09],
+        "Veneto": [-14.9]
     }
 }

@@ -1,3 +1,10 @@
+export const generations = [
+    { name: "Baby Boomers", ageStart: 66, ageEnd: 83, shapeColour: "dd6666" },
+    { name: "Generation X", ageStart: 51, ageEnd: 65, shapeColour: "dd5555" },
+    { name: "Generation Y", ageStart: 26, ageEnd: 50, shapeColour: "dd4444" },
+    { name: "Generation Z", ageStart: 16, ageEnd: 25, shapeColour: "dd3333" },
+];
+
 export const titleFont = {
     color: 'black',
     size: 16
@@ -24,15 +31,17 @@ export const themeColours = {
     primaryRed: "#dd3333",
     lightRed: "#f85b52",
     darkRed: "#8d1818",
-    lightRose: "#ffcece",
-    darkRose:  "#ff9d9d",
+    lightRose: "#ffd8d8ff", // ffcece
+    mediumRose: "#ff9d9d",
+    darkRose: "#ff6c6c",
     labelColour: "#333333",
+    additionalLine: "rgba(0, 0, 0, 0.15)"
 };
 
 export const colourPalettes = {
-    eightColourPalette: [themeColours.primaryRed, "#9b2424", 
-        themeColours.lightRose, themeColours.darkRose, 
-        themeColours.labelColour, "#777777", "#BBBBBB"],
+    eightColourPalette: [themeColours.primaryRed, "#9b2424",
+    themeColours.lightRose, themeColours.mediumRose,
+    themeColours.labelColour, "#777777", "#BBBBBB"],
     sentimentColours: {
         negative: themeColours.mostNegativeColour,
         positive: themeColours.mostPositiveColour,
@@ -67,21 +76,101 @@ export const hoverLabelConfig = {
 };
 
 export const dialectScatterPlotConfig = {
-    colours: {
-        generation: "Generation Y", // ! INCOMPLETE
-        region: { 
-            north: themeColours.lightRose,
-            centre: themeColours.primaryRed,
-            south: themeColours.darkRed
+    sortCategories: ["generation", "macro_region", "educational_background"],
+    sizing: {
+        bubbleMultiplier: 6
+    },
+    rules: {
+        minY: 0.5
+    },
+    generation: {
+        formatted: "Generation",
+        order: ["Baby Boomers", "Generation X", "Generation Y", "Generation Z"],
+        "Baby Boomers": {
+            colour: themeColours.lightRose,
         },
-        educational_background: "laurea in corso"
+        "Generation X": {
+            colour: themeColours.darkRose,
+        },
+        "Generation Y": {
+            colour: themeColours.primaryRed,
+        },
+        "Generation Z": {
+            colour: themeColours.darkRed,
+        }
+    },
+    macro_region: {
+        formatted: "Macro region",
+        order: ["north", "centre", "south"],
+        north: {
+            colour: themeColours.lightRose,
+            formatted: "North"
+        },
+        centre: {
+            colour: themeColours.primaryRed,
+            formatted: "Centre"
+        },
+        south: {
+            colour: themeColours.darkRed,
+            formatted: "South"
+        },
+    },
+    educational_background: {
+        formatted: "Educational background",
+        order: ["laurea", "laurea in corso", "dip_lic", "dip_tec_prof", "med", "elem"],
+        "laurea": {
+            formatted: "Laurea",
+            colour: themeColours.lightRose
+        },
+        "laurea in corso": {
+            formatted: "Laurea (in corso)",
+            colour: themeColours.mediumRose
+        },
+        "dip_lic": {
+            formatted: "Diploma di Liceo",
+            colour: themeColours.primaryRed
+        },
+        "dip_tec_prof": {
+            formatted: "Tecnico/Professionale",
+            colour: themeColours.darkRed
+        },
+        "med": {
+            formatted: "Scuola Media",
+            colour: themeColours.mostPositiveColour
+        },
+        "elem": {
+            formatted: "Scuola Elementare",
+            colour: themeColours.darkGrey
+        }
     }
 };
 
 export const globalConfig = {
-    responsive: true, 
+    responsive: true,
     displayModeBar: false
 };
 
 
 // ! create a radar chart properties object!!!!
+
+/*
+KPS001: {
+    generation: "Generation X"
+    lines: [
+        "themes": [], 
+        "lemmas": []
+    ]
+        "themes_and_lemmas" {
+            Conversation Piece: [..., ..., ...]
+        }
+
+
+Generation X {
+    theme1: {
+        chunk_percentage: 90%
+        all_lemmas: []
+        filtered_lemmas: [] // choose 3-5, also judge based top lemmas in the heatmap
+    }
+}
+
+ */

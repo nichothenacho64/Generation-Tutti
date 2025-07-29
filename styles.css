@@ -46,6 +46,10 @@ a.nav-link:hover {
     font-weight: 500;
 }
 
+.sort-category:active {
+    background-color: var(--primary-color);
+}
+
 #logo {
     width: 3%;
     height: 3%;
@@ -117,9 +121,12 @@ a.nav-link:hover {
 }
 
 .styled-button {
-    background-color: var(--primary-color);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+    background-color: var(--primary-color) !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px !important;
     border: none;
+    position: relative;
+    /* Needed if we reposition the caret */
+    z-index: 5;
 }
 
 .styled-button:hover {
