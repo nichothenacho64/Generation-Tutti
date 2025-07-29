@@ -8,7 +8,7 @@ import {
 } from "../graph_configurations.js";
 
 let currentSortAttribute = "Average";
-let currentDisplayAttribute = "educational_background"; // macro_region, generation
+let currentDisplayAttribute = "macro_region"; // macro_region, generation, educational_background
 
 async function createSentimentBarChart() {
     let sentimentBarChart = await new ChartConstructor("sentiment_percentages.json").init();
@@ -61,7 +61,7 @@ async function createSentimentBarChart() {
 async function createLemmaHeatmap(sortAttribute) {
     let lemmaHeatmap = await new ChartConstructor("top_lemmas.json", { sortAttribute: sortAttribute }).init();
     lemmaHeatmap.orderData();
-    lemmaHeatmap.numDataArrays = 10;
+    lemmaHeatmap.numDataArrays = lemmaHeatmap.metadata["top_n_lemmas"];
 
     const lemmas = lemmaHeatmap.getDataArrayKeys();
     const frequencies = lemmaHeatmap.getDataArrayValues().map(row => row.slice(0, -2)); // all except the last columns
@@ -112,8 +112,7 @@ async function createLemmaHeatmap(sortAttribute) {
             text: paddedDeltaFrequencies,
             texttemplate: "%{text}",
             hoverlabel: hoverLabelConfig,
-            hovertemplate:
-                `Lemma: %{y}<br>Value: %{z}<extra></extra>`,
+            hovertemplate:`Lemma: %{y}<br>Value: %{z}<extra></extra>`,
             hoverongaps: false,
             showscale: false
         }
@@ -194,27 +193,18 @@ async function createProsodicLineChart() {
 }
 
 async function createThemesRadarChart() {
-    const data = [
-        {
-            type: 'scatterpolar',
-            r: [0.39, 0.28, 0.8, 0.7, 0.28, 0.39, 0.45, 0.11, 0.27, 0.39],
-            theta: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'A'],
-            fill: 'toself',
-            name: 'Baby Boomers',
-        },
-        {
-            type: 'scatterpolar',
-            r: [0.45, 0.90, 0.59, 0.71, 0.85, 0.15, 0.75, 1, 0.61, 0.45],
-            theta: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'A'],
-            fill: 'toself',
-            name: 'Generation X',
-            hovertemplate: `<b>Generation X<br></b>Theme: %{theta}<br>Correlation: %{r}<extra></extra>` // ! eventually replace with x values...
-        }
-        // ! to remember
-        // ∞ 1. the R/theta lists need to have their first and last values DUPLICATED
-        // ∞ 2. Apply the same mapping approach
-        // ∞ 3. Use the same eight colours
-    ]
+    let themesRadarChart = await new ChartConstructor("sentiment_percentages.json").init(); // ! change JSON file
+
+    const data = themesRadarChart.getDataArrayKeys().map((generation, index) => ({
+        type: 'scatterpolar',
+        theta: [...themesRadarChart.xValues, themesRadarChart.xValues[0]],
+        r: [...themesRadarChart.dataArray[generation], themesRadarChart.dataArray[generation][0]],
+        fill: 'toself',
+        name: generation,
+        marker: { color: generations[index].shapeColour},
+        hoverlabel: hoverLabelConfig,
+        hovertemplate: `Area name: ${generation}<br>Theme: %{theta}<br>Correlation: %{r}%<extra></extra>`
+    }));
 
     const layout = {
         title: {
@@ -242,7 +232,7 @@ async function createThemesRadarChart() {
         polar: {
             radialaxis: {
                 visible: true, // ! important too?
-                range: [0, 1], // ! must keep this
+                range: [0, 100], // ! must keep this
                 tickangle: 22.5
             },
             // gridshape: 'linear' // comment this to make it circular (default)
@@ -392,7 +382,7 @@ async function createDialectScatterPlot(displayAttribute) {
                 text: "Dialect words used in conversation (%)",
                 font: axisFont
             },
-            range: [0, 17], // ! temporary, KPN019 is an outlier
+            range: [0, 15], // ! temporary, KPN019 is an outlier
         },
         legend: {
             title: {
@@ -405,7 +395,7 @@ async function createDialectScatterPlot(displayAttribute) {
         shapes: createGenerationGridLines(),
     };
 
-    Plotly.newPlot("dialectScatterPlot", data, layout, globalConfig);
+    Plotly.newPlot("dialectScatterPlot", data, layout, globalConfig.responsive);
 }
 
 function createGenerationGridLines() {

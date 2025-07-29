@@ -121,6 +121,10 @@ export class ChartConstructor {
         this._dataArray = dataArray;
     }
 
+    createRadarChartDataArray() {
+        
+    }
+
     orderData() {
         const entries = Object.entries(this.dataArray);
 

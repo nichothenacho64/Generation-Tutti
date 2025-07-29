@@ -1,7 +1,7 @@
 {
     "metadata": {
         "title": "Top lemmas by generation",
-        "top_n_lemmas": 20,
+        "top_n_lemmas": 11,
         "per_n_words": 1000
     },
     "data": {

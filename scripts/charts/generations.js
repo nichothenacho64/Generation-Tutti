@@ -6,32 +6,32 @@ document.addEventListener("DOMContentLoaded", function () {
         gen.birthEnd = 2025 - gen.ageStart;
     });
 
-    const shapes = generations.map((gen, i) => ({
+    const shapes = generations.map((generation, index) => ({
         type: "rect",
-        x0: gen.birthStart,
-        x1: gen.birthEnd,
-        y0: i - 0.3,
-        y1: i + 0.3,
-        fillcolor: `#${gen.shapeColour}`,
+        x0: generation.birthStart,
+        x1: generation.birthEnd,
+        y0: index - 0.3,
+        y1: index + 0.3,
+        fillcolor: generation.shapeColour,
         line: { width: 0 }
     }));
 
     const annotations = [];
 
-    generations.forEach((gen, i) => {
+    generations.forEach((generation, index) => {
         annotations.push({
-            x: (gen.birthStart + gen.birthEnd) / 2,
-            y: i,
-            text: `Born ${gen.birthStart}-${gen.birthEnd}`,
+            x: (generation.birthStart + generation.birthEnd) / 2,
+            y: index,
+            text: `Born ${generation.birthStart}-${generation.birthEnd}`,
             showarrow: false,
-            font: { color: "white", size: 10 },
+            font: { color: generation.textColour, size: 10 },
             xanchor: "center"
         });
 
         annotations.push({
             x: 2011,
-            y: i,
-            text: `<b>${gen.name}</b><br>Ages ${gen.ageStart} - ${gen.ageEnd}`,
+            y: index,
+            text: `<b>${generation.name}</b><br>Ages ${generation.ageStart} - ${generation.ageEnd}`,
             showarrow: false,
             xanchor: "left",
             align: "left",
