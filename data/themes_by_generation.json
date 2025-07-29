@@ -7617,7 +7617,23 @@
                     "é",
                     "ì"
                 ],
-                "match": 86.72
+                "match": 86.72,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             },
             "Gossip": {
                 "lemmas": [
@@ -12968,7 +12984,23 @@
                     "é",
                     "ì"
                 ],
-                "match": 53.8
+                "match": 53.8,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             },
             "Intervention": {
                 "lemmas": [
@@ -13886,7 +13918,23 @@
                     "zeto",
                     "zia"
                 ],
-                "match": 3.6
+                "match": 3.6,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             },
             "Emotion Recognition In Conversation": {
                 "lemmas": [
@@ -17986,7 +18034,23 @@
                     "zucchero",
                     "èvecchio"
                 ],
-                "match": 33.2
+                "match": 33.2,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             },
             "Discussion": {
                 "lemmas": [
@@ -21013,7 +21077,23 @@
                     "zucca",
                     "zucchero"
                 ],
-                "match": 18.12
+                "match": 18.12,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             },
             "Conversation Piece": {
                 "lemmas": [
@@ -24649,7 +24729,23 @@
                     "é",
                     "ì"
                 ],
-                "match": 25.73
+                "match": 25.73,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             },
             "Relationship Effort": {
                 "lemmas": [
@@ -26499,7 +26595,23 @@
                     "zonare",
                     "zucca"
                 ],
-                "match": 13.42
+                "match": 13.42,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             },
             "Non-Convergent Discourse": {
                 "lemmas": [
@@ -27565,7 +27677,23 @@
                     "zanzara",
                     "zio"
                 ],
-                "match": 3.18
+                "match": 3.18,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             },
             "Comfortable Silence": {
                 "lemmas": [
@@ -27881,11 +28009,43 @@
                     "zia",
                     "zio"
                 ],
-                "match": 1.11
+                "match": 1.11,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             },
             "Awkward Silence": {
                 "lemmas": [],
-                "match": 0.28
+                "match": 0.28,
+                "filtered_lemmas": [
+                    "sapere",
+                    "andare",
+                    "mhmh",
+                    "okay",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "vedere",
+                    "prendere",
+                    "tipo",
+                    "mho",
+                    "mangiare",
+                    "cioè",
+                    "mettere"
+                ]
             }
         },
         "Generation X": {
@@ -34802,7 +34962,23 @@
                     "éi",
                     "ño"
                 ],
-                "match": 83.33
+                "match": 83.33,
+                "filtered_lemmas": [
+                    "mettere",
+                    "tipo",
+                    "dovere",
+                    "sapere",
+                    "mho",
+                    "mangiare",
+                    "okay",
+                    "andare",
+                    "volere",
+                    "cioè",
+                    "vedere",
+                    "prendere",
+                    "nonno",
+                    "mhmh"
+                ]
             },
             "Gossip": {
                 "lemmas": [
@@ -39894,7 +40070,23 @@
                     "zz",
                     "é"
                 ],
-                "match": 49.48
+                "match": 49.48,
+                "filtered_lemmas": [
+                    "mettere",
+                    "tipo",
+                    "dovere",
+                    "sapere",
+                    "mho",
+                    "mangiare",
+                    "okay",
+                    "andare",
+                    "volere",
+                    "cioè",
+                    "vedere",
+                    "prendere",
+                    "nonno",
+                    "mhmh"
+                ]
             },
             "Discussion": {
                 "lemmas": [
@@ -43132,7 +43324,23 @@
                     "éi",
                     "ño"
                 ],
-                "match": 26.39
+                "match": 26.39,
+                "filtered_lemmas": [
+                    "mettere",
+                    "tipo",
+                    "dovere",
+                    "sapere",
+                    "mho",
+                    "mangiare",
+                    "okay",
+                    "andare",
+                    "volere",
+                    "cioè",
+                    "vedere",
+                    "prendere",
+                    "nonno",
+                    "mhmh"
+                ]
             },
             "Conversation Piece": {
                 "lemmas": [
@@ -46007,7 +46215,23 @@
                     "zuppa",
                     "é"
                 ],
-                "match": 25.35
+                "match": 25.35,
+                "filtered_lemmas": [
+                    "mettere",
+                    "tipo",
+                    "dovere",
+                    "sapere",
+                    "mho",
+                    "mangiare",
+                    "okay",
+                    "andare",
+                    "volere",
+                    "cioè",
+                    "vedere",
+                    "prendere",
+                    "nonno",
+                    "mhmh"
+                ]
             },
             "Emotion Recognition In Conversation": {
                 "lemmas": [
@@ -48741,7 +48965,23 @@
                     "zuccare",
                     "é"
                 ],
-                "match": 26.39
+                "match": 26.39,
+                "filtered_lemmas": [
+                    "mettere",
+                    "tipo",
+                    "dovere",
+                    "sapere",
+                    "mho",
+                    "mangiare",
+                    "okay",
+                    "andare",
+                    "volere",
+                    "cioè",
+                    "vedere",
+                    "prendere",
+                    "nonno",
+                    "mhmh"
+                ]
             },
             "Relationship Effort": {
                 "lemmas": [
@@ -50056,7 +50296,23 @@
                     "zoom",
                     "é"
                 ],
-                "match": 12.33
+                "match": 12.33,
+                "filtered_lemmas": [
+                    "mettere",
+                    "tipo",
+                    "dovere",
+                    "sapere",
+                    "mho",
+                    "mangiare",
+                    "okay",
+                    "andare",
+                    "volere",
+                    "cioè",
+                    "vedere",
+                    "prendere",
+                    "nonno",
+                    "mhmh"
+                ]
             },
             "Non-Convergent Discourse": {
                 "lemmas": [
@@ -51085,7 +51341,23 @@
                     "zucchero",
                     "zz"
                 ],
-                "match": 5.73
+                "match": 5.73,
+                "filtered_lemmas": [
+                    "mettere",
+                    "tipo",
+                    "dovere",
+                    "sapere",
+                    "mho",
+                    "mangiare",
+                    "okay",
+                    "andare",
+                    "volere",
+                    "cioè",
+                    "vedere",
+                    "prendere",
+                    "nonno",
+                    "mhmh"
+                ]
             },
             "Comfortable Silence": {
                 "lemmas": [
@@ -51295,7 +51567,23 @@
                     "x",
                     "zaintetto"
                 ],
-                "match": 1.22
+                "match": 1.22,
+                "filtered_lemmas": [
+                    "mettere",
+                    "tipo",
+                    "dovere",
+                    "sapere",
+                    "mho",
+                    "mangiare",
+                    "okay",
+                    "andare",
+                    "volere",
+                    "cioè",
+                    "vedere",
+                    "prendere",
+                    "nonno",
+                    "mhmh"
+                ]
             },
             "Intervention": {
                 "lemmas": [
@@ -51683,7 +51971,23 @@
                     "zio",
                     "zona"
                 ],
-                "match": 2.08
+                "match": 2.08,
+                "filtered_lemmas": [
+                    "mettere",
+                    "tipo",
+                    "dovere",
+                    "sapere",
+                    "mho",
+                    "mangiare",
+                    "okay",
+                    "andare",
+                    "volere",
+                    "cioè",
+                    "vedere",
+                    "prendere",
+                    "nonno",
+                    "mhmh"
+                ]
             }
         },
         "Generation Y": {
@@ -56317,7 +56621,23 @@
                     "ì",
                     "əh"
                 ],
-                "match": 82.03
+                "match": 82.03,
+                "filtered_lemmas": [
+                    "tipo",
+                    "andare",
+                    "mho",
+                    "mangiare",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "sapere",
+                    "okay",
+                    "mhmh",
+                    "cioè",
+                    "vedere",
+                    "mettere",
+                    "prendere"
+                ]
             },
             "Gossip": {
                 "lemmas": [
@@ -59623,7 +59943,23 @@
                     "ì",
                     "əh"
                 ],
-                "match": 48.41
+                "match": 48.41,
+                "filtered_lemmas": [
+                    "tipo",
+                    "andare",
+                    "mho",
+                    "mangiare",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "sapere",
+                    "okay",
+                    "mhmh",
+                    "cioè",
+                    "vedere",
+                    "mettere",
+                    "prendere"
+                ]
             },
             "Conversation Piece": {
                 "lemmas": [
@@ -61976,7 +62312,23 @@
                     "zucchine",
                     "é"
                 ],
-                "match": 26.96
+                "match": 26.96,
+                "filtered_lemmas": [
+                    "tipo",
+                    "andare",
+                    "mho",
+                    "mangiare",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "sapere",
+                    "okay",
+                    "mhmh",
+                    "cioè",
+                    "vedere",
+                    "mettere",
+                    "prendere"
+                ]
             },
             "Comfortable Silence": {
                 "lemmas": [
@@ -62378,7 +62730,23 @@
                     "yeah",
                     "zuccare"
                 ],
-                "match": 2.32
+                "match": 2.32,
+                "filtered_lemmas": [
+                    "tipo",
+                    "andare",
+                    "mho",
+                    "mangiare",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "sapere",
+                    "okay",
+                    "mhmh",
+                    "cioè",
+                    "vedere",
+                    "mettere",
+                    "prendere"
+                ]
             },
             "Emotion Recognition In Conversation": {
                 "lemmas": [
@@ -64339,7 +64707,23 @@
                     "zuccare",
                     "zucchina"
                 ],
-                "match": 27.83
+                "match": 27.83,
+                "filtered_lemmas": [
+                    "tipo",
+                    "andare",
+                    "mho",
+                    "mangiare",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "sapere",
+                    "okay",
+                    "mhmh",
+                    "cioè",
+                    "vedere",
+                    "mettere",
+                    "prendere"
+                ]
             },
             "Discussion": {
                 "lemmas": [
@@ -66715,7 +67099,23 @@
                     "zucchine",
                     "é"
                 ],
-                "match": 29.57
+                "match": 29.57,
+                "filtered_lemmas": [
+                    "tipo",
+                    "andare",
+                    "mho",
+                    "mangiare",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "sapere",
+                    "okay",
+                    "mhmh",
+                    "cioè",
+                    "vedere",
+                    "mettere",
+                    "prendere"
+                ]
             },
             "Relationship Effort": {
                 "lemmas": [
@@ -68602,7 +69002,23 @@
                     "zozza",
                     "əh"
                 ],
-                "match": 18.84
+                "match": 18.84,
+                "filtered_lemmas": [
+                    "tipo",
+                    "andare",
+                    "mho",
+                    "mangiare",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "sapere",
+                    "okay",
+                    "mhmh",
+                    "cioè",
+                    "vedere",
+                    "mettere",
+                    "prendere"
+                ]
             },
             "Intervention": {
                 "lemmas": [
@@ -69304,7 +69720,23 @@
                     "zona",
                     "é"
                 ],
-                "match": 6.09
+                "match": 6.09,
+                "filtered_lemmas": [
+                    "tipo",
+                    "andare",
+                    "mho",
+                    "mangiare",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "sapere",
+                    "okay",
+                    "mhmh",
+                    "cioè",
+                    "vedere",
+                    "mettere",
+                    "prendere"
+                ]
             },
             "Non-Convergent Discourse": {
                 "lemmas": [
@@ -69658,7 +70090,23 @@
                     "vuless",
                     "x"
                 ],
-                "match": 3.48
+                "match": 3.48,
+                "filtered_lemmas": [
+                    "tipo",
+                    "andare",
+                    "mho",
+                    "mangiare",
+                    "nonno",
+                    "dovere",
+                    "volere",
+                    "sapere",
+                    "okay",
+                    "mhmh",
+                    "cioè",
+                    "vedere",
+                    "mettere",
+                    "prendere"
+                ]
             }
         },
         "Baby Boomers": {
@@ -72854,7 +73302,23 @@
                     "zucchina",
                     "zucchino"
                 ],
-                "match": 37.1
+                "match": 37.1,
+                "filtered_lemmas": [
+                    "mettere",
+                    "okay",
+                    "tipo",
+                    "cioè",
+                    "sapere",
+                    "mangiare",
+                    "andare",
+                    "prendere",
+                    "dovere",
+                    "nonno",
+                    "volere",
+                    "mho",
+                    "vedere",
+                    "mhmh"
+                ]
             },
             "Gossip": {
                 "lemmas": [
@@ -76318,7 +76782,23 @@
                     "èil",
                     "é"
                 ],
-                "match": 42.54
+                "match": 42.54,
+                "filtered_lemmas": [
+                    "mettere",
+                    "okay",
+                    "tipo",
+                    "cioè",
+                    "sapere",
+                    "mangiare",
+                    "andare",
+                    "prendere",
+                    "dovere",
+                    "nonno",
+                    "volere",
+                    "mho",
+                    "vedere",
+                    "mhmh"
+                ]
             },
             "Difficult Conversation": {
                 "lemmas": [
@@ -81499,7 +81979,23 @@
                     "é",
                     "əh"
                 ],
-                "match": 77.62
+                "match": 77.62,
+                "filtered_lemmas": [
+                    "mettere",
+                    "okay",
+                    "tipo",
+                    "cioè",
+                    "sapere",
+                    "mangiare",
+                    "andare",
+                    "prendere",
+                    "dovere",
+                    "nonno",
+                    "volere",
+                    "mho",
+                    "vedere",
+                    "mhmh"
+                ]
             },
             "Discussion": {
                 "lemmas": [
@@ -83796,7 +84292,23 @@
                     "é",
                     "əh"
                 ],
-                "match": 24.4
+                "match": 24.4,
+                "filtered_lemmas": [
+                    "mettere",
+                    "okay",
+                    "tipo",
+                    "cioè",
+                    "sapere",
+                    "mangiare",
+                    "andare",
+                    "prendere",
+                    "dovere",
+                    "nonno",
+                    "volere",
+                    "mho",
+                    "vedere",
+                    "mhmh"
+                ]
             },
             "Relationship Effort": {
                 "lemmas": [
@@ -85434,7 +85946,23 @@
                     "zucca",
                     "é"
                 ],
-                "match": 13.31
+                "match": 13.31,
+                "filtered_lemmas": [
+                    "mettere",
+                    "okay",
+                    "tipo",
+                    "cioè",
+                    "sapere",
+                    "mangiare",
+                    "andare",
+                    "prendere",
+                    "dovere",
+                    "nonno",
+                    "volere",
+                    "mho",
+                    "vedere",
+                    "mhmh"
+                ]
             },
             "Non-Convergent Discourse": {
                 "lemmas": [
@@ -86157,7 +86685,23 @@
                     "zio",
                     "zucchero"
                 ],
-                "match": 4.23
+                "match": 4.23,
+                "filtered_lemmas": [
+                    "mettere",
+                    "okay",
+                    "tipo",
+                    "cioè",
+                    "sapere",
+                    "mangiare",
+                    "andare",
+                    "prendere",
+                    "dovere",
+                    "nonno",
+                    "volere",
+                    "mho",
+                    "vedere",
+                    "mhmh"
+                ]
             },
             "Emotion Recognition In Conversation": {
                 "lemmas": [
@@ -88765,7 +89309,23 @@
                     "é",
                     "əh"
                 ],
-                "match": 26.81
+                "match": 26.81,
+                "filtered_lemmas": [
+                    "mettere",
+                    "okay",
+                    "tipo",
+                    "cioè",
+                    "sapere",
+                    "mangiare",
+                    "andare",
+                    "prendere",
+                    "dovere",
+                    "nonno",
+                    "volere",
+                    "mho",
+                    "vedere",
+                    "mhmh"
+                ]
             },
             "Intervention": {
                 "lemmas": [
@@ -89280,7 +89840,23 @@
                     "zombie",
                     "əh"
                 ],
-                "match": 2.22
+                "match": 2.22,
+                "filtered_lemmas": [
+                    "mettere",
+                    "okay",
+                    "tipo",
+                    "cioè",
+                    "sapere",
+                    "mangiare",
+                    "andare",
+                    "prendere",
+                    "dovere",
+                    "nonno",
+                    "volere",
+                    "mho",
+                    "vedere",
+                    "mhmh"
+                ]
             },
             "Comfortable Silence": {
                 "lemmas": [
@@ -89547,7 +90123,23 @@
                     "x",
                     "é"
                 ],
-                "match": 1.61
+                "match": 1.61,
+                "filtered_lemmas": [
+                    "mettere",
+                    "okay",
+                    "tipo",
+                    "cioè",
+                    "sapere",
+                    "mangiare",
+                    "andare",
+                    "prendere",
+                    "dovere",
+                    "nonno",
+                    "volere",
+                    "mho",
+                    "vedere",
+                    "mhmh"
+                ]
             }
         }
     }
