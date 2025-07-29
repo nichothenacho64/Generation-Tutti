@@ -1,11 +1,8 @@
 {
     "conversation_types": [
         "Awkward Silence",
-        "Chatter",
         "Comfortable Silence",
-        "Communication In Small Groups",
         "Conversation Piece",
-        "Dialogue",
         "Difficult Conversation",
         "Discussion",
         "Emotion Recognition In Conversation",

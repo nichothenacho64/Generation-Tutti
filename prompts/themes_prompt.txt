@@ -10,6 +10,7 @@ Instructions:
 - Return only the themes from the list above that apply to the content
 - The output must be a valid JSON object with exactly one key: "applicable_themes"
 - The value must be a JSON array of strings, each string being a theme from the list
+- The value can be empty if no themes in the list apply
 - Do not include any explanations, comments, or text outside the JSON
 
 Example Output:
