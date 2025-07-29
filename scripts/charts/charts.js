@@ -112,7 +112,7 @@ async function createLemmaHeatmap(sortAttribute) {
             text: paddedDeltaFrequencies,
             texttemplate: "%{text}",
             hoverlabel: hoverLabelConfig,
-            hovertemplate:`Lemma: %{y}<br>Value: %{z}<extra></extra>`,
+            hovertemplate: `Lemma: %{y}<br>Value: %{z}<extra></extra>`,
             hoverongaps: false,
             showscale: false
         }
@@ -160,7 +160,7 @@ async function createProsodicLineChart() {
         type: 'scatter',
         marker: { color: colourPalettes.eightColourPalette[colourNumber % colourPalettes.eightColourPalette.length] },
         hoverlabel: hoverLabelConfig,
-        hovertemplate: `<b>%{x}</b><br>%{y}<extra></extra>`, // all on one line with <br>
+        hovertemplate: `<b>%{x}</b><br>Frequency of prosodic feature: %{y}%<extra></extra>`, // all on one line with <br>
     }));
 
     const layout = {
@@ -193,22 +193,35 @@ async function createProsodicLineChart() {
 }
 
 async function createThemesRadarChart() {
-    let themesRadarChart = await new ChartConstructor("sentiment_percentages.json").init(); // ! change JSON file
+    let themesRadarChart = await new ChartConstructor("themes_by_generation.json", { sortAttribute: "No transformation" }).init(); // ! change JSON file
 
-    const data = themesRadarChart.getDataArrayKeys().map((generation, index) => ({
-        type: 'scatterpolar',
-        theta: [...themesRadarChart.xValues, themesRadarChart.xValues[0]],
-        r: [...themesRadarChart.dataArray[generation], themesRadarChart.dataArray[generation][0]],
-        fill: 'toself',
-        name: generation,
-        marker: { color: generations[index].shapeColour},
-        hoverlabel: hoverLabelConfig,
-        hovertemplate: `Area name: ${generation}<br>Theme: %{theta}<br>Correlation: %{r}%<extra></extra>`
-    }));
+    const data = themesRadarChart.xValues.map((generation, index) => {
+        const generationData = themesRadarChart.data[generation];
+
+        const excludedMatches = ["Awkward Silence", "Comfortable Silence", "Non-Convergent Discourse", "Intervention"]; // not enough data...
+        const thetaValues = Object.keys(generationData).filter(theme => !excludedMatches.includes(theme)).toSorted();
+
+        const themeOccurences = Object.values(generationData);
+
+        const radiusValues = themeOccurences.map(theme => theme.match);
+        
+            console.log(radiusValues);
+
+        return {
+            type: 'scatterpolar',
+            theta: [...thetaValues, thetaValues[0]], // or use specific labels if available
+            r: [...radiusValues, radiusValues[0]],
+            fill: 'toself',
+            name: generation,
+            marker: { color: generations[generations.length - index - 1].shapeColour },
+            hoverlabel: hoverLabelConfig,
+            hovertemplate: `<b>${generation}</b><br>Theme: %{theta}<br>Occurence of theme: %{r}%<extra></extra>`
+        };
+    });
 
     const layout = {
         title: {
-            text: `<b>Correlation between themes and generational conversations</b>`,
+            text: `<b>Occurence percentages of themes in conversation chunks by generation</b>`,
             font: titleFont
         },
         xaxis: {
@@ -263,7 +276,7 @@ async function createDialectDeltaChoroplethMap() {
         },
         colorscale: [[0, "#f6f6f6"], [1, "#f6f6f6"]],
         hoverinfo: "text",
-        hovertext: noDataRegions.map(r => `<b>${r}</b><br>Insufficient data`),
+        hovertext: noDataRegions.map(r => `<b>Region${r}</b><br>Insufficient data`),
         hoverlabel: hoverLabelConfig
     },
     {
@@ -282,7 +295,7 @@ async function createDialectDeltaChoroplethMap() {
         // ! extra
         zmax: -15,
         hoverinfo: "text",
-        hovertext: filteredRegionData.map(d => `<b>${d.region}</b><br>${d.value}%`),
+        hovertext: filteredRegionData.map(d => `<b>Region: ${d.region}</b><br>Generational change in dialect spoken: ${d.value}%`),
         hoverlabel: hoverLabelConfig,
         colorbar: {
             title: {

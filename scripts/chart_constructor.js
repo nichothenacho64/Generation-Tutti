@@ -31,7 +31,7 @@ export class ChartConstructor {
 		this._metadata = jsonData.metadata;
 		this.data = jsonData.data;
 
-        if (this.sortAttribute !== "No sort") {
+        if (this.sortAttribute !== "No sort" && this.sortAttribute !== "No transformation") {
             this.transformDataFormat();
         }
 
@@ -41,7 +41,9 @@ export class ChartConstructor {
             this.addAverageDeltas();
         }
 
-        this.createDataArray();
+        if (this.sortAttribute !== "No transformation") {
+            this.createDataArray();
+        }
 	}
 
 	transformDataFormat() {
@@ -122,7 +124,7 @@ export class ChartConstructor {
     }
 
     createRadarChartDataArray() {
-        
+
     }
 
     orderData() {
