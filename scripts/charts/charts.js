@@ -3,12 +3,13 @@ import {
     titleFont, axisFont, globalFont,
     themeColours, colourPalettes,
     dialectScatterPlotConfig,
-    globalConfig, hoverLabelConfig,
+    globalConfig, hiddenConfig,
+    hoverLabelConfig,
     generations
 } from "../graph_configurations.js";
 
 let currentSortAttribute = "Average";
-let currentDisplayAttribute = "educational_background"; // macro_region, generation
+let currentDisplayAttribute = "macro_region"; // macro_region, generation, educational_background
 
 async function createSentimentBarChart() {
     let sentimentBarChart = await new ChartConstructor("sentiment_percentages.json").init();
@@ -55,13 +56,13 @@ async function createSentimentBarChart() {
         font: globalFont
     };
 
-    Plotly.newPlot("sentimentBarChart", data, layout, globalConfig);
+    Plotly.newPlot("sentimentBarChart", data, layout, hiddenConfig);
 }
 
 async function createLemmaHeatmap(sortAttribute) {
     let lemmaHeatmap = await new ChartConstructor("top_lemmas.json", { sortAttribute: sortAttribute }).init();
     lemmaHeatmap.orderData();
-    lemmaHeatmap.numDataArrays = 10;
+    lemmaHeatmap.numDataArrays = lemmaHeatmap.metadata["top_n_lemmas"];
 
     const lemmas = lemmaHeatmap.getDataArrayKeys();
     const frequencies = lemmaHeatmap.getDataArrayValues().map(row => row.slice(0, -2)); // all except the last columns
@@ -112,8 +113,7 @@ async function createLemmaHeatmap(sortAttribute) {
             text: paddedDeltaFrequencies,
             texttemplate: "%{text}",
             hoverlabel: hoverLabelConfig,
-            hovertemplate:
-                `Lemma: %{y}<br>Value: %{z}<extra></extra>`,
+            hovertemplate: `Lemma: %{y}<br>Value: %{z}<extra></extra>`,
             hoverongaps: false,
             showscale: false
         }
@@ -161,7 +161,7 @@ async function createProsodicLineChart() {
         type: 'scatter',
         marker: { color: colourPalettes.eightColourPalette[colourNumber % colourPalettes.eightColourPalette.length] },
         hoverlabel: hoverLabelConfig,
-        hovertemplate: `<b>%{x}</b><br>%{y}<extra></extra>`, // all on one line with <br>
+        hovertemplate: `<b>%{x}</b><br>Frequency of '${prosodicFeature}': %{y}%<extra></extra>`, // all on one line with <br>
     }));
 
     const layout = {
@@ -190,35 +190,40 @@ async function createProsodicLineChart() {
         font: globalFont
     }
 
-    Plotly.newPlot("prosodicLineChart", data, layout, globalConfig);
+    Plotly.newPlot("prosodicLineChart", data, layout, hiddenConfig);
 }
 
 async function createThemesRadarChart() {
-    const data = [
-        {
+    let themesRadarChart = await new ChartConstructor("themes_by_generation.json", { sortAttribute: "No transformation" }).init(); // ! change JSON file
+
+    const data = themesRadarChart.xValues.map((generation, index) => {
+        const generationData = themesRadarChart.data[generation];
+
+        const sortedObj = Object.fromEntries(
+            Object.entries(generationData).sort(([a], [b]) => a.localeCompare(b))
+        );
+        const allValues = Object.entries(sortedObj);
+        const thetaValues = allValues.map(([k]) => k);
+        const themeOccurences = allValues.map(([, v]) => v);
+        const filteredLemmas = themeOccurences.map(theme => theme.filtered_lemmas.slice(0, 4))[index];
+        const radiusValues = themeOccurences.map(theme => theme.match);
+
+
+        return {
             type: 'scatterpolar',
-            r: [0.39, 0.28, 0.8, 0.7, 0.28, 0.39, 0.45, 0.11, 0.27, 0.39],
-            theta: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'A'],
+            theta: [...thetaValues, thetaValues[0]], // or use specific labels if available
+            r: [...radiusValues, radiusValues[0]],
             fill: 'toself',
-            name: 'Baby Boomers',
-        },
-        {
-            type: 'scatterpolar',
-            r: [0.45, 0.90, 0.59, 0.71, 0.85, 0.15, 0.75, 1, 0.61, 0.45],
-            theta: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'A'],
-            fill: 'toself',
-            name: 'Generation X',
-            hovertemplate: `<b>Generation X<br></b>Theme: %{theta}<br>Correlation: %{r}<extra></extra>` // ! eventually replace with x values...
-        }
-        // ! to remember
-        // ∞ 1. the R/theta lists need to have their first and last values DUPLICATED
-        // ∞ 2. Apply the same mapping approach
-        // ∞ 3. Use the same eight colours
-    ]
+            name: generation,
+            marker: { color: generations[generations.length - index - 1].shapeColour },
+            hoverlabel: hoverLabelConfig,
+            hovertemplate: `<b>${generation}</b><br>Theme: %{theta}<br>Occurence of theme: %{r}%<br>Top lemmas: ${filteredLemmas.join(", ")}<extra></extra>`
+        };
+    });
 
     const layout = {
         title: {
-            text: `<b>Correlation between themes and generational conversations</b>`,
+            text: `<b>Themes occurences by percentage in conversation chunks by generation</b>`,
             font: titleFont
         },
         xaxis: {
@@ -241,11 +246,10 @@ async function createThemesRadarChart() {
         font: globalFont,
         polar: {
             radialaxis: {
-                visible: true, // ! important too?
-                range: [0, 1], // ! must keep this
+                visible: true, 
+                range: [0, 100], 
                 tickangle: 22.5
             },
-            // gridshape: 'linear' // comment this to make it circular (default)
         }
     }
 
@@ -273,7 +277,7 @@ async function createDialectDeltaChoroplethMap() {
         },
         colorscale: [[0, "#f6f6f6"], [1, "#f6f6f6"]],
         hoverinfo: "text",
-        hovertext: noDataRegions.map(r => `<b>${r}</b><br>Insufficient data`),
+        hovertext: noDataRegions.map(r => `<b>Region: ${r}</b><br>Insufficient data`),
         hoverlabel: hoverLabelConfig
     },
     {
@@ -289,10 +293,9 @@ async function createDialectDeltaChoroplethMap() {
                 color: "#000"
             }
         },
-        // ! extra
         zmax: -15,
         hoverinfo: "text",
-        hovertext: filteredRegionData.map(d => `<b>${d.region}</b><br>${d.value}%`),
+        hovertext: filteredRegionData.map(d => `<b>Region: ${d.region}</b><br>Generational change in dialect spoken: ${d.value}%`),
         hoverlabel: hoverLabelConfig,
         colorbar: {
             title: {
@@ -385,14 +388,14 @@ async function createDialectScatterPlot(displayAttribute) {
                 text: "Average participant age",
                 font: axisFont
             },
-            range: [82, 18] // ! temporary, MOVE TO CONSTANTS
+            range: [82, 18] 
         },
         yaxis: {
             title: {
                 text: "Dialect words used in conversation (%)",
                 font: axisFont
             },
-            range: [0, 17], // ! temporary, KPN019 is an outlier
+            range: [0, 15], 
         },
         legend: {
             title: {
@@ -454,10 +457,10 @@ document.addEventListener("DOMContentLoaded", () => {
     createProsodicLineChart();
 
     createLemmaHeatmap(currentSortAttribute);
-    createThemesRadarChart(); // ! incomplete
+    createThemesRadarChart(); 
 
-    createDialectDeltaChoroplethMap(); // ! incomplete
-    createDialectScatterPlot(currentDisplayAttribute); // ! incomplete
+    createDialectDeltaChoroplethMap(); 
+    createDialectScatterPlot(currentDisplayAttribute); 
 
     document.querySelectorAll(".styled-button").forEach(button => {
         button.addEventListener("click", switchSortAttribute);

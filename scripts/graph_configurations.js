@@ -1,10 +1,3 @@
-export const generations = [
-    { name: "Baby Boomers", ageStart: 66, ageEnd: 83, shapeColour: "dd6666" },
-    { name: "Generation X", ageStart: 51, ageEnd: 65, shapeColour: "dd5555" },
-    { name: "Generation Y", ageStart: 26, ageEnd: 50, shapeColour: "dd4444" },
-    { name: "Generation Z", ageStart: 16, ageEnd: 25, shapeColour: "dd3333" },
-];
-
 export const titleFont = {
     color: 'black',
     size: 16
@@ -66,6 +59,12 @@ export const colourPalettes = {
     ]
 };
 
+export const generations = [
+    { name: "Baby Boomers", ageStart: 66, ageEnd: 83, shapeColour: themeColours.lightRose, textColour: "black" },
+    { name: "Generation X", ageStart: 51, ageEnd: 65, shapeColour: themeColours.darkRose, textColour: "white" },
+    { name: "Generation Y", ageStart: 26, ageEnd: 50, shapeColour: themeColours.primaryRed, textColour: "white" },
+    { name: "Generation Z", ageStart: 16, ageEnd: 25, shapeColour: themeColours.darkRed, textColour: "white" },
+];
 
 export const hoverLabelConfig = {
     font: {
@@ -147,23 +146,26 @@ export const dialectScatterPlotConfig = {
 
 export const globalConfig = {
     responsive: true,
-    displayModeBar: false
+    displayModeBar: 'hover',        
+    displaylogo: false,           
+    modeBarButtonsToRemove: [
+        'select2d', 'lasso2d',
+        'zoomIn2d', 'zoomOut2d',
+        'autoScale2d',
+        'hoverCompareCartesian', 'hoverClosestCartesian',
+        'toggleSpikelines'
+    ],
+    toImageButtonOptions: { format: 'png', filename: 'my_chart' }
 };
 
+export const hiddenConfig = {
+    responsive: true,
+    displayModeBar: false, 
+}
 
 // ! create a radar chart properties object!!!!
 
 /*
-KPS001: {
-    generation: "Generation X"
-    lines: [
-        "themes": [], 
-        "lemmas": []
-    ]
-        "themes_and_lemmas" {
-            Conversation Piece: [..., ..., ...]
-        }
-
 
 Generation X {
     theme1: {
