@@ -3,7 +3,8 @@ import {
     titleFont, axisFont, globalFont,
     themeColours, colourPalettes,
     dialectScatterPlotConfig,
-    globalConfig, hoverLabelConfig,
+    globalConfig, hiddenConfig,
+    hoverLabelConfig,
     generations
 } from "../graph_configurations.js";
 
@@ -55,7 +56,7 @@ async function createSentimentBarChart() {
         font: globalFont
     };
 
-    Plotly.newPlot("sentimentBarChart", data, layout, globalConfig);
+    Plotly.newPlot("sentimentBarChart", data, layout, hiddenConfig);
 }
 
 async function createLemmaHeatmap(sortAttribute) {
@@ -189,7 +190,7 @@ async function createProsodicLineChart() {
         font: globalFont
     }
 
-    Plotly.newPlot("prosodicLineChart", data, layout, globalConfig);
+    Plotly.newPlot("prosodicLineChart", data, layout, hiddenConfig);
 }
 
 async function createThemesRadarChart() {
@@ -204,6 +205,7 @@ async function createThemesRadarChart() {
         const themeOccurences = Object.values(generationData);
 
         const radiusValues = themeOccurences.map(theme => theme.match);
+        // const filteredLemmas = themeOccurences.map(theme => theme.filtered_lemmas.slice(0, 4));
         
             console.log(radiusValues);
 
@@ -215,7 +217,7 @@ async function createThemesRadarChart() {
             name: generation,
             marker: { color: generations[generations.length - index - 1].shapeColour },
             hoverlabel: hoverLabelConfig,
-            hovertemplate: `<b>${generation}</b><br>Theme: %{theta}<br>Occurence of theme: %{r}%<extra></extra>`
+            hovertemplate: `<b>${generation}</b><br>Theme: %{theta}<br>Occurence of theme: %{r}%<br><extra></extra>` // Top lemmas: ${filteredLemmas}
         };
     });
 
@@ -276,7 +278,7 @@ async function createDialectDeltaChoroplethMap() {
         },
         colorscale: [[0, "#f6f6f6"], [1, "#f6f6f6"]],
         hoverinfo: "text",
-        hovertext: noDataRegions.map(r => `<b>Region${r}</b><br>Insufficient data`),
+        hovertext: noDataRegions.map(r => `<b>Region: ${r}</b><br>Insufficient data`),
         hoverlabel: hoverLabelConfig
     },
     {

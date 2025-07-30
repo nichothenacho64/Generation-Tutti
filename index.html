@@ -29,7 +29,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-flex gap-2">
-                        <li class="nav-item"><a class="nav-link" href="#home" onclick="resetTransitions()">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#home" 
+                                onclick="resetTransitions()">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#emotionalTone"
                                 onclick="resetTransitions()">Emotional tone</a></li>
                         <li class="nav-item"><a class="nav-link" href="#foundations"
@@ -60,10 +61,10 @@
                 <div class="col">
                     <h2 id="home" class="top-heading">What don't we know?</h2>
                     <p>
-                        Despite widespread awareness of the idea that languages change over time, <span
-                            class="fw-bold">we lack a clear, data-driven
+                        Despite widespread awareness of the idea that languages change over time, <strong>
+                            we lack a clear, data-driven
                             understanding of how everyday conversation really differs between generations in
-                            Italy</span>. This is not just in terms of
+                            Italy</strong>. This is not just in terms of
                         vocabulary, but also tone, sentiment, and dialectal variation, where we explore how Italian not
                         only changes as a spoken
                         language but as a form of expression for many Italians. So you might ponder on questions like
@@ -96,8 +97,8 @@
                         spoken
                         language (i.e. how we speak in informal quotidian contexts) remains underexplored, especially
                         across different generations.
-                        Hence, in our research, we aim to <span class="fw-bold">compare and contrast the nature of
-                            everyday conversations in Italy across generations.</span>
+                        Hence, in our research, we aim to <strong>compare and contrast the nature of
+                            everyday conversations in Italy across generations.</strong>
 
                     </p>
                     <p>
@@ -122,78 +123,162 @@
             </section>
             <section class="row row-container animated-element">
                 <div class="col">
-                    <h2 id="emotionalTone" class="top-heading">Emotional tone</h2>
+                    <span id="emotionalTone"></span>
+                    <h2 class="top-heading">Emotional tone</h2>
+                    <h3>A Generational Mood Swing: From Negativity and Less Expression to Positivity and More Expression</h3>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti
-                        aut.
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos
-                        inventore
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati,
-                        eaque non
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
+                        How do you think your parents' conversations sound compared to your own? Our data reveals a significant emotional divide.
+                        The chart below shows the sentiment of everyday conversations for the four generations of Italians examined.
                     </p>
                     <div id="sentimentBarChart" class="chart full-width-chart"></div>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti
-                        aut.
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos
-                        inventore
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati,
-                        eaque non
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
+                        While <strong>Baby Boomer</strong> and <strong>Generation X</strong> conversations are predominantly 
+                        <strong>negative</strong> (46.3% and 50% respectively), Generation Y and Generation Z have completely gone the other way, 
+                        recording <strong>positive sentiment</strong> both at 47.5%.
+                        This is not merely about <span class="coloured-text">what</span> they feel, but <span class="coloured-text">how</span> they express it. The way that generations use their
+                        voices through their pitch, volume, and pace also shares a compelling story. 
                     </p>
+                    <h3>How does linguistic change sound?</h3>
                     <div id="prosodicLineChart" class="chart full-width-chart"></div>
+                    <p>
+                        In the chart above, we can see that younger Italians speak with more animation. Their more frequent use of <strong>raised volume</strong>
+                        and <strong>rising intonation (normal and weak)</strong> is significantly higher than that of older generations. Baby Boomers, instead 
+                        have more similar levels of <strong>low volume</strong> and <strong>slowing down</strong>, perhaps indicative of their
+                        more reserved conversational style. This reveals two distinctive conversational styles: one that is lively and dynamic, and another that is more
+                        calm and measured.
+                    </p>
                 </div>
             </section>
             <section class="row row-container animated-element">
                 <div class="col">
-                    <h2 id="foundations" class="top-heading">Lexical and thematic foundations</h2>
+                    <span id="foundations"></span>
+                    <h2 class="top-heading">Lexical and thematic foundations</h2>
+                    <h3>Do us Italians still speak the same language?</h3>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti
-                        aut.
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos
-                        inventore
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati,
-                        eaque non
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
+                        Beyond the emotional tone, what about the words themselves? We analysed many lemmas 
+                        (i.e. the base form of words, excluding those with fewer than 3 letters) to see the vocabulary that unites and divides the generations.
                     </p>
                     <button id="lemmaHeatmapSort" class="btn btn-primary styled-button">Switch sort attribute</button>
                     <div id="lemmaHeatmap" class="chart"></div>
-                    <br>
-                    <br>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti
-                        aut.
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos
-                        inventore
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati,
-                        eaque non
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
+                    <p>At first glance, a common conversational foundation is apparent. Basic perceptive and communicative verbs like 
+                        <span class="fst-italic">vedere</span> (to see)
+                        <span class="fst-italic">parlare</span> (to speak)
+                        <span class="fst-italic">sentire</span> (to hear/feel)
+                        are common across all generations.
+                        However, the linguistic story takes a sharp turn with <strong>Generation Z</strong> when we
+                        examine the delta change in generations. 
+                        Their use of many common verbs drops significantly. For example, the frequency of 
+                        <span class="fst-italic">prendere</span> (to take) drops from a high of 19.9 for Baby Boomers to just 0.6 for Generation Z.
+                        Furthermore, verbs like <span class="fst-italic">andare</span> (to go) and <span class="fst-italic">mangiare</span> (to eat)
+                        have illustrated an increase, highlighting the importance of everyday important tasks in their conversations.
+                        This change in vocabulary additionally reflects a shift in <span class="coloured-text">what</span> generations talk about.
                     </p>
+                    <h3>From deeper discussions to casual chats</h3>
                     <div id="themesRadarChart" class="chart"></div>
+                    <p>
+                        Older generations gravitate towards <strong>discussions</strong>; meanwhile, younger generations tend to prefer
+                        lighter, more casual <strong>conversation pieces</strong>. For these Italians, it seems that the very purpose
+                        of everyday conversations is changing, from discussions towards more informal connection and sharing.
+                    </p>
+                    <article>
+                        <p><em>Note: The following are some examples taken directly out of the text that were found as matches to certain themes to 
+                            better understand them. Note that all themes are derived from Wikidata as objects with relevant conversational predicates.
+                            Where descriptions were available, they were taken and used here.                         
+                        </em></p>
+                        <ul class="nav nav-tabs" id="demoTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tab-1"
+                                    data-bs-toggle="tab" data-bs-target="#pane-1"
+                                    type="button" role="tab" aria-controls="pane-1" aria-selected="true">
+                                Conversation Piece
+                            </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab-2"
+                                    data-bs-toggle="tab" data-bs-target="#pane-2"
+                                    type="button" role="tab" aria-controls="pane-2" aria-selected="false">
+                                Difficult Conversation
+                            </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab-3"
+                                    data-bs-toggle="tab" data-bs-target="#pane-3"
+                                    type="button" role="tab" aria-controls="pane-3" aria-selected="false">
+                                Relationship Effort
+                            </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content border-start border-end border-bottom p-3" id="demoTabsContent">
+                            <div class="tab-pane fade show active quote-text" id="pane-1" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
+                                <p>The following definition was a reference definition on Cambridge Dictionary due to the unavailability of any on Wikidata.<br>
+                                    <strong>Conversation Piece: An unusual object that causes people to start talking.</strong>
+                                </p>
+                                <p>
+                                    <strong>Excerpt</strong><br>
+                                    A: Vai.<br>
+                                    B: Lo zucchero c'è?<br>
+                                    A: Sì, questo.<br>
+                                    B: Te come la vuoi?<br>
+                                    A: Quella al caffè e amaretto.<br>
+                                    B: Caffè e amaretto.<br>
+                                    ...<br>
+                                    A: Comunque, le altre alternative sono...<br>
+                                    B: Tacchi gialli.<br>
+                                    A: Bomba! Infatti, quei tacchi sono una bomba.<br>
+                                </p>
+                            </div>
+
+                            <div class="tab-pane fade quote-text" id="pane-2" role="tabpanel" aria-labelledby="tab-2" tabindex="0">
+                                <p>The following definition was a reference definition on Wikipedia due to the unavailability of any on Wikidata.<br>
+                                    <strong>Difficult Conversation: A difficult conversation is a dialogue addressing sensitive, controversial, or emotionally charged topics, 
+                                    often with the potential for conflict, discomfort, or disagreement.</strong>
+                                </p>
+                                <p>
+                                    <strong>Excerpt</strong><br>
+                                    A: Ci sono i genitori di lui che pagano il pranzo, che doveva essere pesce al lungomare, ma Pulcinella ha detto che è troppo, è troppo appiccicato, boh.<br>
+                                    ...<br>
+                                    A: Posso dire di essere delusa?<br>
+                                    B: Sono delusa.<br>
+                                    A: Sì.<br>
+                                </p>
+                            </div>
+
+                            <div class="tab-pane fade quote-text" id="pane-3" role="tabpanel" aria-labelledby="tab-3" tabindex="0">
+                                <p>The following definition was directly sourced from SPARQL querying on Wikidata.<br>
+                                    <strong>Relationship Effort: The type of work done to keep a relationship alive and thriving for everyone involved.</strong>
+                                </p>
+                                <p>
+                                    <strong>Excerpt</strong><br>
+                                    A: Infatti, io ho detto in caso ti faccio da babysitter.<br>
+                                    ...<br>
+                                    A: Comunque, prima che partite tutte e due, mi dovete venire a trovare a Bologna che facciamo qualcosa.<br>
+                                    B: Guarda, [A], io aspetto solo che mi inviti perché non sono potuta venire.<br>
+                                    A: Ma quando lavoravo al Macho...<br>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                    <p></p>
                 </div>
             </section>
             <section class="row row-container animated-element">
                 <div class="col">
-                    <h2 id="regionalIdentity" class="top-heading">Regional identity</h2>
+                    <span id="regionalIdentity"></span>
+                    <h2 class="top-heading">Regional identity</h2>
+                    <h3>The surprising truth about Italian dialects/regional languages</h3>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti
-                        aut.
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos
-                        inventore
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati,
-                        eaque non
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
+                        We've all heard the standard narrative that local dialects are disappearing in favour of standard Italian.
+                        However, our data reveals a more fascinating and nuanced reality.
                     </p>
                     <div id="dialectsDeltaChoroplethMap" class="chart"><svg id="patternLayer"></svg></div>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti
-                        aut.
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos
-                        inventore
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati,
-                        eaque non
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
+                        This map uncovers some of the most unexpected findings in the project. While dialect usage is declining in parts of the North
+                        (in grey areas, particularly Veneto, with a 14.9% decrease), it is making a <strong>significant comeback in the South</strong>, 
+                        in particular, in <strong>Puglia</strong> (in the red area). Instead of merely being a thing of the past, dialect usage in Puglia
+                        appears to be a growing part of modern identity for younger generations, directly challenging the idea of a uniform decline in dialect usage.
+                        This trend is not only about geography. A closer look reveals that where people live, their generation, and educational background strongly
+                        shape the usage of dialect in their conversations.
                     </p>
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle styled-button" type="button" id="styleDropdown"
@@ -207,20 +292,41 @@
                         </ul>
                     </div>
                     <div id="dialectScatterPlot" class="chart full-width-chart"></div>
+                    <p>
+                        As the charts illustrate, dialect use has some relationship to a participant's <strong>educational background</strong> and
+                        <strong>macro region</strong>. When examining each conversation, those with people from an elementary or middle school education
+                        tend to have a higher frequency of dialect words, though this does not show a significant correlation with the average age of participants. 
+                        As seen previously, southern conversations show a steady increase in the usage of dialect. This once again proves that dialect is not just
+                        a remnant of the past, but a living, evolving feature of modern Italian identity.
+                    </p>
                 </div>
             </section>
             <section class="row row-container animated-element end">
                 <div class="col">
-                    <h2>Conclusion</h2>
+                    <h2 class="top-heading">Conclusion: One country, many voices</h2>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita totam quod obcaecati corrupti
-                        aut.
-                        Hic veritatis provident non est quod reiciendis. Facere odio provident libero. Similique quos
-                        inventore
-                        repudiandae dolorem maxime quia aliquid, repellendus odit porro est! Commodi possimus obcaecati,
-                        eaque non
-                        deserunt ex quaerat ea, corporis nam veritatis quos!
+                        Our journey through everyday conversations all across Italy demonstrate Italy as a linguistically transitioning nation. We've witnessed a
+                        profound <strong>emotional shift</strong>, with younger generations bringing a wave of positivity and expression to their chats.
+                        We've uncovered <strong>lexical divergences</strong>, as Generation Z redefines everyday conversation with vocabulary changes.
                     </p>
+                    <p>
+                        Most surprisingly, we've debunked the myth of disappearing dialects across the country. In its place, we find a 
+                        <strong>regional alignment</strong> where dialect is not just surviving, but thriving in the South, re-emerging as a marker of
+                        local and regional identity.
+                    </p>
+                    <p>
+                        The data found highlights a fascinating tension between national linguistic standards and perceptions and the persistent power of regional
+                        and generational identity. There is no single 'Italian way' of speaking, but many. Whilst the data analysed in this project is not super extensive,
+                        it nonetheless postulates the idea that the Italian language is a vibrant, living organism that reflects our emotions, our culture, and our
+                        identity and place in a rapidly changing world. 
+                    </p>
+                    <p>What do these changes mean for the future of Italian communication?</p>
+                        <p class="quote-text">
+                            <strong>Reflect</strong> on your own conversational habits and those of your family<br>
+                            <strong>Listen</strong> to the subtle differences in tone and vocabulary between generations<br>
+                            <strong>Share</strong> this story to spark a new conversation about how we use language to connect with each other<br>
+                        </p>
+                    <p class="mb-20">The evolution of language is happening all around us. What will your generation leave behind?</p>
                 </div>
             </section>
         </section>

@@ -146,9 +146,22 @@ export const dialectScatterPlotConfig = {
 
 export const globalConfig = {
     responsive: true,
-    displayModeBar: false
+    displayModeBar: 'hover',        
+    displaylogo: false,           
+    modeBarButtonsToRemove: [
+        'select2d', 'lasso2d',
+        'zoomIn2d', 'zoomOut2d',
+        'autoScale2d',
+        'hoverCompareCartesian', 'hoverClosestCartesian',
+        'toggleSpikelines'
+    ],
+    toImageButtonOptions: { format: 'png', filename: 'my_chart' }
 };
 
+export const hiddenConfig = {
+    responsive: true,
+    displayModeBar: false, 
+}
 
 // ! create a radar chart properties object!!!!
 
