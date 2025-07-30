@@ -161,7 +161,7 @@ async function createProsodicLineChart() {
         type: 'scatter',
         marker: { color: colourPalettes.eightColourPalette[colourNumber % colourPalettes.eightColourPalette.length] },
         hoverlabel: hoverLabelConfig,
-        hovertemplate: `<b>%{x}</b><br>Frequency of prosodic feature: %{y}%<extra></extra>`, // all on one line with <br>
+        hovertemplate: `<b>%{x}</b><br>Frequency of '${prosodicFeature}': %{y}%<extra></extra>`, // all on one line with <br>
     }));
 
     const layout = {
@@ -199,15 +199,15 @@ async function createThemesRadarChart() {
     const data = themesRadarChart.xValues.map((generation, index) => {
         const generationData = themesRadarChart.data[generation];
 
-        const excludedMatches = ["Awkward Silence", "Comfortable Silence", "Non-Convergent Discourse", "Intervention"]; // not enough data...
-        const thetaValues = Object.keys(generationData).filter(theme => !excludedMatches.includes(theme)).toSorted();
-
-        const themeOccurences = Object.values(generationData);
-
+        const sortedObj = Object.fromEntries(
+            Object.entries(generationData).sort(([a], [b]) => a.localeCompare(b))
+        );
+        const allValues = Object.entries(sortedObj);
+        const thetaValues = allValues.map(([k]) => k);
+        const themeOccurences = allValues.map(([, v]) => v);
+        const filteredLemmas = themeOccurences.map(theme => theme.filtered_lemmas.slice(0, 4))[index];
         const radiusValues = themeOccurences.map(theme => theme.match);
-        // const filteredLemmas = themeOccurences.map(theme => theme.filtered_lemmas.slice(0, 4));
-        
-            console.log(radiusValues);
+
 
         return {
             type: 'scatterpolar',
@@ -217,13 +217,13 @@ async function createThemesRadarChart() {
             name: generation,
             marker: { color: generations[generations.length - index - 1].shapeColour },
             hoverlabel: hoverLabelConfig,
-            hovertemplate: `<b>${generation}</b><br>Theme: %{theta}<br>Occurence of theme: %{r}%<br><extra></extra>` // Top lemmas: ${filteredLemmas}
+            hovertemplate: `<b>${generation}</b><br>Theme: %{theta}<br>Occurence of theme: %{r}%<br>Top lemmas: ${filteredLemmas.join(", ")}<extra></extra>`
         };
     });
 
     const layout = {
         title: {
-            text: `<b>Occurence percentages of themes in conversation chunks by generation</b>`,
+            text: `<b>Themes occurences by percentage in conversation chunks by generation</b>`,
             font: titleFont
         },
         xaxis: {
@@ -246,11 +246,10 @@ async function createThemesRadarChart() {
         font: globalFont,
         polar: {
             radialaxis: {
-                visible: true, // ! important too?
-                range: [0, 100], // ! must keep this
+                visible: true, 
+                range: [0, 100], 
                 tickangle: 22.5
             },
-            // gridshape: 'linear' // comment this to make it circular (default)
         }
     }
 
@@ -294,7 +293,6 @@ async function createDialectDeltaChoroplethMap() {
                 color: "#000"
             }
         },
-        // ! extra
         zmax: -15,
         hoverinfo: "text",
         hovertext: filteredRegionData.map(d => `<b>Region: ${d.region}</b><br>Generational change in dialect spoken: ${d.value}%`),
@@ -390,14 +388,14 @@ async function createDialectScatterPlot(displayAttribute) {
                 text: "Average participant age",
                 font: axisFont
             },
-            range: [82, 18] // ! temporary, MOVE TO CONSTANTS
+            range: [82, 18] 
         },
         yaxis: {
             title: {
                 text: "Dialect words used in conversation (%)",
                 font: axisFont
             },
-            range: [0, 15], // ! temporary, KPN019 is an outlier
+            range: [0, 15], 
         },
         legend: {
             title: {
@@ -410,7 +408,7 @@ async function createDialectScatterPlot(displayAttribute) {
         shapes: createGenerationGridLines(),
     };
 
-    Plotly.newPlot("dialectScatterPlot", data, layout, globalConfig.responsive);
+    Plotly.newPlot("dialectScatterPlot", data, layout, globalConfig);
 }
 
 function createGenerationGridLines() {
@@ -459,10 +457,10 @@ document.addEventListener("DOMContentLoaded", () => {
     createProsodicLineChart();
 
     createLemmaHeatmap(currentSortAttribute);
-    createThemesRadarChart(); // ! incomplete
+    createThemesRadarChart(); 
 
-    createDialectDeltaChoroplethMap(); // ! incomplete
-    createDialectScatterPlot(currentDisplayAttribute); // ! incomplete
+    createDialectDeltaChoroplethMap(); 
+    createDialectScatterPlot(currentDisplayAttribute); 
 
     document.querySelectorAll(".styled-button").forEach(button => {
         button.addEventListener("click", switchSortAttribute);

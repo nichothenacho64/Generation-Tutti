@@ -9,10 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
     <script src="scripts/script.js"></script>
-    <!-- <script src="scripts/charts/italy_map.js"></script> -->
     <script type="module" src="scripts/charts/generations.js"></script> <!-- defer -->
     <script type="module" src="scripts/charts/charts.js"></script>
 </head>
@@ -62,9 +60,9 @@
                     <h2 id="home" class="top-heading">What don't we know?</h2>
                     <p>
                         Despite widespread awareness of the idea that languages change over time, <strong>
-                            we lack a clear, data-driven
-                            understanding of how everyday conversation really differs between generations in
-                            Italy</strong>. This is not just in terms of
+                        we lack a clear, data-driven
+                        understanding of how everyday conversation really differs between generations in
+                        Italy</strong>. This is not just in terms of
                         vocabulary, but also tone, sentiment, and dialectal variation, where we explore how Italian not
                         only changes as a spoken
                         language but as a form of expression for many Italians. So you might ponder on questions like
@@ -98,7 +96,7 @@
                         language (i.e. how we speak in informal quotidian contexts) remains underexplored, especially
                         across different generations.
                         Hence, in our research, we aim to <strong>compare and contrast the nature of
-                            everyday conversations in Italy across generations.</strong>
+                        everyday conversations in Italy across generations.</strong>
 
                     </p>
                     <p>
@@ -125,7 +123,7 @@
                 <div class="col">
                     <span id="emotionalTone"></span>
                     <h2 class="top-heading">Emotional tone</h2>
-                    <h3>A Generational Mood Swing: From Negativity and Less Expression to Positivity and More Expression</h3>
+                    <h3>A generational mood swing: from negativity and less expression to positivity and more expression</h3>
                     <p>
                         How do you think your parents' conversations sound compared to your own? Our data reveals a significant emotional divide.
                         The chart below shows the sentiment of everyday conversations for the four generations of Italians examined.
@@ -135,8 +133,8 @@
                         While <strong>Baby Boomer</strong> and <strong>Generation X</strong> conversations are predominantly 
                         <strong>negative</strong> (46.3% and 50% respectively), Generation Y and Generation Z have completely gone the other way, 
                         recording <strong>positive sentiment</strong> both at 47.5%.
-                        This is not merely about <span class="coloured-text">what</span> they feel, but <span class="coloured-text">how</span> they express it. The way that generations use their
-                        voices through their pitch, volume, and pace also shares a compelling story. 
+                        This is not merely about <span class="coloured-text">what</span> they feel, but <span class="coloured-text">how</span> they express it. 
+                        The way that generations use their voices through their pitch, volume, and pace also shares a compelling story. 
                     </p>
                     <h3>How does linguistic change sound?</h3>
                     <div id="prosodicLineChart" class="chart full-width-chart"></div>
@@ -156,29 +154,41 @@
                     <h3>Do us Italians still speak the same language?</h3>
                     <p>
                         Beyond the emotional tone, what about the words themselves? We analysed many lemmas 
-                        (i.e. the base form of words, excluding those with fewer than 3 letters) to see the vocabulary that unites and divides the generations.
+                        (i.e. the base form of words, excluding those with fewer than 3 letters) to see the vocabulary that is shared and different.
                     </p>
                     <button id="lemmaHeatmapSort" class="btn btn-primary styled-button">Switch sort attribute</button>
                     <div id="lemmaHeatmap" class="chart"></div>
                     <p>At first glance, a common conversational foundation is apparent. Basic perceptive and communicative verbs like 
-                        <span class="fst-italic">vedere</span> (to see)
-                        <span class="fst-italic">parlare</span> (to speak)
-                        <span class="fst-italic">sentire</span> (to hear/feel)
+                        <em>vedere</em> (to see)
+                        <em>parlare</em> (to speak)
+                        <em>sentire</em> (to hear/feel)
                         are common across all generations.
                         However, the linguistic story takes a sharp turn with <strong>Generation Z</strong> when we
                         examine the delta change in generations. 
                         Their use of many common verbs drops significantly. For example, the frequency of 
-                        <span class="fst-italic">prendere</span> (to take) drops from a high of 19.9 for Baby Boomers to just 0.6 for Generation Z.
-                        Furthermore, verbs like <span class="fst-italic">andare</span> (to go) and <span class="fst-italic">mangiare</span> (to eat)
+                        <em>prendere</em> (to take) drops from a high of 19.9 for Baby Boomers to just 0.6 for Generation Z.
+                        Furthermore, verbs like <em>andare</em> (to go) and <em>mangiare</em> (to eat)
                         have illustrated an increase, highlighting the importance of everyday important tasks in their conversations.
                         This change in vocabulary additionally reflects a shift in <span class="coloured-text">what</span> generations talk about.
                     </p>
-                    <h3>From deeper discussions to casual chats</h3>
+                    <h3>From discussing facts to recognising feelings</h3>
+                    <p>
+                        What is the main purpose of a conversation? Is it to exchange ideas, or to connect emotionally? Our research shows that
+                        the answer may depend on where an Italian is born. By analysing the core themes found in conversations, we can see a fundamental
+                        shift in the very purpose of everyday chat across generations.
+                    </p>
                     <div id="themesRadarChart" class="chart"></div>
                     <p>
-                        Older generations gravitate towards <strong>discussions</strong>; meanwhile, younger generations tend to prefer
-                        lighter, more casual <strong>conversation pieces</strong>. For these Italians, it seems that the very purpose
-                        of everyday conversations is changing, from discussions towards more informal connection and sharing.
+                        For Baby Boomers, conversation is primarily a forum for sharing lighter, more casual <strong>conversation pieces</strong>
+                        and exchanging information through <strong>discussions</strong>. Meanwhile, for Generation Y and Generation Z, their conversational
+                        landscape changes dramatically, being dominated by <strong>gossip</strong> and <strong>emotion recognition in conversation</strong>.
+                        In particular, Generation Z shows focus on recognising emotions and having difficult conversations, while also leading in
+                        light, topic-based conversations.
+
+                        For many Italians, it seems that the very purpose of everyday conversations is changing. For older Italians, conversation
+                        was often a tool for fact-based discussions, while for younger Italians, it is a vehicle for social and emotional connection
+                        The goal isn't just to discuss a topic, but to understand the feelings communicated, making empathetic themes
+                        crucial to the way that they communicate
                     </p>
                     <article>
                         <p><em>Note: The following are some examples taken directly out of the text that were found as matches to certain themes to 
@@ -303,7 +313,8 @@
             </section>
             <section class="row row-container animated-element end">
                 <div class="col">
-                    <h2 class="top-heading">Conclusion: One country, many voices</h2>
+                    <h2 class="top-heading">Conclusion</h2>
+                    <h3>Across one country, across many generations and voices</h3>
                     <p>
                         Our journey through everyday conversations all across Italy demonstrate Italy as a linguistically transitioning nation. We've witnessed a
                         profound <strong>emotional shift</strong>, with younger generations bringing a wave of positivity and expression to their chats.
